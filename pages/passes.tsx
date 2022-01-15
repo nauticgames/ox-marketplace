@@ -1,17 +1,9 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import React from "react";
 import AsidePanel from "../components/AsidePanel/AsidePanel";
 import SEO from "../components/SEO";
 import Header from "../components/UI/Header/Header";
 
-const Home: NextPage = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace("/stadiums");
-  }, []);
-
+const passes = () => {
   return (
     <>
       <style jsx global>{`
@@ -27,4 +19,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default passes;
