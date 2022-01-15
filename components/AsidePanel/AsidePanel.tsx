@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import CapitalizePathname from "../../utils/CapitalizePathname";
 
 const StyledAsidePanel = styled.aside`
+  position: fixed;
   min-width: 240px;
   width: 240px;
   background-color: #fff;

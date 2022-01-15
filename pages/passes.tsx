@@ -15,6 +15,9 @@ const passes = () => {
       <SEO />
       <Header />
       <AsidePanel />
+      <main style={{ paddingLeft: "240px" }}>
+        <h1>Passes</h1>
+      </main>
     </>
   );
 };
