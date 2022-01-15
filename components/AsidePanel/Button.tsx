@@ -13,25 +13,22 @@ interface ButtonProps {
 const Button = ({ label, src, active, setCurrent }: ButtonProps) => {
   const StyledButton = styled.button`
     width: 100%;
-    height: 55px;
+    height: 65px;
     display: flex;
     margin-bottom: 20px;
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
     padding-left: 15px;
-    border-left: ${active ? "4px solid #4a6cf5" : "4px solid transparent"};
+    border-left: ${active ? "4px solid #2F57F7" : "4px solid transparent"};
     background: ${active
-      ? "linear-gradient(90.01deg, #DDDAFF 0.01%, rgba(255, 255, 255, 0) 99.99%)"
+      ? "linear-gradient(90.01deg, #ebebeb 0.01%, rgba(255, 255, 255, 0) 99.99%)"
       : "#fff"};
 
-    color: ${active ? "#3a3a3a" : "#929292"};
+    color: #535353;
     font-weight: ${active ? 600 : 500};
     font-size: 0.8em;
-
-    &:hover {
-      color: ${active ? "#3a3a3a" : "#616161"};
-    }
+    opacity: ${active ? 1 : 0.4};
 
     img {
       margin-left: 10px;

@@ -10,4 +10,8 @@ button {
   outline: none;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 @import "./normalize.css";

@@ -13,11 +13,11 @@ const Marketplace = ({ current = "Stadiums", setCurrent }: MenuProps) => {
     <Container>
       <Row>
         <Col>
-          {Items.map(({ label, src, activeSrc }) => (
+          {Items.map(({ label, src }) => (
             <Button
               key={label}
               label={label}
-              src={current === label ? activeSrc : src}
+              src={src}
               active={current === label ? true : false}
               setCurrent={setCurrent}
             />
