@@ -44,7 +44,7 @@ const Button = ({ label, src, active, setCurrent }: ButtonProps) => {
 
   const redirect = () => {
     if (CapitalizePathname(router.pathname) !== label) {
-      router.push(label.toLowerCase());
+      router.replace(label.toLowerCase());
     }
   };
 

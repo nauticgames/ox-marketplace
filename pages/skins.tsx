@@ -15,6 +15,9 @@ const skins = () => {
       <SEO />
       <Header />
       <AsidePanel />
+      <main style={{ paddingLeft: "240px" }}>
+        <h1>Skins</h1>
+      </main>
     </>
   );
 };

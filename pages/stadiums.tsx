@@ -15,6 +15,9 @@ const stadiums = () => {
       <SEO />
       <Header />
       <AsidePanel />
+      <main style={{ paddingLeft: "240px" }}>
+        <h1>Stadiums</h1>
+      </main>
     </>
   );
 };
