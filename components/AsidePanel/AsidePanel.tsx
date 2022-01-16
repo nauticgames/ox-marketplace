@@ -1,8 +1,6 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import Marketplace from "./Menus/Marketplace/Marketplace";
-import { useRouter } from "next/router";
-import CapitalizePathname from "../../utils/CapitalizePathname";
+import useWindowSize from "../../hooks/useWindowsSize";
 
 const StyledAsidePanel = styled.aside`
   position: fixed;
@@ -11,16 +9,22 @@ const StyledAsidePanel = styled.aside`
   background-color: #fff;
   height: 100vh;
   padding: 20px 0;
+  transition: min-width 0.2s ease, width 0.2s ease;
 `;
 
 const AsidePanel = () => {
-  const { pathname } = useRouter();
-  const [current, setCurrent] = useState(CapitalizePathname(pathname));
+  const { width } = useWindowSize();
 
   return (
-    <StyledAsidePanel>
-      <Marketplace current={current} setCurrent={setCurrent} />
-    </StyledAsidePanel>
+    <>
+      {width && width < 800 ? (
+        <h1>Mobile</h1>
+      ) : (
+        <StyledAsidePanel>
+          <Marketplace />
+        </StyledAsidePanel>
+      )}
+    </>
   );
 };
 

@@ -6,10 +6,10 @@ import SEO from "../components/SEO";
 import Header from "../components/UI/Header/Header";
 
 const Home: NextPage = () => {
-  const router = useRouter();
+  const { replace } = useRouter();
 
   useEffect(() => {
-    router.replace("/stadiums");
+    replace("/stadiums");
   }, []);
 
   return (

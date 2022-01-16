@@ -1,25 +1,24 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { Col, Container, Row } from "react-grid-system";
-import Button from "../../Button";
-import Items from "./Items";
+import PanelButton from "../../PanelButton";
+import { MarketplaceItems } from "../../Items";
 
-interface MenuProps {
-  current: string;
-  setCurrent: any;
-}
+const Marketplace = () => {
+  const { pathname } = useRouter();
 
-const Marketplace = ({ current = "Stadiums", setCurrent }: MenuProps) => {
   return (
     <Container>
       <Row>
         <Col>
-          {Items.map(({ label, src }) => (
-            <Button
+          {MarketplaceItems.map(({ label, src, name, path }) => (
+            <PanelButton
+              path={path}
+              name={name}
               key={label}
               label={label}
               src={src}
-              active={current === label ? true : false}
-              setCurrent={setCurrent}
+              active={pathname === path}
             />
           ))}
         </Col>

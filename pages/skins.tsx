@@ -1,7 +1,7 @@
-import React from "react";
 import AsidePanel from "../components/AsidePanel/AsidePanel";
 import SEO from "../components/SEO";
 import Header from "../components/UI/Header/Header";
+import Main from "../components/Layout/Main";
 
 const skins = () => {
   return (
@@ -15,9 +15,9 @@ const skins = () => {
       <SEO />
       <Header />
       <AsidePanel />
-      <main style={{ paddingLeft: "240px" }}>
+      <Main>
         <h1>Skins</h1>
-      </main>
+      </Main>
     </>
   );
 };

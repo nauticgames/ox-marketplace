@@ -7,14 +7,14 @@ interface LogoProps {
 }
 
 const StyledLogo = styled.a`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   cursor: pointer;
 
-  p {
-    font-size: 0.8em;
+  h1 {
+    font-size: 0.9em;
     color: #c4c4c4;
     font-weight: 400;
   }
@@ -32,7 +32,7 @@ const Logo = ({ source }: LogoProps) => {
     <Link href="/">
       <StyledLogo rel="noreferrer">
         <img src={source} alt="Logo" />
-        <p>Marketplace</p>
+        <h1>Marketplace</h1>
       </StyledLogo>
     </Link>
   );
