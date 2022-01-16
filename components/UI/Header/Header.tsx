@@ -8,29 +8,18 @@ const StyledHeader = styled.header`
   width: 100%;
   height: 80px;
   background: #ffffff;
-  box-shadow: 0px 4px 12px rgba(116, 116, 116, 0.15);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 2%;
+  justify-content: space-between;
+  padding: 0 3%;
 `;
 
 const Header = () => {
   return (
-    <Container fluid style={{ padding: 0, width: "100%" }}>
-      <StyledHeader>
-        <Row>
-          <Col>
-            <Logo source="/assets/img/logo.png" />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <LoginButton />
-          </Col>
-        </Row>
-      </StyledHeader>
-    </Container>
+    <StyledHeader>
+      <Logo source="/assets/img/logo.png" />
+      <LoginButton />
+    </StyledHeader>
   );
 };
 
