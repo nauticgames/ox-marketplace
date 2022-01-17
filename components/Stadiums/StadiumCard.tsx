@@ -36,8 +36,7 @@ const StyledStadiumCard = styled.div`
   }
 
   .image {
-    width: 100%;
-    height: fit-content;
+    width: 80%;
     margin: 50px auto 20px auto;
     position: relative;
   }
@@ -66,21 +65,9 @@ const StyledStadiumCard = styled.div`
   }
 `;
 
-interface StadiumCardProps {
-  img: string;
-  name: string;
-  price: number;
-  usd?: number;
-  nameBackground: string;
-}
+const StadiumCard = ({ stadium }) => {
+  const { img, name, price, nameBackground } = stadium;
 
-const StadiumCard = ({
-  img,
-  name,
-  price,
-  usd,
-  nameBackground,
-}: StadiumCardProps) => {
   return (
     <StyledStadiumCard nameBackground={nameBackground}>
       <div className="name">
@@ -88,18 +75,18 @@ const StadiumCard = ({
       </div>
       <div className="image">
         <Image
-          loading="lazy"
           src={img}
           alt={name}
           width={200}
           height={200}
           layout="responsive"
           objectFit="contain"
+          priority
         />
       </div>
       <p>
         <Icon icon="simple-icons:binance" color="#f3ba2f" />
-        {price} <span>${usd}</span>
+        {price} <span>$245.06</span>
       </p>
     </StyledStadiumCard>
   );

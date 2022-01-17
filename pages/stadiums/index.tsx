@@ -1,8 +1,8 @@
-import AsidePanel from "../components/AsidePanel/AsidePanel";
-import SEO from "../components/SEO";
-import Header from "../components/UI/Header/Header";
-import Main from "../components/Layout/Main";
-import StadiumList from "../components/Stadiums/StadiumList";
+import AsidePanel from "../../components/AsidePanel/AsidePanel";
+import SEO from "../../components/SEO";
+import Header from "../../components/UI/Header/Header";
+import Main from "../../components/Layout/Main";
+import StadiumList from "../../components/Stadiums/StadiumList";
 
 const stadiums = () => {
   return (

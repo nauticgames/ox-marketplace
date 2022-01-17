@@ -8,7 +8,7 @@ const StyledAsidePanel = styled.aside`
   width: 240px;
   background-color: #fff;
   height: 100vh;
-  padding: 20px 0;
+  padding: 100px 0 20px 0;
   transition: min-width 0.2s ease, width 0.2s ease;
 `;
 

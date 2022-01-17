@@ -15,14 +15,7 @@ const StadiumList = () => {
   return (
     <StyledContainer>
       {StadiumsPublicSaleData.map((stadium) => (
-        <StadiumCard
-          key={stadium.name}
-          img={stadium.img}
-          name={stadium.name}
-          price={stadium.price}
-          nameBackground={stadium.nameBackground}
-          usd={240.56}
-        />
+        <StadiumCard stadium={stadium} key={stadium.name} />
       ))}
     </StyledContainer>
   );

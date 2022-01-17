@@ -4,6 +4,7 @@ import useWindowSize from "../../hooks/useWindowsSize";
 
 const StyledMain = styled.main`
   margin-left: ${(props) => (props.isMobile ? "0" : "240px")};
+  padding-top: 80px;
 `;
 
 const Main = ({ children }) => {
