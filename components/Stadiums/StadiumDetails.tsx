@@ -33,15 +33,11 @@ const Title = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  width: 100%;
-  height: 250px;
-  display: flex;
-  justify-content: center;
   position: relative;
+  width: 100%;
 
   @media (min-width: 768px) {
     width: 55%;
-    height: 400px;
   }
 `;
 
@@ -145,33 +141,39 @@ const BuyButton = styled.button`
   }
 `;
 
-const StadiumDetails = ({ name, nameBackground }) => {
+const StadiumDetails = ({ stadiumDetails }) => {
+  const { nameBackground, name, fee, maxParticipants, price, img } =
+    stadiumDetails;
+
   return (
     <Container>
       <Title nameBackground={nameBackground}>
-        <h1>{name || "Chaos Stadium"}</h1>
+        <h1>{name}</h1>
       </Title>
       <ImageContainer>
         <Image
-          src="/assets/img/moon.png"
-          layout="fill"
+          src={img}
+          width={1470}
+          height={1366}
+          layout="responsive"
           objectFit="contain"
           quality={100}
+          onLoadingComplete={(imageDimension) => console.log(imageDimension)}
         />
       </ImageContainer>
       <DetailsContainer>
         <Price>
-          <p>1.4 WBNB</p>
+          <p>{price} WBNB</p>
         </Price>
         <Details>
           <div>
             <Icon icon="mdi:hand-coin" color="#CACACA" /> <p>Fee:</p>
-            <strong>29%</strong>
+            <strong>{fee}%</strong>
           </div>
           <div>
             <Icon icon="bi:people-fill" color="#CACACA" />{" "}
             <p>Max participants in C.T:</p>
-            <strong>45</strong>
+            <strong>{maxParticipants}</strong>
           </div>
         </Details>
         <BuyButton>

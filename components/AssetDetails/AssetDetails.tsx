@@ -18,7 +18,7 @@ const StyledAssetDetails = styled.main`
   }
 
   @media (min-width: 1200px) {
-    width: 900px;
+    width: 800px;
   }
 `;
 
