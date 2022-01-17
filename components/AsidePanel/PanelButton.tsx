@@ -27,7 +27,7 @@ const StyledPanelButton = styled.button`
 
   color: #535353;
   font-weight: ${(props) => (props.active ? 600 : 500)};
-  font-size: 0.8em;
+  font-size: 0.9em;
   opacity: ${(props) => (props.active ? 1 : 0.4)};
 
   img {

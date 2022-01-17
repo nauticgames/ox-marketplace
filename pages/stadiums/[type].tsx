@@ -1,9 +1,25 @@
+import { useRouter, withRouter } from "next/router";
+import { useEffect, useState } from "react";
 import AssetDetails from "../../components/AssetDetails/AssetDetails";
 import SEO from "../../components/SEO";
 import StadiumDetails from "../../components/Stadiums/StadiumDetails";
+import StadiumsPublicSaleData from "../../components/Stadiums/StadiumsPublicSaleData";
 import Header from "../../components/UI/Header/Header";
 
-const type = () => {
+const Type = () => {
+  const { query } = useRouter();
+
+  const [stadiumDetails, setStadiumDetails] = useState(null);
+
+  useEffect(() => {
+    if (query.type !== "undefined") {
+      const details = StadiumsPublicSaleData.find(
+        (stadium) => stadium.label === query.type
+      );
+      details && setStadiumDetails(details);
+    }
+  }, [query]);
+
   return (
     <>
       <style jsx global>{`
@@ -15,10 +31,10 @@ const type = () => {
       <SEO />
       <Header />
       <AssetDetails>
-        <StadiumDetails name="Chaos Stadium" nameBackground="#C96825" />
+        {stadiumDetails && <StadiumDetails stadiumDetails={stadiumDetails} />}
       </AssetDetails>
     </>
   );
 };
 
-export default type;
+export default withRouter(Type);

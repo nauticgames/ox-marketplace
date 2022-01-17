@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/router";
 
 const StyledStadiumCard = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const StyledStadiumCard = styled.div`
   }
 
   .image {
-    width: 80%;
+    width: 100%;
     margin: 50px auto 20px auto;
     position: relative;
   }
@@ -66,10 +67,17 @@ const StyledStadiumCard = styled.div`
 `;
 
 const StadiumCard = ({ stadium }) => {
-  const { img, name, price, nameBackground } = stadium;
+  const { img, name, price, nameBackground, path } = stadium;
+  const { replace } = useRouter();
+
+  const showDetails = () => {
+    replace({
+      pathname: `stadiums${path}`,
+    });
+  };
 
   return (
-    <StyledStadiumCard nameBackground={nameBackground}>
+    <StyledStadiumCard nameBackground={nameBackground} onClick={showDetails}>
       <div className="name">
         <h2>{name}</h2>
       </div>
@@ -77,10 +85,11 @@ const StadiumCard = ({ stadium }) => {
         <Image
           src={img}
           alt={name}
-          width={200}
-          height={200}
+          width={1366}
+          height={1207}
           layout="responsive"
           objectFit="contain"
+          quality={100}
           priority
         />
       </div>
