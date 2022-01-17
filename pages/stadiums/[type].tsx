@@ -1,13 +1,9 @@
-import { useRouter } from "next/router";
 import AssetDetails from "../../components/AssetDetails/AssetDetails";
 import SEO from "../../components/SEO";
 import StadiumDetails from "../../components/Stadiums/StadiumDetails";
 import Header from "../../components/UI/Header/Header";
 
 const type = () => {
-  const { query } = useRouter();
-
-  console.log(query);
   return (
     <>
       <style jsx global>{`
