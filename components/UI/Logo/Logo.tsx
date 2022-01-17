@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -7,6 +8,7 @@ interface LogoProps {
 }
 
 const StyledLogo = styled.a`
+  position: relative;
   width: 80px;
   height: 80px;
   display: flex;
@@ -17,13 +19,7 @@ const StyledLogo = styled.a`
     font-size: 0.9em;
     color: #c4c4c4;
     font-weight: 400;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    margin-right: 5px;
+    margin-left: 90px;
   }
 `;
 
@@ -31,7 +27,13 @@ const Logo = ({ source }: LogoProps) => {
   return (
     <Link href="/">
       <StyledLogo rel="noreferrer">
-        <img src={source} alt="Logo" />
+        <Image
+          src={source}
+          alt="Logo"
+          layout="fill"
+          objectFit="contain"
+          quality={100}
+        />
         <h1>Marketplace</h1>
       </StyledLogo>
     </Link>
