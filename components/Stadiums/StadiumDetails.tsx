@@ -19,16 +19,16 @@ const Title = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 45px;
+  height: 50px;
   background-color: ${(props) => props.nameBackground};
   display: flex;
   align-items: center;
-  padding-left: 5%;
+  padding-left: 30px;
 
   h1 {
     color: #fff;
     font-weight: 600;
-    font-size: 0.9em;
+    font-size: 1em;
   }
 `;
 
@@ -59,14 +59,18 @@ const Price = styled.div`
   margin-bottom: 30px;
   padding-bottom: 20px;
 
-  @media (min-width: 768px) {
-    margin-top: 0;
-  }
-
   p {
     font-size: 2em;
     color: #efbf15;
     font-weight: 600;
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+
+    p {
+      font-size: 2.4em;
+    }
   }
 `;
 
@@ -108,6 +112,23 @@ const Details = styled.div`
       color: #535353;
     }
   }
+
+  @media (min-width: 768px) {
+    div {
+      svg {
+        width: 35px;
+        height: 35px;
+      }
+
+      p {
+        font-size: 1.2em;
+      }
+
+      strong {
+        font-size: 1.6em;
+      }
+    }
+  }
 `;
 
 const BuyButton = styled.button`
@@ -141,9 +162,28 @@ const BuyButton = styled.button`
   }
 `;
 
+const UnAuthButton = styled.div`
+  min-width: 230px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  background-color: #ebebeb;
+  width: 230px;
+  height: 45px;
+  color: #868686;
+  border: 1px solid #cacaca;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img } =
     stadiumDetails;
+
+  const isAuth = false;
 
   return (
     <Container>
@@ -176,9 +216,13 @@ const StadiumDetails = ({ stadiumDetails }) => {
             <strong>{maxParticipants}</strong>
           </div>
         </Details>
-        <BuyButton>
-          Buy <Icon icon="icons8:buy" color="#fff" />
-        </BuyButton>
+        {isAuth ? (
+          <BuyButton>
+            Buy <Icon icon="icons8:buy" color="#fff" />
+          </BuyButton>
+        ) : (
+          <UnAuthButton>Sign in to buy!</UnAuthButton>
+        )}
       </DetailsContainer>
     </Container>
   );

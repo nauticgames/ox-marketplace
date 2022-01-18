@@ -32,7 +32,7 @@ const StyledStadiumCard = styled.div`
     h2 {
       font-weight: 600;
       color: #fff;
-      font-size: 0.7em;
+      font-size: 0.8em;
     }
   }
 
@@ -48,7 +48,7 @@ const StyledStadiumCard = styled.div`
     align-items: center;
     color: #5e5e5e;
     font-weight: 600;
-    font-size: 1.8em;
+    font-size: 2.5em;
     margin-top: 20px;
 
     span {
@@ -62,6 +62,12 @@ const StyledStadiumCard = styled.div`
       width: 40px;
       height: 40px;
       margin-right: 10px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    p {
+      font-size: 2em;
     }
   }
 `;
