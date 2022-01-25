@@ -3,7 +3,7 @@ const StadiumsPublicSaleData = [
     name: "Moon Stadium",
     label: "moon",
     path: "/moon",
-    price: 0.4,
+    price: 0.6,
     fee: 9,
     maxParticipants: 12,
     img: "/assets/img/moon.png",
@@ -11,7 +11,7 @@ const StadiumsPublicSaleData = [
   },
   {
     name: "Mars Stadium",
-    price: 0.9,
+    price: 1.2,
     label: "mars",
     path: "/mars",
     fee: 18,
@@ -21,7 +21,7 @@ const StadiumsPublicSaleData = [
   },
   {
     name: "Chaos Stadium",
-    price: 1.4,
+    price: 1.9,
     label: "chaos",
     path: "/chaos",
     fee: 29,

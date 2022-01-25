@@ -2,6 +2,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
+import { useTokenPrice } from "react-moralis";
 
 const StyledStadiumCard = styled.div`
   display: flex;
@@ -10,6 +11,8 @@ const StyledStadiumCard = styled.div`
   background: #ffffff;
   position: relative;
   border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  overflow: hidden;
   cursor: pointer;
 
   &:hover {
@@ -76,6 +79,11 @@ const StadiumCard = ({ stadium }) => {
   const { img, name, price, nameBackground, path } = stadium;
   const { replace } = useRouter();
 
+  const { data: formattedData } = useTokenPrice({
+    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    chain: "bsc",
+  });
+
   const showDetails = () => {
     replace({
       pathname: `stadiums${path}`,
@@ -96,12 +104,14 @@ const StadiumCard = ({ stadium }) => {
           layout="responsive"
           objectFit="contain"
           quality={100}
-          priority
         />
       </div>
       <p>
         <Icon icon="simple-icons:binance" color="#f3ba2f" />
-        {price} <span>$245.06</span>
+        {price}{" "}
+        <span>
+          ${formattedData ? (price * formattedData.usdPrice).toFixed(2) : "-"}
+        </span>
       </p>
     </StyledStadiumCard>
   );
