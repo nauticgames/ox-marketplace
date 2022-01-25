@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
+import { useChain, useMoralis } from "react-moralis";
+import { Moralis } from "moralis";
+import useWeb3 from "../../../../hooks/useWeb3";
 
 const StyledLoginButton = styled.button`
   display: flex;
@@ -31,10 +34,40 @@ const StyledLoginButton = styled.button`
 `;
 
 const LoginButton = () => {
+  const { isAuthenticated, authenticate, logout, user, chainId } = useMoralis();
+
+  const { switchNetwork } = useChain();
+
+  const auth = async () => {
+    await Moralis.Web3.enableWeb3()
+      .then(() => {
+        if (chainId !== "0x61") {
+          switchNetwork("0x61").then(() => {
+            authenticate({ chainId: 97 });
+          });
+        } else {
+          authenticate({ chainId: 97 });
+        }
+      })
+      .catch((err) => {
+        window.open("https://www.metamask.io/download", "_blank");
+      });
+  };
+
   return (
-    <StyledLoginButton>
-      Sign in <Icon icon="logos:metamask-icon" />
-    </StyledLoginButton>
+    <>
+      {isAuthenticated ? (
+        <>
+          <button onClick={logout}>Logout</button>
+          <span>Your user is: {user.get("ethAddress")}</span>
+          <p>{chainId && chainId}</p>
+        </>
+      ) : (
+        <StyledLoginButton onClick={auth}>
+          Sign in <Icon icon="logos:metamask-icon" />
+        </StyledLoginButton>
+      )}
+    </>
   );
 };
 

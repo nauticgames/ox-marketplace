@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import { useChain, useERC20Balances, useMoralis } from "react-moralis";
 
 const Container = styled.div`
   width: 100%;
@@ -183,7 +184,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img } =
     stadiumDetails;
 
-  const isAuth = false;
+  const { isAuthenticated } = useMoralis();
 
   return (
     <Container>
@@ -193,12 +194,12 @@ const StadiumDetails = ({ stadiumDetails }) => {
       <ImageContainer>
         <Image
           src={img}
+          alt={name}
           width={1470}
           height={1366}
           layout="responsive"
           objectFit="contain"
           quality={100}
-          onLoadingComplete={(imageDimension) => console.log(imageDimension)}
         />
       </ImageContainer>
       <DetailsContainer>
@@ -216,7 +217,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
             <strong>{maxParticipants}</strong>
           </div>
         </Details>
-        {isAuth ? (
+        {isAuthenticated ? (
           <BuyButton>
             Buy <Icon icon="icons8:buy" color="#fff" />
           </BuyButton>
