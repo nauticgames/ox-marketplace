@@ -76,7 +76,8 @@ const StyledStadiumCard = styled.div`
 `;
 
 const StadiumCard = ({ stadium }) => {
-  const { img, name, price, nameBackground, path } = stadium;
+  const { img, name, price, nameBackground, path, id, type } = stadium;
+
   const { replace } = useRouter();
 
   const { data: formattedData } = useTokenPrice({
@@ -86,19 +87,19 @@ const StadiumCard = ({ stadium }) => {
 
   const showDetails = () => {
     replace({
-      pathname: `stadiums${path}`,
+      pathname: `/stadiums${path}`,
     });
   };
 
   return (
     <StyledStadiumCard nameBackground={nameBackground} onClick={showDetails}>
       <div className="name">
-        <h2>{name}</h2>
+        <h2>{name || `#${id}`}</h2>
       </div>
       <div className="image">
         <Image
-          src={img}
-          alt={name}
+          src={img || `/assets/img/${type}.png`}
+          alt={name || id}
           width={1366}
           height={1207}
           layout="responsive"
@@ -106,13 +107,15 @@ const StadiumCard = ({ stadium }) => {
           quality={100}
         />
       </div>
-      <p>
-        <Icon icon="simple-icons:binance" color="#f3ba2f" />
-        {price}{" "}
-        <span>
-          ${formattedData ? (price * formattedData.usdPrice).toFixed(2) : "-"}
-        </span>
-      </p>
+      {price && (
+        <p>
+          <Icon icon="simple-icons:binance" color="#f3ba2f" />
+          {price}{" "}
+          <span>
+            ${formattedData ? (price * formattedData.usdPrice).toFixed(2) : "-"}
+          </span>
+        </p>
+      )}
     </StyledStadiumCard>
   );
 };

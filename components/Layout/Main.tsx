@@ -14,7 +14,7 @@ const Main = ({ children }) => {
 
   useEffect(() => {
     if (width) {
-      width < 800 ? setIsMobile(true) : setIsMobile(false);
+      width < 768 ? setIsMobile(true) : setIsMobile(false);
     }
   }, [width]);
 

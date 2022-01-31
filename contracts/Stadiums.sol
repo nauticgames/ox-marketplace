@@ -1,34 +1,117 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import '@openzeppelin/contracts/access/Ownable.sol';
-import '@openzeppelin/contracts/security/Pausable.sol';
-import '@openzeppelin/contracts/utils/Counters.sol';
-import '@openzeppelin/contracts/interfaces/IERC20.sol';
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract Stadiums is ERC721, Ownable, Pausable {
+contract OXStadium is ERC721, Ownable, Pausable, ERC721Enumerable, ReentrancyGuard {
     using Counters for Counters.Counter;
+    Counters.Counter private tokenId;
+    string private baseURI;
+    
+    IERC20 public tokenAddress;
 
-    constructor() ERC721("Stadiums", "STD") {}
+    uint256[3] public stadiumsQuantity = [7500,5000,2500];
+    uint256[3] public prices = [600000000000000000, 1200000000000000000, 1900000000000000000];
 
-    enum StadiumType {
-        Moon,
-        Mars,
-        Chaos
+    mapping (uint8 => uint256) public stadiumsLeft;
+
+    mapping(address => uint8) public addressPurchases;
+
+    mapping(uint256 => uint8) public getStadiumType;
+
+    uint8 private marketingStadiumsLeft = 30; 
+
+
+    constructor(IERC20 _tokenAddress, string memory _baseURI) ERC721("OX Soccer Stadium", "OXSTD"){
+        tokenAddress = _tokenAddress;
+        baseURI = _baseURI;
+
+        for(uint8 i = 0; i < 3; i++){
+            stadiumsLeft[i] = stadiumsQuantity[i];
+        }
     }
 
-    address public wBNBAddress = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;
-
-    function transferToMe(address _token, uint256 _amount) public {
-        IERC20(_token).transferFrom(msg.sender, address(this), _amount);
+    function _beforeTokenTransfer(address from, address to, uint256 _tokenId)
+        internal
+        whenNotPaused
+        override(ERC721, ERC721Enumerable)
+    {
+        super._beforeTokenTransfer(from, to, _tokenId);
     }
 
-    function withdrawEther() external payable onlyOwner {
+    // The following functions are overrides required by Solidity.
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
+
+    uint8 public maxPurchasesPerAddress = 8;
+
+    function setMaxPurchasesPerAddress(uint8 _amount) public onlyOwner{
+        maxPurchasesPerAddress = _amount;
+    }
+
+    function changeTokenAddress(IERC20 _newTokenAddress) public onlyOwner {
+        tokenAddress = _newTokenAddress;
+    }
+
+    function purchase(uint8 _type) public whenNotPaused nonReentrant {
+        require(stadiumsLeft[_type] > 0, "There are no such stadiums left of this type");
+        require(addressPurchases[msg.sender] < maxPurchasesPerAddress, "You reached the maximum number of allow purchases");
+        uint256 stadiumPrice = prices[_type];
+        require(tokenAddress.balanceOf(msg.sender) >= stadiumPrice, "You don't have enought money");
+        require(tokenAddress.transferFrom(msg.sender, address(this), stadiumPrice));
+        addressPurchases[msg.sender] += 1;
+        stadiumsLeft[_type] -= 1;
+        tokenId.increment();
+        getStadiumType[tokenId.current()] = _type;
+        _safeMint(msg.sender, tokenId.current());
+    }
+
+    function marketingMint(address _to, uint8 _type) public onlyOwner {
+        require(_to != address(0), "You can't mint to zero!");
+        require(stadiumsLeft[_type] > 0, "There are no such stadiums left of this type");
+        require(marketingStadiumsLeft > 0, "There are no marketing stadiums left");
+        marketingStadiumsLeft -= 1;
+        stadiumsLeft[_type] -= 1;
+        tokenId.increment();
+        _safeMint(_to, tokenId.current());
+    }
+
+    function withdrawEther() public payable onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }
 
-    function withdrawToken(IERC20 _token) external onlyOwner {
-    require(_token.transfer(msg.sender, _token.balanceOf(address(this))));
+    function withdrawErc20(IERC20 token) public onlyOwner {
+        require(token.transfer(msg.sender, token.balanceOf(address(this))), "Transfer failed");
+    }
+
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    function unpause() public onlyOwner {
+        _unpause();
+    }
+
+    function setBaseURI(string memory _baseURI) public onlyOwner {
+        baseURI = _baseURI;
+    }
+
+    function tokenURI(uint256 _tokenId) public view override returns(string memory) {
+        require(ownerOf(_tokenId) != address(0), "ERC721: owner query for nonexistent token");
+        return string(abi.encodePacked(baseURI, Strings.toString(_tokenId) , ".json"));
     }
 }

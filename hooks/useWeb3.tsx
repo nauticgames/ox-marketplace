@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
-import { useMoralis } from "react-moralis";
+import { Moralis } from "moralis";
 
 const useWeb3 = () => {
   const [enabled, setEnabled] = useState(false);
-  const { isWeb3Enabled, enableWeb3 } = useMoralis();
 
   useEffect(() => {
-    if (!isWeb3Enabled) {
-      enableWeb3(); // I'm not sure what is going on here
+    if (
+      typeof window !== "undefined" &&
+      typeof window.ethereum !== "undefined"
+    ) {
+      Moralis.Web3.enableWeb3();
       setEnabled(true);
+    } else {
+      alert("No tienes metamask");
     }
-  }, [isWeb3Enabled]);
+  }, []);
 
   return { enabled };
 };

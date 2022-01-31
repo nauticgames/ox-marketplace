@@ -12,9 +12,36 @@ export const MarketplaceItems = [
     src: "/assets/img/skins.svg",
   },
   {
+    name: "chests",
+    path: "/chests",
+    label: "Mystery Chests",
+    src: "/assets/img/mystery-chests.svg",
+  },
+  {
     name: "passes",
     path: "/passes",
     label: "Passes",
     src: "/assets/img/passes.svg",
+  },
+];
+
+export const AccountItems = [
+  {
+    name: "overview",
+    path: "/account/overview",
+    label: "Overview",
+    src: "/assets/img/overview.svg",
+  },
+  {
+    name: "inventory",
+    path: "/account/inventory",
+    label: "Inventory",
+    src: "/assets/img/inventory.svg",
+  },
+  {
+    name: "claim",
+    path: "/account/claim",
+    label: "Claim Rewards",
+    src: "/assets/img/claim.svg",
   },
 ];

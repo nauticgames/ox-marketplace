@@ -30,10 +30,11 @@ const StyledPanelButton = styled.button`
   font-size: 0.9em;
   opacity: ${(props) => (props.active ? 1 : 0.4)};
 
-  img {
-    margin-left: 10px;
-    width: 28px;
-    height: 28px;
+  img,
+  svg {
+    margin-left: 15px;
+    width: 24px;
+    height: 24px;
   }
 `;
 

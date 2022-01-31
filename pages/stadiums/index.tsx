@@ -15,7 +15,7 @@ const stadiums = () => {
 
       <SEO />
       <Header />
-      <AsidePanel />
+      <AsidePanel type="marketplace" />
       <Main>
         <StadiumList />
       </Main>

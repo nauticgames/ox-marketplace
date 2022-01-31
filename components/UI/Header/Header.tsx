@@ -2,6 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import LoginButton from "../Buttons/LoginButton/LoginButton";
 import Logo from "../Logo/Logo";
+import { useMoralis } from "react-moralis";
+import AccountButton from "../Buttons/AccountButton/AccountButton";
+import ExchangeButton from "../Buttons/ExchangeButton/ExchangeButton";
+import LunyBalances from "../LunyBalances/LunyBalances";
+import LogoutButton from "../Buttons/LogoutButton/LogoutButton";
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -17,10 +22,23 @@ const StyledHeader = styled.header`
 `;
 
 const Header = () => {
+  const { isAuthenticated } = useMoralis();
+
   return (
     <StyledHeader>
       <Logo source="/assets/img/logo.png" />
-      <LoginButton />
+      {isAuthenticated ? (
+        <>
+          <div style={{ display: "flex" }}>
+            <LunyBalances />
+            <ExchangeButton />
+            <AccountButton />
+            <LogoutButton />
+          </div>
+        </>
+      ) : (
+        <LoginButton />
+      )}
     </StyledHeader>
   );
 };
