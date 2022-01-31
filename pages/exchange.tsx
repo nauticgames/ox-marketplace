@@ -1,9 +1,8 @@
-import Main from "../components/Layout/Main";
 import SEO from "../components/SEO";
 import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
 import Header from "../components/UI/Header/Header";
 
-const exchange = () => {
+const Exchange = () => {
   return (
     <>
       <style jsx global>{`
@@ -21,4 +20,4 @@ const exchange = () => {
   );
 };
 
-export default exchange;
+export default Exchange;

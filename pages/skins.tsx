@@ -4,7 +4,7 @@ import Header from "../components/UI/Header/Header";
 import Main from "../components/Layout/Main";
 import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
 
-const skins = () => {
+const Skins = () => {
   return (
     <>
       <style jsx global>{`
@@ -23,4 +23,4 @@ const skins = () => {
   );
 };
 
-export default skins;
+export default Skins;

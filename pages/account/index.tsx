@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useMoralis } from "react-moralis";
 import AsidePanel from "../../components/AsidePanel/AsidePanel";
 import SEO from "../../components/SEO";
 import Header from "../../components/UI/Header/Header";
 
-const index = () => {
+const Index = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
   const router = useRouter();
 
@@ -34,4 +34,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

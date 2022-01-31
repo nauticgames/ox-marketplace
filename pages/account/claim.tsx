@@ -7,7 +7,7 @@ import SEO from "../../components/SEO";
 import ComingSoon from "../../components/UI/ComingSoon/ComingSoon";
 import Header from "../../components/UI/Header/Header";
 
-const claim = () => {
+const Claim = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
   const router = useRouter();
 
@@ -36,4 +36,4 @@ const claim = () => {
   );
 };
 
-export default claim;
+export default Claim;

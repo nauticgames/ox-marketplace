@@ -7,7 +7,7 @@ import Main from "../../../components/Layout/Main";
 import SEO from "../../../components/SEO";
 import Header from "../../../components/UI/Header/Header";
 
-const stadiums = () => {
+const Stadiums = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
   const router = useRouter();
 
@@ -36,4 +36,4 @@ const stadiums = () => {
   );
 };
 
-export default stadiums;
+export default Stadiums;

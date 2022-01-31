@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { Container, Grid, GridColumn } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import AsidePanel from "../../components/AsidePanel/AsidePanel";
 import Main from "../../components/Layout/Main";
 import SEO from "../../components/SEO";
@@ -17,7 +17,7 @@ const StyledContainer = styled.div`
   height: 100%;
 `;
 
-const overview = () => {
+const Overview = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
   const router = useRouter();
 
@@ -58,4 +58,4 @@ const overview = () => {
   );
 };
 
-export default overview;
+export default Overview;
