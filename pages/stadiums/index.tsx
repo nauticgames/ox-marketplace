@@ -4,7 +4,7 @@ import Header from "../../components/UI/Header/Header";
 import Main from "../../components/Layout/Main";
 import StadiumList from "../../components/Stadiums/StadiumList";
 
-const stadiums = () => {
+const index = () => {
   return (
     <>
       <style jsx global>{`
@@ -23,4 +23,4 @@ const stadiums = () => {
   );
 };
 
-export default stadiums;
+export default index;
