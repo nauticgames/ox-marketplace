@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 
-const index = () => {
+const Index = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
   const router = useRouter();
 
@@ -19,4 +19,4 @@ const index = () => {
   return null;
 };
 
-export default index;
+export default Index;
