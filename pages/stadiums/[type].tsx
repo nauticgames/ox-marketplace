@@ -2,7 +2,7 @@ import { useRouter, withRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AssetDetails from "../../components/AssetDetails/AssetDetails";
 import SEO from "../../components/SEO";
-import StadiumDetails from "../../components/Stadiums/StadiumDetails";
+import StadiumsPublicSaleDetails from "../../components/Stadiums/StadiumPublicSaleDetails";
 import StadiumsPublicSaleData from "../../components/Stadiums/StadiumsPublicSaleData";
 import Header from "../../components/UI/Header/Header";
 
@@ -31,7 +31,9 @@ const Type = () => {
       <SEO />
       <Header />
       <AssetDetails>
-        {stadiumDetails && <StadiumDetails stadiumDetails={stadiumDetails} />}
+        {stadiumDetails && (
+          <StadiumsPublicSaleDetails stadiumDetails={stadiumDetails} />
+        )}
       </AssetDetails>
     </>
   );

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Marketplace from "./Menus/Marketplace/Marketplace";
 import useWindowSize from "../../hooks/useWindowsSize";
+import Account from "./Menus/Account/Account";
 
 const StyledAsidePanel = styled.aside`
   position: fixed;
@@ -12,20 +13,43 @@ const StyledAsidePanel = styled.aside`
   transition: min-width 0.2s ease, width 0.2s ease;
 `;
 
-const AsidePanel = () => {
+interface AsidePanelProps {
+  type: string;
+}
+
+const AsidePanel = ({ type }: AsidePanelProps) => {
   const { width } = useWindowSize();
 
-  return (
-    <>
-      {width && width < 800 ? (
-        <h1>Mobile</h1>
-      ) : (
-        <StyledAsidePanel>
-          <Marketplace />
-        </StyledAsidePanel>
-      )}
-    </>
-  );
+  const isMobile = width < 768;
+
+  if (isMobile) {
+    return (
+      <>
+        <h1>Mobile mode</h1>
+      </>
+    );
+  } else {
+    switch (type) {
+      case "marketplace":
+        return (
+          <StyledAsidePanel>
+            <Marketplace />
+          </StyledAsidePanel>
+        );
+      case "account":
+        return (
+          <StyledAsidePanel>
+            <Account />
+          </StyledAsidePanel>
+        );
+      default:
+        return (
+          <StyledAsidePanel>
+            <Marketplace />
+          </StyledAsidePanel>
+        );
+    }
+  }
 };
 
 export default AsidePanel;

@@ -15,7 +15,7 @@ const passes = () => {
 
       <SEO />
       <Header />
-      <AsidePanel />
+      <AsidePanel type="marketplace" />
       <Main>
         <ComingSoon width={400} height={400} />
       </Main>

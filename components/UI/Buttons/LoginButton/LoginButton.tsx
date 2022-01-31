@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { useChain, useMoralis } from "react-moralis";
-import { Moralis } from "moralis";
-import useWeb3 from "../../../../hooks/useWeb3";
+import { Web3Enabled } from "../../../../context/Web3EnabledContext";
 
 const StyledLoginButton = styled.button`
   display: flex;
@@ -34,40 +33,34 @@ const StyledLoginButton = styled.button`
 `;
 
 const LoginButton = () => {
-  const { isAuthenticated, authenticate, logout, user, chainId } = useMoralis();
+  const { authenticate, chainId } = useMoralis();
 
   const { switchNetwork } = useChain();
 
+  const web3isEnabled = useContext(Web3Enabled);
+
   const auth = async () => {
-    await Moralis.Web3.enableWeb3()
-      .then(() => {
-        if (chainId !== "0x61") {
-          switchNetwork("0x61").then(() => {
-            authenticate({ chainId: 97 });
+    if (web3isEnabled) {
+      if (chainId !== "0x38") {
+        switchNetwork("0x38").then(() => {
+          authenticate({
+            chainId: 56,
+            signingMessage: "Welcome to OX Soccer Marketplace",
           });
-        } else {
-          authenticate({ chainId: 97 });
-        }
-      })
-      .catch((err) => {
-        window.open("https://www.metamask.io/download", "_blank");
-      });
+        });
+      } else {
+        authenticate({
+          chainId: 56,
+          signingMessage: "Welcome to OX Soccer Marketplace",
+        });
+      }
+    }
   };
 
   return (
-    <>
-      {isAuthenticated ? (
-        <>
-          <button onClick={logout}>Logout</button>
-          <span>Your user is: {user.get("ethAddress")}</span>
-          <p>{chainId && chainId}</p>
-        </>
-      ) : (
-        <StyledLoginButton onClick={auth}>
-          Sign in <Icon icon="logos:metamask-icon" />
-        </StyledLoginButton>
-      )}
-    </>
+    <StyledLoginButton onClick={auth}>
+      Sign in <Icon icon="logos:metamask-icon" />
+    </StyledLoginButton>
   );
 };
 

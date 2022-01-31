@@ -20,7 +20,9 @@
     "**/*.ts",
     "**/*.tsx",
     "redux/store.js",
-    "redux/store.js"
+    "redux/store.js",
+    "context/Web3EnabledContext.js",
+    "hooks/useWeb3.js"
   ],
   "exclude": ["node_modules"]
 }

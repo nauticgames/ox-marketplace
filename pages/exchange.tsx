@@ -1,10 +1,9 @@
-import AsidePanel from "../components/AsidePanel/AsidePanel";
-import SEO from "../components/SEO";
-import Header from "../components/UI/Header/Header";
 import Main from "../components/Layout/Main";
+import SEO from "../components/SEO";
 import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
+import Header from "../components/UI/Header/Header";
 
-const skins = () => {
+const exchange = () => {
   return (
     <>
       <style jsx global>{`
@@ -15,12 +14,11 @@ const skins = () => {
 
       <SEO />
       <Header />
-      <AsidePanel type="marketplace" />
-      <Main>
+      <main style={{ marginTop: 80 }}>
         <ComingSoon width={400} height={400} />
-      </Main>
+      </main>
     </>
   );
 };
 
-export default skins;
+export default exchange;
