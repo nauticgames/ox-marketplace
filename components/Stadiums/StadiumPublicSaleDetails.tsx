@@ -3,7 +3,7 @@ import { Moralis } from "moralis";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import approveABI from "../../abis/approveAllowance";
 import purchaseStadiumABI from "../../abis/purchaseStadiumABI";
@@ -168,6 +168,8 @@ const StadiumDetails = ({ stadiumDetails }) => {
 
   const { isAuthenticated, account } = useMoralis();
 
+  const [allowance, setAllowance] = useState(null);
+
   const web3Api = useMoralisWeb3Api();
 
   const stadiumContract = process.env.NEXT_PUBLIC_DEVELOPMENT_STADIUM_CONTRACT;
@@ -178,6 +180,10 @@ const StadiumDetails = ({ stadiumDetails }) => {
     address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     chain: "bsc",
   });
+
+  useEffect(() => {
+    setAllowance(null);
+  }, [account]);
 
   const getAllowance = async () => {
     const result = await web3Api.token.getTokenAllowance({
@@ -195,7 +201,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
       functionName: "approve",
       contractAddress: "0xDd946a5C1dA0C727D4b748270aE1b59aa5f8c8A8",
       chain: "0x4",
-      abi: approveABI,
+      abi: [approveABI],
       params: {
         spender: stadiumContract,
         amount: Moralis.Units.ETH(30),
@@ -211,59 +217,69 @@ const StadiumDetails = ({ stadiumDetails }) => {
 
       setFetching(false);
     } catch {
-      return;
+      return null;
     }
   };
 
-  const purchaseStadium = async () => {
+  const verifyUserAllowance = () => {
     getAllowance()
       .then((res) => {
-        const allowance = Number(Moralis.Units.FromWei(res.allowance));
+        const formatAllowance = Number(Moralis.Units.FromWei(res.allowance));
 
-        if (allowance < price) {
-          approveAllowance()
-            .then(() => {
-              purchase();
-            })
-            .catch(() => {
-              return;
-            });
-        } else {
-          purchase();
-        }
+        setAllowance(formatAllowance);
+
+        formatAllowance < price
+          ? approveAllowance()
+              .then(() => {
+                runPurchaseTransaction();
+              })
+              .catch(() => {
+                return null;
+              })
+          : runPurchaseTransaction();
       })
       .catch(() => {
-        return;
+        return null;
       });
+  };
 
-    const purchase = async () => {
-      const options = {
-        functionName: "purchase",
-        contractAddress: stadiumContract,
-        chain: "0x4",
-        abi: purchaseStadiumABI,
-        params: {
-          _type: type,
-        },
-      };
+  const purchase = async () => {
+    if (allowance === null || allowance < price) {
+      verifyUserAllowance();
+    }
 
-      try {
-        const tx: any = await Moralis.executeFunction(options);
+    if (allowance >= price) {
+      runPurchaseTransaction();
+    }
+  };
 
-        setFetching(true);
-
-        await tx.wait();
-
-        setFetching(false);
-
-        toast.success("Stadium purchased succesfull");
-      } catch ({ error }) {
-        error &&
-          toast.error(
-            `Error: ${error.message.replace("execution reverted: ", "")}`
-          );
-      }
+  const runPurchaseTransaction = async () => {
+    const options = {
+      functionName: "purchase",
+      contractAddress: stadiumContract,
+      chain: "0x4",
+      abi: [purchaseStadiumABI],
+      params: {
+        _type: type,
+      },
     };
+
+    try {
+      const tx: any = await Moralis.executeFunction(options);
+
+      setFetching(true);
+
+      await tx.wait();
+
+      setFetching(false);
+
+      toast.success("Stadium purchased succesfull");
+    } catch ({ error }) {
+      error &&
+        toast.error(
+          `Error: ${error.message.replace("execution reverted: ", "")}`
+        );
+    }
   };
 
   return (
@@ -303,7 +319,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
           </Details>
           {isAuthenticated ? (
             <>
-              <BuyButton disabled={fetching} onClick={purchaseStadium}>
+              <BuyButton disabled={fetching} onClick={purchase}>
                 {fetching ? (
                   <>
                     <Loader active inline size="small" />
