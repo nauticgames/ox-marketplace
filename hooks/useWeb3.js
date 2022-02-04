@@ -9,14 +9,14 @@ const useWeb3 = () => {
       typeof window !== "undefined" &&
       typeof window.ethereum !== "undefined"
     ) {
-      Moralis.Web3.enableWeb3();
+      Moralis.enableWeb3();
       setEnabled(true);
     } else {
       alert("No tienes metamask");
     }
   }, []);
 
-  return { enabled };
+  return enabled;
 };
 
 export default useWeb3;

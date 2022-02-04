@@ -2,6 +2,8 @@ import Image from "next/image";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
+import StadiumsPublicSaleData from "../Stadiums/StadiumsPublicSaleData";
+import { useEffect, useState } from "react";
 
 const StyledStadiumCard = styled.div`
   display: flex;
@@ -25,13 +27,16 @@ const StyledStadiumCard = styled.div`
     left: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-width: 150px;
+    width: 90px;
     height: 35px;
+    padding-left: 20px;
     border-radius: 0px 0px 5px 0px;
     background: ${(props) => props.nameBackground};
 
     h2 {
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
       font-weight: 600;
       color: #fff;
       font-size: 0.8em;
@@ -50,7 +55,7 @@ const StyledStadiumCard = styled.div`
     align-items: center;
     color: #5e5e5e;
     font-weight: 600;
-    font-size: 2.5em;
+    font-size: 2em;
     margin-top: 20px;
 
     span {
@@ -69,44 +74,69 @@ const StyledStadiumCard = styled.div`
 
   @media (min-width: 768px) {
     p {
-      font-size: 2em;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
     }
   }
 `;
 
-const StadiumCard = ({ stadium, usdPrice }) => {
-  const { name, path, img, price, nameBackground } = stadium;
+const StadiumCard = ({ stadium, price, usdPrice }) => {
+  const { metadata } = stadium;
 
   const router = useRouter();
 
+  const { name, itemId, image } = JSON.parse(metadata);
+
+  const query = name.replace(`Stadium #${itemId}`, "");
+
+  const filterStadium = StadiumsPublicSaleData.find((item) =>
+    item.name.includes(query)
+  );
+
+  const [formattedPrice, setFormattedPrice] = useState(null);
+
+  useEffect(() => {
+    if (price) {
+      setFormattedPrice(numberWithCommas((usdPrice * price).toFixed(2)));
+    }
+  }, []);
+
+  const numberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const nameBackground = filterStadium.nameBackground;
+
   const showDetails = () => {
     router.push({
-      pathname: `/stadiums/sale${path}`,
+      pathname: `/stadiums/${itemId}`,
     });
   };
 
   return (
     <StyledStadiumCard nameBackground={nameBackground} onClick={showDetails}>
       <div className="name">
-        <h2>{name}</h2>
+        <h2>#{itemId}</h2>
       </div>
       <div className="image">
         <Image
-          src={img}
-          alt={name}
+          src={image}
+          alt={itemId}
           width={1366}
           height={1207}
           layout="responsive"
           objectFit="contain"
-          quality={100}
           priority
         />
       </div>
-      <p>
-        <Icon icon="simple-icons:binance" color="#f3ba2f" />
-        {price}
-        <span>${usdPrice ? usdPrice : "-"}</span>
-      </p>
+      {price && (
+        <p>
+          <Icon icon="icomoon-free:price-tag" color="#c2c2c2" />
+          {price} <span>${formattedPrice && formattedPrice}</span>
+        </p>
+      )}
     </StyledStadiumCard>
   );
 };

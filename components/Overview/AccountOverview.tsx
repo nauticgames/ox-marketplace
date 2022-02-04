@@ -82,11 +82,15 @@ const AccountOverview = () => {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (copied) {
-      setTimeout(() => {
-        setCopied(false);
-      }, 3000);
-    }
+    const unsubscribe = () => {
+      if (copied) {
+        setTimeout(() => {
+          setCopied(false);
+        }, 3000);
+      }
+    };
+
+    return unsubscribe();
   }, [copied]);
 
   return (

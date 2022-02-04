@@ -1,22 +1,16 @@
+import { useMoralis, useMoralisWeb3Api, useTokenPrice } from "react-moralis";
+import { Moralis } from "moralis";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import { useMoralis } from "react-moralis";
-import S3 from "react-aws-s3";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import useOptions from "../../hooks/useOptions";
+import approveABI from "../../abis/approveAllowance";
+import purchaseStadiumABI from "../../abis/purchaseStadiumABI";
+import { Container, Grid, Loader } from "semantic-ui-react";
 
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-`;
-
-const Title = styled.div`
+export const Title = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -34,28 +28,10 @@ const Title = styled.div`
   }
 `;
 
-const ImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-
-  @media (min-width: 768px) {
-    width: 55%;
-  }
-`;
-
-const DetailsContainer = styled.div`
-  width: 100%;
-
-  @media (min-width: 768px) {
-    width: 45%;
-  }
-`;
-
-const Price = styled.div`
+export const Price = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   margin-top: 40px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
@@ -67,6 +43,13 @@ const Price = styled.div`
     font-weight: 600;
   }
 
+  span {
+    font-size: 1.3em;
+    font-weight: 500;
+    color: #cacaca;
+    margin-left: 10px;
+  }
+
   @media (min-width: 768px) {
     margin-top: 0;
 
@@ -76,7 +59,7 @@ const Price = styled.div`
   }
 `;
 
-const Details = styled.div`
+export const Details = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -89,7 +72,6 @@ const Details = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     margin-bottom: 10px;
 
     &:last-of-type {
@@ -137,11 +119,11 @@ const BuyButton = styled.button`
   min-width: 230px;
   margin: 0 auto;
   margin-bottom: 30px;
-  width: 230px;
+  width: 100%;
   height: 45px;
   background-color: #62d250;
   box-shadow: 4px 4px 12px rgba(83, 83, 83, 0.15);
-  border-radius: 10px;
+  border-radius: 5px;
   color: #fff;
   font-weight: 600;
   font-size: 1.3em;
@@ -164,13 +146,12 @@ const BuyButton = styled.button`
   }
 `;
 
-const UnAuthButton = styled.div`
-  min-width: 230px;
+const DisabledButton = styled.div`
+  width: 100%;
+  height: 45px;
   margin: 0 auto;
   margin-bottom: 30px;
   background-color: #ebebeb;
-  width: 230px;
-  height: 45px;
   color: #868686;
   border: 1px solid #cacaca;
   border-radius: 5px;
@@ -179,86 +160,167 @@ const UnAuthButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 `;
 
 const StadiumDetails = ({ stadiumDetails }) => {
-  const { nameBackground, name, fee, maxParticipants, price, img } =
+  const { nameBackground, name, fee, maxParticipants, price, img, type } =
     stadiumDetails;
 
-  const { isAuthenticated } = useMoralis();
+  const { isAuthenticated, account } = useMoralis();
 
-  const config = {
-    bucketName: "oxstadiums",
-    region: "us-east-1",
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  const web3Api = useMoralisWeb3Api();
+
+  const stadiumContract = process.env.NEXT_PUBLIC_DEVELOPMENT_STADIUM_CONTRACT;
+
+  const [fetching, setFetching] = useState(false);
+
+  const { data: formattedData } = useTokenPrice({
+    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    chain: "bsc",
+  });
+
+  const getAllowance = async () => {
+    const result = await web3Api.token.getTokenAllowance({
+      chain: "0x4",
+      address: "0xDd946a5C1dA0C727D4b748270aE1b59aa5f8c8A8",
+      owner_address: account,
+      spender_address: stadiumContract,
+    });
+
+    return result;
   };
 
-  const ReactS3Client = new S3(config);
+  const approveAllowance = async () => {
+    const options = useOptions({
+      functionName: "approve",
+      contractAddress: "0xDd946a5C1dA0C727D4b748270aE1b59aa5f8c8A8",
+      chain: "0x4",
+      abi: approveABI,
+      params: {
+        spender: stadiumContract,
+        amount: Moralis.Units.ETH(30),
+      },
+    });
 
-  const uploadMetadata = () => {
-    const id = prompt("Ingresa id");
+    try {
+      const tx: any = await Moralis.executeFunction(options);
 
-    const file = {
-      itemId: id,
-      name: `Chaos Stadium #${id}`,
-      description: "OX Soccer Stadiums",
-      external_url: "https://marketplace.oxsoccer.com/",
-      image: "https://marketplace.oxsoccer.com/assets/img/chaos.png",
-      attributes: [
-        {
-          trait_type: "Stadium Type",
-          value: "Chaos",
+      setFetching(true);
+
+      await tx.wait();
+
+      setFetching(false);
+    } catch {
+      return;
+    }
+  };
+
+  const purchaseStadium = async () => {
+    getAllowance()
+      .then((res) => {
+        const allowance = Number(Moralis.Units.FromWei(res.allowance));
+
+        if (allowance < price) {
+          approveAllowance()
+            .then(() => {
+              purchase();
+            })
+            .catch(() => {
+              return;
+            });
+        } else {
+          purchase();
+        }
+      })
+      .catch(() => {
+        return;
+      });
+
+    const purchase = async () => {
+      const options = useOptions({
+        functionName: "purchase",
+        contractAddress: stadiumContract,
+        chain: "0x4",
+        abi: purchaseStadiumABI,
+        params: {
+          _type: type,
         },
-      ],
+      });
+
+      try {
+        const tx: any = await Moralis.executeFunction(options);
+
+        setFetching(true);
+
+        await tx.wait();
+
+        setFetching(false);
+
+        toast.success("Stadium purchased succesfull");
+      } catch ({ error }) {
+        error &&
+          toast.error(
+            `Error: ${error.message.replace("execution reverted: ", "")}`
+          );
+      }
     };
-
-    const fileName = `${id}.json`;
-
-    ReactS3Client.uploadFile(file, fileName)
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err));
   };
 
   return (
-    <Container>
+    <Container fluid>
       <Title nameBackground={nameBackground}>
         <h1>{name}</h1>
       </Title>
-      <ImageContainer>
-        <Image
-          src={img}
-          alt={name}
-          width={1470}
-          height={1366}
-          layout="responsive"
-          objectFit="contain"
-          quality={100}
-        />
-      </ImageContainer>
-      <DetailsContainer>
-        <Price>
-          <p>{price} WBNB</p>
-        </Price>
-        <Details>
-          <div>
-            <Icon icon="mdi:hand-coin" color="#CACACA" /> <p>Fee:</p>
-            <strong>{fee}%</strong>
-          </div>
-          <div>
-            <Icon icon="bi:people-fill" color="#CACACA" />{" "}
-            <p>Max participants in C.T:</p>
-            <strong>{maxParticipants}</strong>
-          </div>
-        </Details>
-        {isAuthenticated ? (
-          <BuyButton onClick={uploadMetadata}>
-            Buy <Icon icon="icons8:buy" color="#fff" />
-          </BuyButton>
-        ) : (
-          <UnAuthButton>Sign in to buy!</UnAuthButton>
-        )}
-      </DetailsContainer>
+      <Grid>
+        <Grid.Column computer={9} tablet={8} mobile={16}>
+          <Image
+            src={img}
+            alt={name}
+            width={1470}
+            height={1366}
+            layout="responsive"
+            objectFit="contain"
+            quality={100}
+          />
+        </Grid.Column>
+        <Grid.Column computer={7} tablet={8} mobile={16}>
+          <Price>
+            <p>{price} WBNB</p>{" "}
+            <span>
+              ${formattedData && (formattedData.usdPrice * price).toFixed(2)}
+            </span>
+          </Price>
+          <Details>
+            <div>
+              <Icon icon="mdi:hand-coin" color="#CACACA" /> <p>Fee:</p>
+              <strong>{fee}%</strong>
+            </div>
+            <div>
+              <Icon icon="bi:people-fill" color="#CACACA" />{" "}
+              <p>Max participants in C.T:</p>
+              <strong>{maxParticipants}</strong>
+            </div>
+          </Details>
+          {isAuthenticated ? (
+            <>
+              <BuyButton disabled={fetching} onClick={purchaseStadium}>
+                {fetching ? (
+                  <>
+                    <Loader active inline size="small" />
+                  </>
+                ) : (
+                  <>
+                    Buy <Icon icon="icons8:buy" color="#fff" />
+                  </>
+                )}
+              </BuyButton>
+            </>
+          ) : (
+            <DisabledButton>Sign in to buy!</DisabledButton>
+          )}
+        </Grid.Column>
+      </Grid>
     </Container>
   );
 };

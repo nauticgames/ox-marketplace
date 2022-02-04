@@ -41,17 +41,17 @@ const LoginButton = () => {
 
   const auth = async () => {
     if (web3isEnabled) {
-      if (chainId !== "0x38") {
-        switchNetwork("0x38").then(() => {
+      if (chainId !== "0x4") {
+        switchNetwork("0x4").then(() => {
           authenticate({
             chainId: 56,
-            signingMessage: "Welcome to OX Soccer Marketplace",
+            signingMessage: "Authenticate",
           });
         });
       } else {
         authenticate({
           chainId: 56,
-          signingMessage: "Welcome to OX Soccer Marketplace",
+          signingMessage: "Authenticate",
         });
       }
     }

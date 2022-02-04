@@ -19,6 +19,7 @@ contract OXStadium is ERC721, Ownable, Pausable, ERC721Enumerable, ReentrancyGua
 
     uint256[3] public stadiumsQuantity = [7500,5000,2500];
     uint256[3] public prices = [600000000000000000, 1200000000000000000, 1900000000000000000];
+    string[3] public stadiumNames = ["Moon", "Mars", "Chaos"];
 
     mapping (uint8 => uint256) public stadiumsLeft;
 
@@ -26,8 +27,9 @@ contract OXStadium is ERC721, Ownable, Pausable, ERC721Enumerable, ReentrancyGua
 
     mapping(uint256 => uint8) public getStadiumType;
 
-    uint8 private marketingStadiumsLeft = 30; 
+    mapping(uint256 => string) public getStadiumNameById;
 
+    uint8 private marketingStadiumsLeft = 30;
 
     constructor(IERC20 _tokenAddress, string memory _baseURI) ERC721("OX Soccer Stadium", "OXSTD"){
         tokenAddress = _tokenAddress;
@@ -37,6 +39,8 @@ contract OXStadium is ERC721, Ownable, Pausable, ERC721Enumerable, ReentrancyGua
             stadiumsLeft[i] = stadiumsQuantity[i];
         }
     }
+
+    event NewPurchase(uint256 stadiumId, uint8 stadiumType);
 
     function _beforeTokenTransfer(address from, address to, uint256 _tokenId)
         internal
@@ -67,7 +71,7 @@ contract OXStadium is ERC721, Ownable, Pausable, ERC721Enumerable, ReentrancyGua
         tokenAddress = _newTokenAddress;
     }
 
-    function purchase(uint8 _type) public whenNotPaused nonReentrant {
+    function purchase(uint8 _type) public whenNotPaused nonReentrant returns(bool) {
         require(stadiumsLeft[_type] > 0, "There are no such stadiums left of this type");
         require(addressPurchases[msg.sender] < maxPurchasesPerAddress, "You reached the maximum number of allow purchases");
         uint256 stadiumPrice = prices[_type];
@@ -76,18 +80,34 @@ contract OXStadium is ERC721, Ownable, Pausable, ERC721Enumerable, ReentrancyGua
         addressPurchases[msg.sender] += 1;
         stadiumsLeft[_type] -= 1;
         tokenId.increment();
-        getStadiumType[tokenId.current()] = _type;
-        _safeMint(msg.sender, tokenId.current());
+
+        uint256 currentId = tokenId.current();
+
+        getStadiumType[currentId] = _type;
+        getStadiumNameById[currentId] = stadiumNames[_type];
+        _safeMint(msg.sender, currentId);
+
+        emit NewPurchase(currentId, _type);
+
+        return true;
     }
 
-    function marketingMint(address _to, uint8 _type) public onlyOwner {
+    function marketingMint(address _to, uint8 _type) public onlyOwner returns(bool) {
         require(_to != address(0), "You can't mint to zero!");
         require(stadiumsLeft[_type] > 0, "There are no such stadiums left of this type");
         require(marketingStadiumsLeft > 0, "There are no marketing stadiums left");
         marketingStadiumsLeft -= 1;
         stadiumsLeft[_type] -= 1;
         tokenId.increment();
-        _safeMint(_to, tokenId.current());
+
+        uint256 currentId = tokenId.current();
+
+        getStadiumType[currentId] = _type;
+        getStadiumNameById[currentId] = stadiumNames[_type];
+        _safeMint(_to, currentId);
+        emit NewPurchase(currentId, _type);
+
+        return true;
     }
 
     function withdrawEther() public payable onlyOwner {
@@ -108,6 +128,19 @@ contract OXStadium is ERC721, Ownable, Pausable, ERC721Enumerable, ReentrancyGua
 
     function setBaseURI(string memory _baseURI) public onlyOwner {
         baseURI = _baseURI;
+    }
+
+    function getTokensByOwner(address _owner) public view returns(uint256[] memory){
+        require(_owner != address(0), "You can't see zero address tokens");
+        require(balanceOf(_owner) > 0, "The address does not have tokens");
+
+        uint256[] memory tokens = new uint256[](balanceOf(_owner));
+
+        for(uint256 i = 0; i < balanceOf(_owner); i++){
+            tokens[i] = tokenOfOwnerByIndex(_owner, i);
+        }
+
+        return tokens;
     }
 
     function tokenURI(uint256 _tokenId) public view override returns(string memory) {
