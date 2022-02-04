@@ -5,7 +5,6 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import useOptions from "../../hooks/useOptions";
 import approveABI from "../../abis/approveAllowance";
 import purchaseStadiumABI from "../../abis/purchaseStadiumABI";
 import { Container, Grid, Loader } from "semantic-ui-react";
@@ -192,7 +191,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
   };
 
   const approveAllowance = async () => {
-    const options = useOptions({
+    const options = {
       functionName: "approve",
       contractAddress: "0xDd946a5C1dA0C727D4b748270aE1b59aa5f8c8A8",
       chain: "0x4",
@@ -201,7 +200,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
         spender: stadiumContract,
         amount: Moralis.Units.ETH(30),
       },
-    });
+    };
 
     try {
       const tx: any = await Moralis.executeFunction(options);
@@ -238,7 +237,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
       });
 
     const purchase = async () => {
-      const options = useOptions({
+      const options = {
         functionName: "purchase",
         contractAddress: stadiumContract,
         chain: "0x4",
@@ -246,7 +245,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
         params: {
           _type: type,
         },
-      });
+      };
 
       try {
         const tx: any = await Moralis.executeFunction(options);
