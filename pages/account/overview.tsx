@@ -25,7 +25,7 @@ const Overview = () => {
     if (isInitialized && !isAuthenticated) {
       router.push("/stadiums");
     }
-  }, [isInitialized]);
+  }, [isInitialized, isAuthenticated]);
 
   return (
     <>

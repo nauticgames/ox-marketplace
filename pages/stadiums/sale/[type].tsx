@@ -1,10 +1,10 @@
 import { useRouter, withRouter } from "next/router";
 import { useEffect, useState } from "react";
-import AssetDetails from "../../components/AssetDetails/AssetDetails";
-import SEO from "../../components/SEO";
-import StadiumsPublicSaleDetails from "../../components/Stadiums/StadiumPublicSaleDetails";
-import StadiumsPublicSaleData from "../../components/Stadiums/StadiumsPublicSaleData";
-import Header from "../../components/UI/Header/Header";
+import AssetDetails from "../../../components/AssetDetails/AssetDetails";
+import SEO from "../../../components/SEO";
+import StadiumsPublicSaleDetails from "../../../components/Stadiums/StadiumPublicSaleDetails";
+import StadiumsPublicSaleData from "../../../components/Stadiums/StadiumsPublicSaleData";
+import Header from "../../../components/UI/Header/Header";
 
 const Type = () => {
   const { query } = useRouter();

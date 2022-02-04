@@ -35,7 +35,6 @@ const LogoutButton = () => {
 
   const logoutFunction = () => {
     logout();
-    router.push({ pathname: "/stadiums" });
   };
 
   return (
