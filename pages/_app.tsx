@@ -7,6 +7,12 @@ import Web3EnabledWrapped from "../hoc/Web3EnabledWrapped";
 import { Toaster } from "react-hot-toast";
 import NextNprogress from "nextjs-progressbar";
 
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
