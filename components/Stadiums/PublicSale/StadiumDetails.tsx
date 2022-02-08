@@ -124,11 +124,12 @@ const StadiumDetails = ({ stadiumDetails }) => {
       setFetching(false);
 
       toast.success("Stadium purchased succesfull");
-    } catch ({ error }) {
-      error &&
-        toast.error(
-          `Error: ${error.message.replace("execution reverted: ", "")}`
-        );
+    } catch (error) {
+      error && error.data
+        ? toast.error(
+            `Error: ${error.data.message.replace("execution reverted: ", "")}`
+          )
+        : toast.error("An error has ocurred");
     }
   };
 
