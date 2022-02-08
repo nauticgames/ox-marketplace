@@ -1,20 +1,12 @@
 import AsidePanel from "../../components/AsidePanel/AsidePanel";
-import SEO from "../../components/SEO";
-import Header from "../../components/UI/Header/Header";
-import Main from "../../components/Layout/Main";
-import StadiumList from "../../components/Stadiums/StadiumList";
+import Main from "../../Layout/Main";
+import StadiumList from "../../components/Stadiums/PublicSale/StadiumList";
+import BasicLayout from "../../Layout/BasicLayout";
 
 const index = () => {
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: #f5f5f5;
-        }
-      `}</style>
-
-      <SEO />
-      <Header />
+      <BasicLayout />
       <AsidePanel type="marketplace" />
       <Main>
         <StadiumList />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import useWindowSize from "../../hooks/useWindowsSize";
+import useWindowSize from "../hooks/useWindowsSize";
 
 const StyledMain = styled.main`
   margin-left: ${(props) => (props.isMobile ? "0" : "240px")};

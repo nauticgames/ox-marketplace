@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import purchasesReducer from "./purchasesReducer";
+import stadiumsDetails from "./stadiumsDetails";
+import stadiumsReducer from "./stadiumsReducer";
 
 export default combineReducers({
-  purchases: purchasesReducer,
+  stadiums: stadiumsReducer,
+  stadiumsDetails: stadiumsDetails,
 });

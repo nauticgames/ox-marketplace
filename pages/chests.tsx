@@ -1,20 +1,12 @@
 import AsidePanel from "../components/AsidePanel/AsidePanel";
-import SEO from "../components/SEO";
-import Header from "../components/UI/Header/Header";
-import Main from "../components/Layout/Main";
+import Main from "../Layout/Main";
 import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
+import BasicLayout from "../Layout/BasicLayout";
 
 const Chests = () => {
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: #f5f5f5;
-        }
-      `}</style>
-
-      <SEO />
-      <Header />
+      <BasicLayout />
       <AsidePanel type="marketplace" />
       <Main>
         <ComingSoon width={400} height={400} />

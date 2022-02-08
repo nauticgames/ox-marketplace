@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { useMoralis } from "react-moralis";
 import LunyBalances from "../UI/LunyBalances/LunyBalances";
 import { Popup } from "semantic-ui-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const StyledAccountOverview = styled.div`
   background-color: #fff;
@@ -81,6 +81,20 @@ const AccountOverview = () => {
 
   const [copied, setCopied] = useState(false);
 
+  const linkRef = useRef(null);
+
+  const copyToClipboard = () => {
+    if (!copied) {
+      const el = document.createElement("textarea");
+      el.value = linkRef.current.value;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      setCopied(true);
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = () => {
       if (copied) {
@@ -103,6 +117,7 @@ const AccountOverview = () => {
         <Icon icon="bi:check-circle-fill" color="#2ccd45" />
       </div>
       <div className="account-number">
+        <input type="hidden" ref={linkRef} value={account || null} />
         <h2>Account: </h2>
         <p>{account} </p>
         <Popup
@@ -110,7 +125,7 @@ const AccountOverview = () => {
           content={copied ? "Copied" : "Copy to clipboard!"}
           position="top center"
           trigger={
-            <span onClick={() => setCopied(true)}>
+            <span onClick={copyToClipboard}>
               <Icon
                 icon="akar-icons:copy"
                 color={copied ? "#57db4b" : "#8f8f8f"}

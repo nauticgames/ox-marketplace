@@ -1,12 +1,5 @@
 import Image from "next/image";
-import styled from "styled-components";
-
-const StyledComingSoon = styled.div`
-  width: ${(props) => `${props.width}px`};
-  height: ${(props) => `${props.height}px`};
-  position: relative;
-  margin: auto;
-`;
+import { StyledComingSoon } from "./styles";
 
 const ComingSoon = ({ width, height }) => {
   return (

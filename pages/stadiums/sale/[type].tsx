@@ -1,10 +1,10 @@
 import { useRouter, withRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AssetDetails from "../../../components/AssetDetails/AssetDetails";
-import SEO from "../../../components/SEO";
-import StadiumsPublicSaleDetails from "../../../components/Stadiums/StadiumPublicSaleDetails";
-import StadiumsPublicSaleData from "../../../components/Stadiums/StadiumsPublicSaleData";
-import Header from "../../../components/UI/Header/Header";
+import StadiumsPublicSaleDetails from "../../../components/Stadiums/PublicSale/StadiumDetails";
+import StadiumsPublicSaleData from "../../../components/Stadiums/PublicSale/PublicSaleData";
+import BasicLayout from "../../../Layout/BasicLayout";
+import NavigationButtons from "../../../Layout/NavigationButtons";
 
 const Type = () => {
   const { query } = useRouter();
@@ -22,14 +22,8 @@ const Type = () => {
 
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: #f5f5f5;
-        }
-      `}</style>
-
-      <SEO />
-      <Header />
+      <BasicLayout />
+      <NavigationButtons mt={120} path="/stadiums" />
       <AssetDetails>
         {stadiumDetails && (
           <StadiumsPublicSaleDetails stadiumDetails={stadiumDetails} />

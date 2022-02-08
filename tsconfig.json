@@ -15,14 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "redux/store.js",
-    "redux/store.js",
-    "context/Web3EnabledContext.js",
-    "hooks/useWeb3.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "redux/store.js"],
   "exclude": ["node_modules"]
 }

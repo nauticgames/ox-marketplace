@@ -1,88 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Grid, Loader } from "semantic-ui-react";
-import { Moralis } from "moralis";
-import { useMoralis, useTokenPrice } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import StadiumCard from "./StadiumCard";
-import styled from "styled-components";
-import axios from "axios";
-
-const StyledContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  width: 100%;
-`;
-
-const EmptyAssetsTitle = styled.h2`
-  font-size: 1.8em;
-  text-align: center;
-  font-weight: 600;
-  color: rgb(170, 170, 170);
-`;
+import { StyledContainer, EmptyAssetsTitle } from "./styles";
+import useChains from "../../hooks/useChains";
+import { useDispatch, useSelector } from "react-redux";
+import getStadiumsAction from "../../redux/actions/stadiums";
+import useUsdPrice from "../../hooks/useUsdPrice";
 
 const Stadiums = () => {
   const { account } = useMoralis();
+  const { chain } = useChains();
+  const dispatch = useDispatch();
+  const { stadiums, error, fetching } = useSelector(
+    (state: any) => state.stadiums
+  );
 
-  const stadiumContract = process.env.NEXT_PUBLIC_DEVELOPMENT_STADIUM_CONTRACT;
-  const [stadiums, setStadiums] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [fetchStadiums, setFetchStadiums] = useState(false);
-
-  const { data: formattedData } = useTokenPrice({
-    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    chain: "bsc",
-  });
+  const { usdPrice } = useUsdPrice();
 
   useEffect(() => {
     const unsubscribe = () => {
-      setLoading(true);
-      setFetchStadiums(true);
+      dispatch(getStadiumsAction(account, chain, "asc"));
     };
 
-    if (account) {
+    if (account && chain) {
       return unsubscribe();
     }
-  }, [account]);
+  }, [account, chain]);
 
-  useEffect(() => {
-    const unsubscribe = () => {
-      if (fetchStadiums) {
-        getStadiums();
-      }
-    };
-
-    return unsubscribe();
-  }, [fetchStadiums]);
-
-  const getStadiums = async () => {
-    setFetchStadiums(false);
-
-    try {
-      const { result }: any = await Moralis.Web3API.account.getNFTs({
-        chain: "0x4",
-        address: account,
-        token_addresses: [stadiumContract],
-      });
-
-      let filteredNullMetadata = result.filter(
-        (asset) => asset.metadata !== null
-      );
-
-      filteredNullMetadata.sort(function (a, b) {
-        return parseInt(a.token_id) - parseInt(b.token_id);
-      });
-
-      setStadiums(filteredNullMetadata);
-      setLoading(false);
-    } catch (error) {
-      return null;
-    }
-  };
-
-  if (loading) {
+  if (fetching) {
     return <LoadingAssets />;
-  } else if (stadiums.length > 0) {
+  }
+  if (error) {
+    return <EmptyAssets title="An error has ocurred" />;
+  }
+  if (stadiums && !stadiums.length) {
+    return <EmptyAssets title="You don't have any assets in this category" />;
+  }
+  if (stadiums && stadiums.length > 0) {
     return (
       <>
         <Grid style={{ marginTop: 40, minHeight: 300 }}>
@@ -94,29 +49,21 @@ const Stadiums = () => {
               key={parseInt(stadium.tokenId) || index}
               stretched
             >
-              <StadiumCard
-                stadium={stadium}
-                price={stadium.price && stadium.price}
-                usdPrice={formattedData && formattedData.usdPrice}
-              />
+              <StadiumCard stadium={stadium} usdPrice={usdPrice} price={null} />
             </Grid.Column>
           ))}
         </Grid>
       </>
     );
-  } else {
-    return <EmptyAsset />;
   }
 };
 
 export default Stadiums;
 
-const EmptyAsset = () => {
+const EmptyAssets = ({ title }) => {
   return (
     <StyledContainer fluid>
-      <EmptyAssetsTitle>
-        You don't have any assets in this category
-      </EmptyAssetsTitle>
+      <EmptyAssetsTitle>{title}</EmptyAssetsTitle>
     </StyledContainer>
   );
 };

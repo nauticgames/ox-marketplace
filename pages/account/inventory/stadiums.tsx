@@ -3,13 +3,16 @@ import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import AsidePanel from "../../../components/AsidePanel/AsidePanel";
 import Inventory from "../../../components/Inventory/Inventory";
-import Main from "../../../components/Layout/Main";
-import SEO from "../../../components/SEO";
-import Header from "../../../components/UI/Header/Header";
+import Main from "../../../Layout/Main";
+import BasicLayout from "../../../Layout/BasicLayout";
+import NavigationButtons from "../../../Layout/NavigationButtons";
+import { useDispatch } from "react-redux";
+import { clearStadiumDetailsStateAction } from "../../../redux/actions/stadiumsDetails";
 
 const Stadiums = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isInitialized && !isAuthenticated) {
@@ -17,19 +20,17 @@ const Stadiums = () => {
     }
   }, [isInitialized, isAuthenticated]);
 
+  useEffect(() => {
+    dispatch(clearStadiumDetailsStateAction());
+  }, []);
+
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: #f5f5f5;
-        }
-      `}</style>
-
-      <SEO />
-      <Header />
+      <BasicLayout />
       <AsidePanel type="account" />
 
       <Main>
+        <NavigationButtons mt={40} path="/stadiums" />
         <Inventory />
       </Main>
     </>

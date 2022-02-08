@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import AsidePanel from "../../components/AsidePanel/AsidePanel";
-import Main from "../../components/Layout/Main";
-import SEO from "../../components/SEO";
+import Main from "../../Layout/Main";
 import ComingSoon from "../../components/UI/ComingSoon/ComingSoon";
-import Header from "../../components/UI/Header/Header";
+import BasicLayout from "../../Layout/BasicLayout";
+import NavigationButtons from "../../Layout/NavigationButtons";
 
 const Claim = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
@@ -19,17 +19,11 @@ const Claim = () => {
 
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: #f5f5f5;
-        }
-      `}</style>
-
-      <SEO />
-      <Header />
+      <BasicLayout />
       <AsidePanel type="account" />
 
       <Main>
+        <NavigationButtons mt={40} path="/stadiums" />
         <ComingSoon width={400} height={400} />
       </Main>
     </>
