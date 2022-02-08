@@ -1,10 +1,13 @@
 import Head from "next/head";
-import React from "react";
 
 const SEO = () => {
   return (
     <Head>
       <title>OX Soccer - Marketplace</title>
+      <meta
+        name="description"
+        content="Buy sell and exchange in the marketplace of the ox ecosystem"
+      />
     </Head>
   );
 };

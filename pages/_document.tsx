@@ -1,18 +1,9 @@
-import React from "react";
-import Document, {
-  DocumentContext,
-  DocumentInitialProps,
-  Html,
-  Head,
-  Main,
-  NextScript,
-} from "next/document";
+import { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+import Document from "next/document";
 
 export default class MyDocument extends Document {
-  static async getInitialProps(
-    ctx: DocumentContext
-  ): Promise<DocumentInitialProps> {
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -37,8 +28,7 @@ export default class MyDocument extends Document {
       sheet.seal();
     }
   }
-
-  render(): JSX.Element {
+  render() {
     return (
       <Html lang="en">
         <Head>
@@ -52,11 +42,6 @@ export default class MyDocument extends Document {
           <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
-          />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="true"
           />
           <link
             href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap"

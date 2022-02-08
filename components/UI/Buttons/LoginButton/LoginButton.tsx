@@ -1,56 +1,30 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { useChain, useMoralis } from "react-moralis";
 import { Web3Enabled } from "../../../../context/Web3EnabledContext";
-
-const StyledLoginButton = styled.button`
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  align-items: center;
-  min-width: 140px;
-  height: 40px;
-  background: #292929;
-  box-shadow: 2px 2px 8px #98989826;
-  border-radius: 5px;
-  color: #ffffff;
-  font-weight: 500;
-  font-size: 0.9em;
-  cursor: pointer;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  @media (min-width: 768px) {
-    &:hover {
-      background: #575757;
-      transition: background 0.2s ease;
-    }
-  }
-`;
+import { StyledLoginButton } from "./styles";
+import useChains from "../../../../hooks/useChains";
 
 const LoginButton = () => {
   const { authenticate, chainId } = useMoralis();
 
   const { switchNetwork } = useChain();
+  const { chain, id } = useChains();
 
   const web3isEnabled = useContext(Web3Enabled);
 
   const auth = async () => {
-    if (web3isEnabled) {
-      if (chainId !== "0x4") {
-        switchNetwork("0x4").then(() => {
+    if (web3isEnabled && chain) {
+      if (chainId !== chain) {
+        switchNetwork(chain).then(() => {
           authenticate({
-            chainId: 56,
+            chainId: id,
             signingMessage: "Authenticate",
           });
         });
       } else {
         authenticate({
-          chainId: 56,
+          chainId: id,
           signingMessage: "Authenticate",
         });
       }

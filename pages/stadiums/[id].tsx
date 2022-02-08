@@ -1,114 +1,66 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter, withRouter } from "next/router";
-import { Moralis } from "moralis";
 import { Loader } from "semantic-ui-react";
-import Header from "../../components/UI/Header/Header";
-import styled from "styled-components";
-import StadiumDetails from "../../components/Stadiums/StadiumDetails";
+import StadiumDetails from "../../components/Stadiums/StadiumDetails/StadiumDetails";
 import AssetDetails from "../../components/AssetDetails/AssetDetails";
-import SEO from "../../components/SEO";
-
-const StyledContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-
-  .notfound__message {
-    margin-top: 300px !important;
-    color: rgb(180, 180, 180);
-    font-weight: 600;
-    font-size: 2em;
-  }
-`;
+import { StyledContainer } from "../../components/Stadiums/StadiumDetails/styles";
+import BasicLayout from "../../Layout/BasicLayout";
+import useChains from "../../hooks/useChains";
+import NavigationButtons from "../../Layout/NavigationButtons";
+import { useDispatch, useSelector } from "react-redux";
+import { getStadiumsDetailsAction } from "../../redux/actions/stadiumsDetails";
+import { useMoralis } from "react-moralis";
 
 const Id = () => {
   const {
     query: { id },
   } = useRouter();
 
-  const [stadiumDetails, setStadiumDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { chain } = useChains();
+  const dispatch = useDispatch();
+  const { fetching, error, details } = useSelector(
+    (state: any) => state.stadiumsDetails
+  );
 
-  const stadiumContract = process.env.NEXT_PUBLIC_DEVELOPMENT_STADIUM_CONTRACT;
+  const { account } = useMoralis();
 
   useEffect(() => {
-    if (id) {
+    if (id && chain) {
       getDetails();
     }
-  }, [id]);
+  }, [id, chain]);
 
-  const getDetails = async () => {
-    try {
-      let details: any = await Moralis.Web3API.token.getTokenIdMetadata({
-        chain: "0x4",
-        address: stadiumContract,
-        token_id: String(id),
-      });
-
-      if (!details.metadata) {
-        throw new Error("Error: Token not found");
-      }
-
-      setStadiumDetails(details);
-
-      setLoading(false);
-    } catch {
-      setLoading(false);
-      setError(true);
-    }
+  const getDetails = () => {
+    dispatch(getStadiumsDetailsAction(chain, id));
   };
 
-  if (!error && loading) {
+  if (fetching) {
     return (
       <>
-        <style jsx global>{`
-          body {
-            background-color: #f5f5f5;
-          }
-        `}</style>
-
-        <SEO />
-        <Header />
+        <BasicLayout />
         <LoadingToken />
       </>
     );
   }
-  if (!loading && error) {
+  if (error) {
     return (
       <>
-        <style jsx global>{`
-          body {
-            background-color: #f5f5f5;
-          }
-        `}</style>
-
-        <SEO />
-        <Header />
+        <BasicLayout />
         <NotFoundMessage />
       </>
     );
   }
-  if (!loading && !error) {
+  if (details && !error) {
     return (
       <>
-        <style jsx global>{`
-          body {
-            background-color: #f5f5f5;
-          }
-        `}</style>
-
-        <SEO />
-        <Header />
-        {stadiumDetails && (
-          <AssetDetails>
-            <StadiumDetails
-              stadium={stadiumDetails}
-              price={stadiumDetails.price && stadiumDetails.price}
-            />
-          </AssetDetails>
-        )}
+        <BasicLayout />
+        <NavigationButtons
+          mt={120}
+          path={account ? "/account/inventory/stadiums" : "/stadiums"}
+        />
+        <AssetDetails>
+          <StadiumDetails details={details} />
+        </AssetDetails>
       </>
     );
   }

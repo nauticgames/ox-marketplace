@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import AsidePanel from "../../../components/AsidePanel/AsidePanel";
-import SEO from "../../../components/SEO";
-import Header from "../../../components/UI/Header/Header";
+import BasicLayout from "../../../Layout/BasicLayout";
+import NavigationButtons from "../../../Layout/NavigationButtons";
 
 const Index = () => {
   const { isAuthenticated, isInitialized } = useMoralis();
@@ -21,14 +21,8 @@ const Index = () => {
 
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: #f5f5f5;
-        }
-      `}</style>
-
-      <SEO />
-      <Header />
+      <BasicLayout />
+      <NavigationButtons mt={40} path="/stadiums" />
       <AsidePanel type="account" />
     </>
   );

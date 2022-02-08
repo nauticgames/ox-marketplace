@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { Grid } from "semantic-ui-react";
 import AsidePanel from "../../components/AsidePanel/AsidePanel";
-import Main from "../../components/Layout/Main";
-import SEO from "../../components/SEO";
-import Header from "../../components/UI/Header/Header";
+import Main from "../../Layout/Main";
 import styled from "styled-components";
 import AccountOverview from "../../components/Overview/AccountOverview";
 import Rankings from "../../components/Overview/Rankings";
 import CommunityTrophys from "../../components/Overview/CommunityTrophys";
+import BasicLayout from "../../Layout/BasicLayout";
+import NavigationButtons from "../../Layout/NavigationButtons";
 
 const StyledContainer = styled.div`
   padding: 3%;
@@ -29,17 +29,11 @@ const Overview = () => {
 
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: #f5f5f5;
-        }
-      `}</style>
-
-      <SEO />
-      <Header />
+      <BasicLayout />
       <AsidePanel type="account" />
 
       <Main>
+        <NavigationButtons mt={40} path="/stadiums" />
         <StyledContainer>
           <Grid stackable>
             <Grid.Column mobile={16} computer={16} tablet={16}>
