@@ -5,10 +5,11 @@ const useWeb3 = () => {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const isEnabled = typeof window.ethereum !== "undefined";
-
-    console.log(isEnabled);
-    if (isEnabled) {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.ethereum !== "undefined"
+    ) {
+      Moralis.enableWeb3();
       setEnabled(true);
     } else {
       alert("No tienes metamask");
