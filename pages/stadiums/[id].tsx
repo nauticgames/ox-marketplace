@@ -5,18 +5,17 @@ import StadiumDetails from "../../components/Stadiums/StadiumDetails/StadiumDeta
 import AssetDetails from "../../components/AssetDetails/AssetDetails";
 import { StyledContainer } from "../../components/Stadiums/StadiumDetails/styles";
 import BasicLayout from "../../Layout/BasicLayout";
-import useChains from "../../hooks/useChains";
 import NavigationButtons from "../../Layout/NavigationButtons";
 import { useDispatch, useSelector } from "react-redux";
 import { getStadiumsDetailsAction } from "../../redux/actions/stadiumsDetails";
 import { useMoralis } from "react-moralis";
+import { chainId } from "../../constants/chain";
 
 const Id = () => {
   const {
     query: { id },
   } = useRouter();
 
-  const { chain } = useChains();
   const dispatch = useDispatch();
   const { fetching, error, details } = useSelector(
     (state: any) => state.stadiumsDetails
@@ -25,13 +24,13 @@ const Id = () => {
   const { account } = useMoralis();
 
   useEffect(() => {
-    if (id && chain) {
+    if (id && chainId) {
       getDetails();
     }
-  }, [id, chain]);
+  }, [id, chainId]);
 
   const getDetails = () => {
-    dispatch(getStadiumsDetailsAction(chain, id));
+    dispatch(getStadiumsDetailsAction(chainId, id));
   };
 
   if (fetching) {
@@ -78,8 +77,11 @@ const LoadingToken = () => {
 
 const NotFoundMessage = () => {
   return (
-    <StyledContainer>
-      <h2 className="notfound__message">Error: Token not found</h2>
-    </StyledContainer>
+    <>
+      <NavigationButtons mt={120} path={"/stadiums"} />
+      <StyledContainer>
+        <h2 className="notfound__message">Token not found</h2>
+      </StyledContainer>
+    </>
   );
 };

@@ -27,6 +27,13 @@ const StyledPanelButton = styled.button`
     width: 24px;
     height: 24px;
   }
+
+  @media (min-width: 768px) {
+    &:hover {
+      opacity: ${(props) => !props.active && 0.8};
+      transition: opacity 0.1s ease-in-out;
+    }
+  }
 `;
 
 const StyledAsidePanel = styled.aside`

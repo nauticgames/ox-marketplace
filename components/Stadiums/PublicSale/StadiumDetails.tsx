@@ -1,8 +1,8 @@
-import { useMoralis, useMoralisWeb3Api } from "react-moralis";
+import { useChain, useMoralis, useMoralisWeb3Api } from "react-moralis";
 import { Moralis } from "moralis";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import approveABI from "../../../abis/approveAllowance";
 import purchaseStadiumABI from "../../../abis/purchaseStadiumABI";
@@ -10,40 +10,40 @@ import { Container, Grid, Loader } from "semantic-ui-react";
 import { BuyButton, DisabledButton } from "./styles/detailsStyles";
 import { Title, Price, Details } from "../detailsStyles";
 import useUsdPrice from "../../../hooks/useUsdPrice";
-import useChains from "../../../hooks/useChains";
 import { erc20Contract, stadiumContract } from "../../../constants/contracts";
+import handleRpcErrors from "../../../utils/handleRpcErrors";
+import { chainId as chain } from "../../../constants/chain";
 
 const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img, type } =
     stadiumDetails;
 
+  const currentChain = Moralis.chainId;
+  const { switchNetwork } = useChain();
+
   const { isAuthenticated, account } = useMoralis();
   const { usdPrice } = useUsdPrice();
-  const { chain } = useChains();
-
-  const [allowance, setAllowance] = useState(null);
 
   const web3Api = useMoralisWeb3Api();
 
   const [fetching, setFetching] = useState(false);
+  const [approved, setApproved] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = () => {
-      setAllowance(null);
-    };
+  const getAllowance = async (address, spender) => {
+    try {
+      const { allowance } = await web3Api.token.getTokenAllowance({
+        chain,
+        address,
+        owner_address: account,
+        spender_address: spender,
+      });
 
-    return unsubscribe();
-  }, [account]);
+      const formattedAllowance = Number(Moralis.Units.FromWei(allowance));
 
-  const getAllowance = async () => {
-    const result = await web3Api.token.getTokenAllowance({
-      chain,
-      address: erc20Contract,
-      owner_address: account,
-      spender_address: stadiumContract,
-    });
-
-    return result;
+      return formattedAllowance;
+    } catch {
+      return;
+    }
   };
 
   const approveAllowance = async () => {
@@ -66,40 +66,32 @@ const StadiumDetails = ({ stadiumDetails }) => {
       await tx.wait();
 
       setFetching(false);
+      setApproved(true);
     } catch {
-      return null;
+      return;
     }
-  };
-
-  const verifyUserAllowance = () => {
-    getAllowance()
-      .then((res) => {
-        const formatAllowance = Number(Moralis.Units.FromWei(res.allowance));
-
-        setAllowance(formatAllowance);
-
-        formatAllowance < price
-          ? approveAllowance()
-              .then(() => {
-                runPurchaseTransaction();
-              })
-              .catch(() => {
-                return null;
-              })
-          : runPurchaseTransaction();
-      })
-      .catch(() => {
-        return null;
-      });
   };
 
   const purchase = async () => {
-    if (allowance === null || allowance < price) {
-      verifyUserAllowance();
-    }
+    try {
+      if (currentChain && currentChain !== chain) {
+        switchNetwork(chain);
+      } else {
+        const allowance = await getAllowance(erc20Contract, stadiumContract);
 
-    if (allowance >= price) {
-      runPurchaseTransaction();
+        if (approved && allowance < price) {
+          return;
+        }
+
+        if (!allowance || allowance < price) {
+          await approveAllowance();
+          await runPurchaseTransaction();
+        } else {
+          await runPurchaseTransaction();
+        }
+      }
+    } catch {
+      return;
     }
   };
 
@@ -125,11 +117,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
 
       toast.success("Stadium purchased succesfull");
     } catch (error) {
-      error && error.data
-        ? toast.error(
-            `Error: ${error.data.message.replace("execution reverted: ", "")}`
-          )
-        : toast.error("An error has ocurred");
+      return handleRpcErrors(error);
     }
   };
 
