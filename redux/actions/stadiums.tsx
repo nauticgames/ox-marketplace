@@ -22,15 +22,13 @@ export default function getStadiumsAction(account, chain, order) {
 
       for (const uri of uris) {
         try {
-          const { data, status } = await axios.get(uri);
+          const { data } = await axios.get(uri);
 
           stadiums.push(data);
         } catch {
           continue;
         }
       }
-
-      console.log(stadiums);
 
       const sortedStadiums = sortMetadata(order, stadiums);
 

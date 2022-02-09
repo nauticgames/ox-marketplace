@@ -25,8 +25,8 @@ function MyApp({ Component, pageProps }) {
       `}</style>
       <MoralisProvider
         initializeOnMount
-        appId="3UDfnGpTjVGM0stnzIA2Wgnj2O7IoNfC2uWkzEln"
-        serverUrl="https://38epkbtvvfvk.usemoralis.com:2053/server"
+        appId={process.env.NEXT_PUBLIC_MORALIS_APPID}
+        serverUrl={process.env.NEXT_PUBLIC_MORALIS_SERVERURL}
       >
         <Web3EnabledWrapped>
           <Provider store={store}>
