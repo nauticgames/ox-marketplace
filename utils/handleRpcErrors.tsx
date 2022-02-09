@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
 
 const handleRpcErrors = (error) => {
+  console.log(error);
+
   if (error.error && error.error.code === -32603) {
     const data = error.error.data;
 
