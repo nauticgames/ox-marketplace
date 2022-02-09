@@ -1,19 +1,14 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useMoralis } from "react-moralis";
 import AsidePanel from "../../../components/AsidePanel/AsidePanel";
+import useAuth from "../../../hooks/useAuth";
 import BasicLayout from "../../../Layout/BasicLayout";
+import Main from "../../../Layout/Main";
 import NavigationButtons from "../../../Layout/NavigationButtons";
 
 const Index = () => {
-  const { isAuthenticated, isInitialized } = useMoralis();
   const router = useRouter();
-
-  useEffect(() => {
-    if (isInitialized && !isAuthenticated) {
-      router.push("/stadiums");
-    }
-  }, [isInitialized, isAuthenticated]);
+  useAuth();
 
   useEffect(() => {
     router.replace("/account/inventory/stadiums");
@@ -22,8 +17,10 @@ const Index = () => {
   return (
     <>
       <BasicLayout />
-      <NavigationButtons mt={40} path="/stadiums" />
       <AsidePanel type="account" />
+      <Main>
+        <NavigationButtons mt={40} path="/stadiums" />
+      </Main>
     </>
   );
 };

@@ -18,8 +18,6 @@ export function getStadiumsDetailsAction(chain, id) {
 
       const data = { ...response.data, owner };
 
-      console.log(data);
-
       dispatch(getStadiumDetailsSuccess(data));
     } catch (error) {
       dispatch(getStadiumDetailsError());

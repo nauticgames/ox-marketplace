@@ -33,7 +33,7 @@ const StyledContainer = styled.div`
   justify-content: center;
 
   .notfound__message {
-    margin-top: 300px !important;
+    margin-top: 100px;
     color: rgb(180, 180, 180);
     font-weight: 600;
     font-size: 2em;

@@ -12,7 +12,7 @@ const useWeb3 = () => {
       Moralis.enableWeb3();
       setEnabled(true);
     } else {
-      alert("No tienes metamask");
+      return;
     }
   }, []);
 

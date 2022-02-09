@@ -3,14 +3,13 @@ import { Grid, Loader } from "semantic-ui-react";
 import { useMoralis } from "react-moralis";
 import StadiumCard from "./StadiumCard";
 import { StyledContainer, EmptyAssetsTitle } from "./styles";
-import useChains from "../../hooks/useChains";
 import { useDispatch, useSelector } from "react-redux";
 import getStadiumsAction from "../../redux/actions/stadiums";
 import useUsdPrice from "../../hooks/useUsdPrice";
+import { chainId } from "../../constants/chain";
 
 const Stadiums = () => {
   const { account } = useMoralis();
-  const { chain } = useChains();
   const dispatch = useDispatch();
   const { stadiums, error, fetching } = useSelector(
     (state: any) => state.stadiums
@@ -20,13 +19,13 @@ const Stadiums = () => {
 
   useEffect(() => {
     const unsubscribe = () => {
-      dispatch(getStadiumsAction(account, chain, "asc"));
+      dispatch(getStadiumsAction(account, chainId, "asc"));
     };
 
-    if (account && chain) {
+    if (account && chainId) {
       return unsubscribe();
     }
-  }, [account, chain]);
+  }, [account, chainId]);
 
   if (fetching) {
     return <LoadingAssets />;

@@ -13,12 +13,11 @@ export default function getStadiumsAction(account, chain, order) {
       });
 
       const uris = [];
+      const stadiums = [];
 
       result.map((item) => {
         uris.push(item.token_uri);
       });
-
-      const stadiums = [];
 
       for (const uri of uris) {
         try {

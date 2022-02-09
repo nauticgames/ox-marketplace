@@ -1,21 +1,12 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useMoralis } from "react-moralis";
 import AsidePanel from "../../components/AsidePanel/AsidePanel";
 import Main from "../../Layout/Main";
 import ComingSoon from "../../components/UI/ComingSoon/ComingSoon";
 import BasicLayout from "../../Layout/BasicLayout";
 import NavigationButtons from "../../Layout/NavigationButtons";
+import useAuth from "../../hooks/useAuth";
 
 const Claim = () => {
-  const { isAuthenticated, isInitialized } = useMoralis();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isInitialized && !isAuthenticated) {
-      router.push("/stadiums");
-    }
-  }, [isInitialized, isAuthenticated]);
+  useAuth();
 
   return (
     <>

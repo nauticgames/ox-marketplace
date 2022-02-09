@@ -1,6 +1,3 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useMoralis } from "react-moralis";
 import { Grid } from "semantic-ui-react";
 import AsidePanel from "../../components/AsidePanel/AsidePanel";
 import Main from "../../Layout/Main";
@@ -10,6 +7,7 @@ import Rankings from "../../components/Overview/Rankings";
 import CommunityTrophys from "../../components/Overview/CommunityTrophys";
 import BasicLayout from "../../Layout/BasicLayout";
 import NavigationButtons from "../../Layout/NavigationButtons";
+import useAuth from "../../hooks/useAuth";
 
 const StyledContainer = styled.div`
   padding: 3%;
@@ -18,14 +16,7 @@ const StyledContainer = styled.div`
 `;
 
 const Overview = () => {
-  const { isAuthenticated, isInitialized } = useMoralis();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isInitialized && !isAuthenticated) {
-      router.push("/stadiums");
-    }
-  }, [isInitialized, isAuthenticated]);
+  useAuth();
 
   return (
     <>

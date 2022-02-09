@@ -4,6 +4,8 @@ import { useMoralis } from "react-moralis";
 import LunyBalances from "../UI/LunyBalances/LunyBalances";
 import { Popup } from "semantic-ui-react";
 import { useEffect, useRef, useState } from "react";
+import cutAddress from "../../utils/cutAddress";
+import copyToClipboard from "../../utils/clipboard";
 
 const StyledAccountOverview = styled.div`
   background-color: #fff;
@@ -63,7 +65,6 @@ const StyledAccountOverview = styled.div`
       font-size: 1.1em;
       color: #a3a3a3;
       font-weight: 400;
-      width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -83,28 +84,18 @@ const AccountOverview = () => {
 
   const linkRef = useRef(null);
 
-  const copyToClipboard = () => {
+  const copyAddress = () => {
     if (!copied) {
-      const el = document.createElement("textarea");
-      el.value = linkRef.current.value;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
+      copyToClipboard(linkRef);
       setCopied(true);
     }
   };
 
   useEffect(() => {
-    const unsubscribe = () => {
-      if (copied) {
-        setTimeout(() => {
-          setCopied(false);
-        }, 3000);
-      }
-    };
-
-    return unsubscribe();
+    if (copied) {
+      const timer = setTimeout(() => setCopied(false), 2000);
+      return () => clearTimeout(timer);
+    }
   }, [copied]);
 
   return (
@@ -118,17 +109,17 @@ const AccountOverview = () => {
       </div>
       <div className="account-number">
         <input type="hidden" ref={linkRef} value={account || null} />
-        <h2>Account: </h2>
-        <p>{account} </p>
+        <h2>Account:</h2>
+        <p>{account && cutAddress(account)}</p>
         <Popup
           style={{ fontWeight: 600 }}
           content={copied ? "Copied" : "Copy to clipboard!"}
           position="top center"
           trigger={
-            <span onClick={copyToClipboard}>
+            <span onClick={() => copyAddress()}>
               <Icon
                 icon="akar-icons:copy"
-                color={copied ? "#57db4b" : "#8f8f8f"}
+                color={copied ? "rgb(44, 205, 69)" : "#8f8f8f"}
               />
             </span>
           }
