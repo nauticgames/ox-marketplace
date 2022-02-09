@@ -1,18 +1,26 @@
 import toast from "react-hot-toast";
 
+const environment = process.env.NODE_ENV;
+
 const handleRpcErrors = (error) => {
-  console.log(error);
+  switch (environment) {
+    case "development":
+      if (error.error && error.error.code === -32603) {
+        const { originalError } = error.error.data;
 
-  if (error.error && error.error.code === -32603) {
-    const data = error.error.data;
+        toast.error(originalError.message.replace("execution reverted: ", ""));
+      } else {
+        return;
+      }
+    case "production":
+      if (error.code && error.code === -32603) {
+        const { message } = error.data;
 
-    data && data.originalError
-      ? toast.error(
-          data.originalError.message.replace("execution reverted: ", "")
-        )
-      : toast.error(data.message.replace("execution reverted: ", ""));
-  } else {
-    return;
+        return toast.error(message.replace("execution reverted: ", ""));
+      }
+
+    default:
+      return;
   }
 };
 
