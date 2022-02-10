@@ -1,4 +1,4 @@
-import { useChain, useMoralis, useMoralisWeb3Api } from "react-moralis";
+import { useChain, useMoralis } from "react-moralis";
 import { Moralis } from "moralis";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
@@ -14,6 +14,7 @@ import { erc20Contract, stadiumContract } from "../../../constants/contracts";
 import handleRpcErrors from "../../../utils/handleRpcErrors";
 import { chainId as chain } from "../../../constants/chain";
 import getAllowance from "../../../utils/getAllowance";
+import StadiumsLeft from "./StadiumsLeft";
 
 const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img, type } =
@@ -65,8 +66,6 @@ const StadiumDetails = ({ stadiumDetails }) => {
           account
         );
 
-        console.log(allowance);
-
         if (approved && allowance < price) {
           return;
         }
@@ -113,6 +112,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
     <Container fluid>
       <Title titleBackground={nameBackground}>
         <h1>{name}</h1>
+        <StadiumsLeft type={type} />
       </Title>
       <Grid>
         <Grid.Column computer={9} tablet={8} mobile={16}>

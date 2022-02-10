@@ -2,9 +2,10 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { StyledStadiumCard } from "./styles/cardStyles";
+import StadiumsLeft from "./StadiumsLeft";
 
 const StadiumCard = ({ stadium, usdPrice }) => {
-  const { name, path, img, price, nameBackground } = stadium;
+  const { name, path, img, price, nameBackground, type } = stadium;
 
   const router = useRouter();
 
@@ -16,8 +17,11 @@ const StadiumCard = ({ stadium, usdPrice }) => {
 
   return (
     <StyledStadiumCard nameBackground={nameBackground} onClick={showDetails}>
-      <div className="name">
-        <h2>{name}</h2>
+      <div className="title">
+        <div className="name">
+          <h2>{name}</h2>
+        </div>
+        <StadiumsLeft type={type} />
       </div>
       <div className="image">
         <Image
