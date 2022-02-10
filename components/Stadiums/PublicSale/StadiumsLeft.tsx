@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useContext, useEffect, useState } from "react";
 import { Moralis } from "moralis";
 import { stadiumContract } from "../../../constants/contracts";
