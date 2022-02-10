@@ -11,6 +11,8 @@ interface AsidePanelProps {
 
 const AsidePanel = ({ type }: AsidePanelProps) => {
   const { width } = useWindowSize();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const { showNav } = useSelector((state) => state.nav);
 
   const isMobile = width < 768;
