@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useContext, useEffect, useState } from "react";
 import { Moralis } from "moralis";
 import { stadiumContract } from "../../../constants/contracts";
@@ -11,7 +12,7 @@ const StadiumsLeft = ({ type }) => {
 
   const getStadiumsLeft = async () => {
     try {
-      /* tslint:disable-next-line */
+      // @ts-ignore:next-line
       const result = await Moralis.Web3API.native.runContractFunction({
         address: stadiumContract,
         function_name: "stadiumsLeft",
