@@ -62,6 +62,10 @@ const StyledAsidePanel = styled.aside`
     overflow-y: auto;
     opacity: 1;
     transform: translateX(0);
+
+    /* .aside__column {
+      width: 90% !important;
+    } */
   }
 `;
 

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import getStadiumsAction from "../../redux/actions/stadiums";
 import useUsdPrice from "../../hooks/useUsdPrice";
 import { chainId } from "../../constants/chain";
+import useWindowSize from "../../hooks/useWindowsSize";
 
 const Stadiums = () => {
   const { account } = useMoralis();
@@ -14,6 +15,9 @@ const Stadiums = () => {
   const { stadiums, error, fetching } = useSelector(
     (state: any) => state.stadiums
   );
+
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
 
   const { usdPrice } = useUsdPrice();
 
@@ -39,7 +43,7 @@ const Stadiums = () => {
   if (stadiums && stadiums.length > 0) {
     return (
       <>
-        <Grid style={{ marginTop: 40, minHeight: 300 }} centered>
+        <Grid style={{ marginTop: 40, minHeight: 300 }} centered={isMobile}>
           {stadiums.map((stadium, index) => (
             <Grid.Column
               computer={4}

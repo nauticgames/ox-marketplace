@@ -9,7 +9,7 @@ const Account = () => {
 
   return (
     <Grid centered>
-      <Grid.Column width={14}>
+      <Grid.Column computer={14} mobile={16} tablet={14}>
         {AccountItems.map(({ label, src, name, path }) => (
           <PanelButton
             path={path}
