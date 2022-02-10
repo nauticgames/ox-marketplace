@@ -9,12 +9,25 @@ const Title = styled.div`
   background-color: ${(props) => props.titleBackground};
   display: flex;
   align-items: center;
-  padding-left: 30px;
+  justify-content: space-between;
+  padding: 0 30px;
 
   h1 {
     color: #fff;
     font-weight: 600;
     font-size: 1em;
+  }
+
+  .stadiums__left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    h2 {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.9em;
+    }
   }
 `;
 

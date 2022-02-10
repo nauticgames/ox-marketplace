@@ -16,22 +16,49 @@ const StyledStadiumCard = styled.div`
     transition: box-shadow 0.2s ease;
   }
 
-  .name {
+  .title {
     position: absolute;
+    width: 100%;
     top: 0;
     left: 0;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    min-width: 150px;
-    height: 35px;
-    border-radius: 0px 0px 5px 0px;
-    background: ${(props) => props.nameBackground};
 
-    h2 {
-      font-weight: 600;
-      color: #fff;
-      font-size: 0.8em;
+    .name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 150px;
+      height: 35px;
+      border-radius: 0px 0px 5px 0px;
+      background: ${(props) => props.nameBackground};
+
+      h2 {
+        font-weight: 600;
+        color: #fff;
+        font-size: 0.8em;
+      }
+    }
+
+    .stadiums__left {
+      min-width: 90px;
+      height: 35px;
+      border-radius: 0 0 0 5px;
+      background: #2b2b2b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      h2 {
+        font-size: 0.8em;
+        font-weight: 600;
+        color: #ffffff;
+      }
+    }
+
+    .soldOut {
+      background: #e94c4c;
     }
   }
 
