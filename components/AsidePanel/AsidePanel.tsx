@@ -12,6 +12,8 @@ interface AsidePanelProps {
 const AsidePanel = ({ type }: AsidePanelProps) => {
   const { width } = useWindowSize();
 
+  //a
+
   const { showNav } = useSelector((state) => state.nav);
 
   const isMobile = width < 768;
