@@ -3,12 +3,12 @@ import styled from "styled-components";
 const StyledAccountButton = styled.button`
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
   align-items: center;
-  min-width: 140px;
-  height: 40px;
+  padding: 0 20px;
+  margin: 0 auto 20px auto;
+  height: 50px;
   background: #292929;
-  box-shadow: 2px 2px 8px #98989826;
+  box-shadow: 2px 2px 8px rgba(152, 152, 152, 0.15);
   border-radius: 5px;
   color: #ffffff;
   font-weight: 500;
@@ -22,7 +22,10 @@ const StyledAccountButton = styled.button`
   }
 
   @media (min-width: 768px) {
+    margin: 0;
     margin-left: 40px;
+    min-width: 140px;
+    height: 40px;
 
     &:hover {
       background: #575757;

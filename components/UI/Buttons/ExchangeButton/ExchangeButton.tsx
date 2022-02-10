@@ -10,7 +10,7 @@ const ExchangeButton = () => {
 
   return (
     <StyledExchangeButton onClick={goToExchange}>
-      Exchange Luny{" "}
+      Exchange Luny
       <img src="/assets/img/exchange-luny.svg" alt="Exchange luny" />
     </StyledExchangeButton>
   );

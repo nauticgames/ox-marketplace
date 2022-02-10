@@ -13,6 +13,7 @@ import useUsdPrice from "../../../hooks/useUsdPrice";
 import { erc20Contract, stadiumContract } from "../../../constants/contracts";
 import handleRpcErrors from "../../../utils/handleRpcErrors";
 import { chainId as chain } from "../../../constants/chain";
+import getAllowance from "../../../utils/getAllowance";
 
 const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img, type } =
@@ -24,27 +25,8 @@ const StadiumDetails = ({ stadiumDetails }) => {
   const { isAuthenticated, account } = useMoralis();
   const { usdPrice } = useUsdPrice();
 
-  const web3Api = useMoralisWeb3Api();
-
   const [fetching, setFetching] = useState(false);
   const [approved, setApproved] = useState(false);
-
-  const getAllowance = async (address, spender) => {
-    try {
-      const { allowance } = await web3Api.token.getTokenAllowance({
-        chain,
-        address,
-        owner_address: account,
-        spender_address: spender,
-      });
-
-      const formattedAllowance = Number(Moralis.Units.FromWei(allowance));
-
-      return formattedAllowance;
-    } catch {
-      return;
-    }
-  };
 
   const approveAllowance = async () => {
     const options = {
@@ -77,7 +59,13 @@ const StadiumDetails = ({ stadiumDetails }) => {
       if (currentChain && currentChain !== chain) {
         switchNetwork(chain);
       } else {
-        const allowance = await getAllowance(erc20Contract, stadiumContract);
+        const allowance = await getAllowance(
+          erc20Contract,
+          stadiumContract,
+          account
+        );
+
+        console.log(allowance);
 
         if (approved && allowance < price) {
           return;

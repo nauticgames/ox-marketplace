@@ -39,11 +39,11 @@ const Stadiums = () => {
   if (stadiums && stadiums.length > 0) {
     return (
       <>
-        <Grid style={{ marginTop: 40, minHeight: 300 }}>
+        <Grid style={{ marginTop: 40, minHeight: 300 }} centered>
           {stadiums.map((stadium, index) => (
             <Grid.Column
               computer={4}
-              mobile={16}
+              mobile={12}
               tablet={8}
               key={parseInt(stadium.tokenId) || index}
               stretched
