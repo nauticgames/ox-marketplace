@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useWindowSize from "../../../hooks/useWindowsSize";
 
 const Backdrop = () => {
-  const { showNav } = useSelector((state) => state.nav);
+  const { showNav } = useSelector((state: any) => state.nav);
   const { width } = useWindowSize();
 
   const isMobile = width < 768;
