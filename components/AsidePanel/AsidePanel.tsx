@@ -3,7 +3,7 @@ import useWindowSize from "../../hooks/useWindowsSize";
 import Account from "./Menus/Account/Account";
 import { StyledAsidePanel } from "./styles";
 import Nav from "../UI/Nav/Nav";
-import { useSelector } from "react-redux";
+import { DefaultRootState, useSelector } from "react-redux";
 
 interface AsidePanelProps {
   type: string;
@@ -11,7 +11,7 @@ interface AsidePanelProps {
 
 const AsidePanel = ({ type }: AsidePanelProps) => {
   const { width } = useWindowSize();
-  const { showNav } = useSelector((state): any => state.nav);
+  const { showNav } = useSelector((state): DefaultRootState => state.nav);
 
   const isMobile = width < 768;
 
