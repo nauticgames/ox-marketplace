@@ -4,7 +4,6 @@ import Account from "./Menus/Account/Account";
 import { StyledAsidePanel } from "./styles";
 import Nav from "../UI/Nav/Nav";
 import { useSelector } from "react-redux";
-import { Container } from "semantic-ui-react";
 
 interface AsidePanelProps {
   type: string;
