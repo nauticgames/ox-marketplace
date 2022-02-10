@@ -1,6 +1,6 @@
 import "semantic-ui-css/semantic.min.css";
 import "../styles/globals.css";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store from "../redux/store";
 import { MoralisProvider } from "react-moralis";
 import Web3EnabledWrapped from "../hoc/Web3EnabledWrapped";

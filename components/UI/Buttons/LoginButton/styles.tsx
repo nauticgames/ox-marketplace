@@ -5,8 +5,8 @@ const StyledLoginButton = styled.button`
   justify-content: space-between;
   padding: 0 20px;
   align-items: center;
-  min-width: 140px;
-  height: 40px;
+  width: 100%;
+  height: 50px;
   background: #292929;
   box-shadow: 2px 2px 8px #98989826;
   border-radius: 5px;
@@ -21,6 +21,8 @@ const StyledLoginButton = styled.button`
   }
 
   @media (min-width: 768px) {
+    min-width: 140px;
+    height: 40px;
     &:hover {
       background: #575757;
       transition: background 0.2s ease;

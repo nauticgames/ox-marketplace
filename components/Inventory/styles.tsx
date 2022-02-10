@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledInventory = styled.div`
   width: 100%;
-  padding: 3%;
+  padding: 20px;
   background-color: #fff;
 
   .title {
@@ -22,14 +22,15 @@ const StyledInventory = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
     .tab {
+      width: 48%;
       padding: 20px 30px;
-      margin-right: 20px;
+      margin-bottom: 10px;
       border-radius: 5px 5px 0 0;
       opacity: 0.3;
-      cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -47,7 +48,7 @@ const StyledInventory = styled.div`
 
       h3 {
         font-weight: 700;
-        font-size: 1.4em;
+        font-size: 1.2em;
         font-family: "Baloo 2", sans-serif;
       }
     }
@@ -79,6 +80,21 @@ const StyledInventory = styled.div`
 
       opacity: 1;
       border-bottom: 5px solid #f34b4b;
+    }
+
+    @media (min-width: 768px) {
+      justify-content: flex-start;
+
+      .tab {
+        margin-right: 20px;
+        cursor: pointer;
+        width: initial;
+        margin-bottom: 0;
+
+        h3 {
+          font-size: 1.4em;
+        }
+      }
     }
   }
 `;

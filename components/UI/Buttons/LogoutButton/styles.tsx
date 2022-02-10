@@ -5,10 +5,11 @@ const StyledLogoutButton = styled.button`
   justify-content: space-between;
   padding: 0 15px;
   align-items: center;
-  height: 40px;
+  height: 50px;
   background: #f33737;
   box-shadow: 2px 2px 8px #98989826;
   border-radius: 5px;
+  margin-left: 10px;
   cursor: pointer;
 
   svg {
@@ -17,7 +18,7 @@ const StyledLogoutButton = styled.button`
   }
 
   @media (min-width: 768px) {
-    margin-left: 10px;
+    height: 40px;
 
     &:hover {
       background: #e04040;

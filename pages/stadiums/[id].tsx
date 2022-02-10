@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStadiumsDetailsAction } from "../../redux/actions/stadiumsDetails";
 import { useMoralis } from "react-moralis";
 import { chainId } from "../../constants/chain";
+import AsidePanel from "../../components/AsidePanel/AsidePanel";
+import useWindowSize from "../../hooks/useWindowsSize";
 
 const Id = () => {
   const {
@@ -20,6 +22,10 @@ const Id = () => {
   const { fetching, error, details } = useSelector(
     (state: any) => state.stadiumsDetails
   );
+
+  const { width } = useWindowSize();
+
+  const isMobile = width < 768;
 
   const { account } = useMoralis();
 
@@ -37,6 +43,7 @@ const Id = () => {
     return (
       <>
         <BasicLayout />
+        {isMobile && <AsidePanel type="marketplace" />}
         <LoadingToken />
       </>
     );
@@ -45,6 +52,7 @@ const Id = () => {
     return (
       <>
         <BasicLayout />
+        {isMobile && <AsidePanel type="marketplace" />}
         <NotFoundMessage />
       </>
     );
@@ -53,6 +61,7 @@ const Id = () => {
     return (
       <>
         <BasicLayout />
+        {isMobile && <AsidePanel type="marketplace" />}
         <NavigationButtons
           mt={120}
           path={account ? "/account/inventory/stadiums" : "/stadiums"}

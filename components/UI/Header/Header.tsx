@@ -1,33 +1,52 @@
-import React from "react";
-import LoginButton from "../Buttons/LoginButton/LoginButton";
 import Logo from "../Logo/Logo";
-import { useMoralis } from "react-moralis";
-import AccountButton from "../Buttons/AccountButton/AccountButton";
-import ExchangeButton from "../Buttons/ExchangeButton/ExchangeButton";
-import LunyBalances from "../LunyBalances/LunyBalances";
-import LogoutButton from "../Buttons/LogoutButton/LogoutButton";
 import { StyledHeader } from "./styles";
+import Nav from "../Nav/Nav";
+import useWindowSize from "../../../hooks/useWindowsSize";
+import { Icon } from "@iconify/react";
+import { useDispatch, useSelector } from "react-redux";
+import { handleNavAction } from "../../../redux/actions/nav";
+import styled from "styled-components";
 
 const Header = () => {
-  const { isAuthenticated } = useMoralis();
+  const { width } = useWindowSize();
+
+  const isMobile = width < 768;
 
   return (
     <StyledHeader>
       <Logo source="/assets/img/logo.png" />
-      {isAuthenticated ? (
-        <>
-          <div style={{ display: "flex" }}>
-            <LunyBalances />
-            <ExchangeButton />
-            <AccountButton />
-            <LogoutButton />
-          </div>
-        </>
-      ) : (
-        <LoginButton />
-      )}
+      {isMobile && <BtnMenu />}
+
+      {!isMobile && <Nav />}
     </StyledHeader>
   );
 };
 
 export default Header;
+
+const StyledBtnMenu = styled.div`
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+`;
+
+const BtnMenu = () => {
+  const dispatch = useDispatch();
+
+  const { showNav } = useSelector((state) => state.nav);
+
+  const handleShowMenu = () => {
+    dispatch(handleNavAction(!showNav));
+  };
+
+  return (
+    <StyledBtnMenu>
+      <Icon
+        icon={!showNav ? "charm:menu-hamburger" : "codicon:chrome-close"}
+        color="#565656"
+        onClick={handleShowMenu}
+      />
+    </StyledBtnMenu>
+  );
+};

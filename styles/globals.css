@@ -29,4 +29,22 @@ p {
   padding: 0;
 }
 
+.backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  z-index: 7000;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+
+.backdrop-active {
+  display: block;
+}
+
 @import "./normalize.css";

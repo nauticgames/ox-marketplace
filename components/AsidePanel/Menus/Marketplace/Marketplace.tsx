@@ -2,14 +2,17 @@ import { useRouter } from "next/router";
 import React from "react";
 import PanelButton from "../../PanelButton";
 import { MarketplaceItems } from "../../Items";
-import { Container, Grid } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
+import useWindowSize from "../../../../hooks/useWindowsSize";
 
 const Marketplace = () => {
   const { pathname } = useRouter();
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
 
   return (
     <Grid centered>
-      <Grid.Column width={14}>
+      <Grid.Column width={isMobile ? 16 : 14}>
         {MarketplaceItems.map(({ label, src, name, path }) => (
           <PanelButton
             path={path}
