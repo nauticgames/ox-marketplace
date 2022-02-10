@@ -34,7 +34,7 @@ const StyledBtnMenu = styled.div`
 const BtnMenu = () => {
   const dispatch = useDispatch();
 
-  const { showNav } = useSelector((state) => state.nav);
+  const { showNav } = useSelector((state: any) => state.nav);
 
   const handleShowMenu = () => {
     dispatch(handleNavAction(!showNav));
