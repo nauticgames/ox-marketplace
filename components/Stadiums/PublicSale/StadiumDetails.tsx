@@ -85,6 +85,22 @@ const StadiumDetails = ({ stadiumDetails }) => {
           },
         };
 
+        const erc20Balance = await Moralis.Web3API.account.getTokenBalances({
+          address: account,
+          chain,
+          token_addresses: [erc20Contract],
+        });
+
+        if (!erc20Balance || !erc20Balance.length) {
+          return toast.error("You don't have enought money");
+        }
+
+        const balance = Number(Moralis.Units.FromWei(erc20Balance[0].balance));
+
+        if (balance < price) {
+          return toast.error("You don't have enought money");
+        }
+
         try {
           const tx: any = await Moralis.executeFunction(options);
 

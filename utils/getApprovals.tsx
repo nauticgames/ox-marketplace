@@ -1,8 +1,6 @@
 import { Moralis } from "moralis";
 
 const OWNER_FILTER = process.env.NODE_ENV === "production" ? "src" : "owner";
-const ATTRIBUTES_VALUE =
-  process.env.NODE_ENV === "production" ? "wad" : "value";
 
 const getApprovals = async (setError, setLastApproval, account) => {
   try {
