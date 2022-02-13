@@ -19,6 +19,7 @@ import { erc20Contract, stadiumContract } from "../../../constants/contracts";
 import handleRpcErrors from "../../../utils/handleRpcErrors";
 import { chainId as chain } from "../../../constants/chain";
 import StadiumsLeft from "./StadiumsLeft";
+import getApprovals from "../../../utils/getApprovals";
 
 const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img, type } =
@@ -36,28 +37,11 @@ const StadiumDetails = ({ stadiumDetails }) => {
 
   useEffect(() => {
     const unsubscribe = () => {
-      getApprovals();
+      getApprovals(setError, setLastApproval, account);
     };
 
     account && unsubscribe();
   }, [account]);
-
-  const getApprovals = async () => {
-    try {
-      const query = new Moralis.Query("TokenApprovals");
-      query.equalTo("owner", account);
-
-      const approvals = await query.find();
-
-      if (!approvals.length) {
-        setLastApproval(0);
-      } else {
-        setLastApproval(approvals[approvals.length - 1].attributes.value);
-      }
-    } catch (error) {
-      setError(true);
-    }
-  };
 
   const approveAllowance = async () => {
     const options = {
@@ -78,7 +62,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
 
       await tx.wait();
 
-      await getApprovals();
+      await getApprovals(setError, setLastApproval, account);
 
       setFetching(false);
     } catch {
