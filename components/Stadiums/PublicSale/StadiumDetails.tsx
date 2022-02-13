@@ -19,7 +19,7 @@ import { erc20Contract, stadiumContract } from "../../../constants/contracts";
 import handleRpcErrors from "../../../utils/handleRpcErrors";
 import { chainId as chain } from "../../../constants/chain";
 import StadiumsLeft from "./StadiumsLeft";
-import getApprovals from "../../../utils/getApprovals";
+import { getWBNBApprovals } from "../../../utils/getApprovals";
 
 const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img, type } =
@@ -37,7 +37,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
 
   useEffect(() => {
     const unsubscribe = () => {
-      getApprovals(setError, setLastApproval, account);
+      getWBNBApprovals(setError, setLastApproval, account);
     };
 
     account && unsubscribe();
@@ -62,7 +62,7 @@ const StadiumDetails = ({ stadiumDetails }) => {
 
       await tx.wait();
 
-      await getApprovals(setError, setLastApproval, account);
+      await getWBNBApprovals(setError, setLastApproval, account);
 
       setFetching(false);
     } catch {
