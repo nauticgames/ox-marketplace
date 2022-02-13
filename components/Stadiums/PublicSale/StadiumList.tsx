@@ -1,5 +1,5 @@
 import StadiumCard from "./StadiumCard";
-import StadiumsPublicSaleData from "./PublicSaleData";
+import PublicSaleData from "./PublicSaleData";
 import styled from "styled-components";
 import { Grid } from "semantic-ui-react";
 import useUsdPrice from "../../../hooks/useUsdPrice";
@@ -22,7 +22,7 @@ const StadiumList = () => {
   return (
     <GridContainer>
       <Grid centered={isMobile}>
-        {StadiumsPublicSaleData.map((stadium) => (
+        {PublicSaleData.map((stadium) => (
           <Grid.Column key={stadium.name} computer={5} mobile={14} tablet={8}>
             <StadiumCard
               stadium={stadium}

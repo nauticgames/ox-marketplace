@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const BuyButton = styled.button`
+const StyledBuyButton = styled.button`
   min-width: 230px;
   margin: 0 auto;
   margin-bottom: 30px;
@@ -31,6 +31,31 @@ const BuyButton = styled.button`
   }
 `;
 
+const StyledApproveButton = styled.button`
+  min-width: 230px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  width: 100%;
+  height: 45px;
+  background-color: #093eb1;
+  box-shadow: 4px 4px 12px rgba(83, 83, 83, 0.15);
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    &:hover {
+      cursor: pointer;
+      background: #1253df;
+      transition: background-color 0.2s ease;
+    }
+  }
+`;
+
 const DisabledButton = styled.div`
   width: 100%;
   height: 45px;
@@ -48,4 +73,28 @@ const DisabledButton = styled.div`
   text-align: center;
 `;
 
-export { BuyButton, DisabledButton };
+const StyledNetworkError = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
+  }
+
+  p {
+    font-size: 1.2em;
+    color: #f03e3e;
+    font-weight: 500;
+  }
+`;
+
+export {
+  StyledBuyButton,
+  DisabledButton,
+  StyledApproveButton,
+  StyledNetworkError,
+};

@@ -23,7 +23,6 @@ const StyledAccountButton = styled.button`
 
   @media (min-width: 768px) {
     margin: 0;
-    margin-left: 40px;
     min-width: 140px;
     height: 40px;
 

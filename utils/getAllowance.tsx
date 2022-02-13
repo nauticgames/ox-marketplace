@@ -10,8 +10,6 @@ const getAllowance = async (address, spender, account) => {
       spender_address: spender,
     });
 
-    console.log(allowance);
-
     const formattedAllowance = Number(Moralis.Units.FromWei(allowance));
 
     return formattedAllowance;
