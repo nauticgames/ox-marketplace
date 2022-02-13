@@ -16,8 +16,8 @@ const StyledExchangeButton = styled.button`
   }
 
   @media (min-width: 768px) {
+    margin: 20px 10px;
     min-width: 170px;
-    margin-left: 40px;
     font-size: 1em;
 
     &:hover {

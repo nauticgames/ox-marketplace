@@ -1,4 +1,4 @@
-const StadiumsPublicSaleData = [
+const PublicSaleData = [
   {
     name: "Moon Stadium",
     label: "moon",
@@ -34,4 +34,4 @@ const StadiumsPublicSaleData = [
   },
 ];
 
-export default StadiumsPublicSaleData;
+export default PublicSaleData;

@@ -2,11 +2,11 @@ import Image from "next/image";
 import { Container, Grid } from "semantic-ui-react";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
-import { Title, Details, Price } from "../detailsStyles";
-import { StyledOwnerAddress } from "./styles";
+import { StyledOwnerAddress, Title, Details, Price } from "./styles";
 import useUsdPrice from "../../../hooks/useUsdPrice";
 import priceWithCommas from "../../../utils/priceWithCommas";
 import StadiumsData from "../StadiumsData";
+import cutAddress from "../../../utils/cutAddress";
 
 interface StadiumDetailsProps {
   details: {
@@ -86,7 +86,7 @@ const StadiumDetails = ({ details, price }: StadiumDetailsProps) => {
           <StyledOwnerAddress>
             <Icon icon="fa-solid:user-tag" color="#CACACA" />
             <h2>Owner:</h2>
-            <span>{owner}</span>
+            <span>{cutAddress(owner)}</span>
           </StyledOwnerAddress>
         </Grid.Column>
       </Grid>
