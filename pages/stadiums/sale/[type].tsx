@@ -1,7 +1,7 @@
 import { useRouter, withRouter } from "next/router";
 import { useEffect, useState } from "react";
 import AssetDetails from "../../../components/AssetDetails/AssetDetails";
-import StadiumsPublicSaleDetails from "../../../components/Stadiums/PublicSale/StadiumDetails";
+import StadiumDetails from "../../../components/Stadiums/PublicSale/StadiumDetails";
 import StadiumsPublicSaleData from "../../../components/Stadiums/PublicSale/PublicSaleData";
 import BasicLayout from "../../../Layout/BasicLayout";
 import NavigationButtons from "../../../Layout/NavigationButtons";
@@ -32,9 +32,7 @@ const Type = () => {
       {isMobile && <AsidePanel type="marketplace" />}
       <NavigationButtons mt={120} path="/stadiums" />
       <AssetDetails>
-        {stadiumDetails && (
-          <StadiumsPublicSaleDetails stadiumDetails={stadiumDetails} />
-        )}
+        {stadiumDetails && <StadiumDetails stadiumDetails={stadiumDetails} />}
       </AssetDetails>
     </>
   );

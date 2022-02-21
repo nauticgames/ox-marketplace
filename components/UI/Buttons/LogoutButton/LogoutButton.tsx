@@ -5,12 +5,8 @@ import { StyledLogoutButton } from "./styles";
 const LogoutButton = () => {
   const { logout } = useMoralis();
 
-  const logoutFunction = () => {
-    logout();
-  };
-
   return (
-    <StyledLogoutButton onClick={logoutFunction}>
+    <StyledLogoutButton onClick={logout}>
       <Icon icon="fe:logout" color="white" />
     </StyledLogoutButton>
   );

@@ -9,12 +9,13 @@ const useUsdPrice = () => {
   });
 
   useEffect(() => {
+    if (!formattedData) return;
+
     const unsubscribe = () => {
       setUsdPrice(formattedData.usdPrice);
     };
-    if (formattedData) {
-      return unsubscribe();
-    }
+
+    return unsubscribe();
   }, [formattedData]);
 
   return { usdPrice };

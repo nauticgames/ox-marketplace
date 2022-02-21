@@ -30,9 +30,13 @@ const Id = () => {
   const { account } = useMoralis();
 
   useEffect(() => {
-    if (id && chainId) {
+    if (!id || !chainId) return;
+
+    const unsubscribe = () => {
       getDetails();
-    }
+    };
+
+    return unsubscribe();
   }, [id, chainId]);
 
   const getDetails = () => {

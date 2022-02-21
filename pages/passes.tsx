@@ -1,6 +1,4 @@
 import AsidePanel from "../components/AsidePanel/AsidePanel";
-import SEO from "../components/SEO";
-import Header from "../components/UI/Header/Header";
 import Main from "../Layout/Main";
 import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
 import BasicLayout from "../Layout/BasicLayout";

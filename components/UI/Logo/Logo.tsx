@@ -2,16 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { StyledLogo } from "./styles";
 
-interface LogoProps {
-  source: string;
-}
-
-const Logo = ({ source }: LogoProps) => {
+const Logo = () => {
   return (
     <Link href="/">
       <StyledLogo rel="noreferrer">
         <Image
-          src={source}
+          src="/assets/img/logo.png"
           alt="Logo"
           layout="fill"
           objectFit="contain"

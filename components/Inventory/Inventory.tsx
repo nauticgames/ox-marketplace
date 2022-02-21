@@ -14,6 +14,13 @@ const Inventory = () => {
             <h3>Stadiums</h3>
             <img src="/assets/img/stadiums.svg" alt="Stadiums Icon" />
           </div>
+          <div className="tab chests">
+            <h3>Mystery Chests</h3>
+            <img
+              src="/assets/img/mystery-chests.svg"
+              alt="Mystery Chests Icon"
+            />
+          </div>
           <div className="tab skins">
             <h3>Skins</h3>
             <img src="/assets/img/skins.svg" alt="Skins Icon" />

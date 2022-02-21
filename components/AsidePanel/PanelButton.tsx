@@ -10,22 +10,22 @@ interface ButtonProps {
 }
 
 const PanelButton = ({ path, label, src, active }: ButtonProps) => {
-  const { pathname, replace } = useRouter();
+  const router = useRouter();
 
-  const redirect = (path) => {
-    if (pathname !== path) {
-      replace(path);
+  const changePage = (path) => {
+    if (router.pathname !== path) {
+      router.push(path);
     }
   };
 
   return (
     <StyledPanelButton
       onClick={() => {
-        redirect(path);
+        changePage(path);
       }}
       active={active}
     >
-      {label} <img src={src} alt={label} />
+      <img src={src} alt={label} /> {label}
     </StyledPanelButton>
   );
 };

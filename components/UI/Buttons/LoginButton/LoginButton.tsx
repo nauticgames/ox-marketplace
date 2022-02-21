@@ -14,21 +14,22 @@ const LoginButton = () => {
   const Web3Enabled = useContext(Web3Context);
 
   const auth = async () => {
+    if (!Web3Enabled) return;
+
     try {
-      if (Web3Enabled) {
-        currentChain === chain
-          ? authenticate({
-              chainId: id,
-              signingMessage: "Authenticate",
-            })
-          : switchNetwork(chain).then(() => {
-              authenticate({
-                chainId: id,
-                signingMessage: "Authenticate",
-              });
-            });
+      if (currentChain === chain) {
+        authenticate({
+          chainId: id,
+          signingMessage: "Authenticate",
+        });
+      } else {
+        await switchNetwork(chain);
+        await authenticate({
+          chainId: id,
+          signingMessage: "Authenticate",
+        });
       }
-    } catch (error) {
+    } catch {
       return;
     }
   };

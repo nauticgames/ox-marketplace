@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import React from "react";
 import PanelButton from "../../PanelButton";
 import { AccountItems } from "../../Items";
 import { Grid } from "semantic-ui-react";

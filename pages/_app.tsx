@@ -6,7 +6,6 @@ import Web3EnabledWrapped from "../hoc/Web3EnabledWrapped";
 import { Toaster } from "react-hot-toast";
 import NextNprogress from "nextjs-progressbar";
 import { MoralisProvider } from "react-moralis";
-import { useEffect } from "react";
 
 declare global {
   interface Window {
@@ -24,6 +23,14 @@ function MyApp({ Component, pageProps }) {
           }
         }
       `}</style>
+      <NextNprogress
+        color="#2F57F7"
+        startPosition={0.5}
+        stopDelayMs={200}
+        height={3}
+        showOnShallow={true}
+      />
+      <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
       <MoralisProvider
         initializeOnMount
         appId={process.env.NEXT_PUBLIC_MORALIS_APPID}
@@ -31,14 +38,6 @@ function MyApp({ Component, pageProps }) {
       >
         <Web3EnabledWrapped>
           <Provider store={store}>
-            <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
-            <NextNprogress
-              color="#2F57F7"
-              startPosition={0.5}
-              stopDelayMs={200}
-              height={3}
-              showOnShallow={true}
-            />
             <Component {...pageProps} />
           </Provider>
         </Web3EnabledWrapped>

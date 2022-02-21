@@ -59,6 +59,12 @@ const StyledInventory = styled.div`
       }
     }
 
+    .chests {
+      h3 {
+        color: #db7028;
+      }
+    }
+
     .skins {
       h3 {
         color: #4666d0;

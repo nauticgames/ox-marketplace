@@ -16,7 +16,7 @@ const StyledPanelButton = styled.button`
 
   img,
   svg {
-    margin-left: 15px;
+    margin-right: 15px;
     width: 24px;
     height: 24px;
   }
@@ -33,7 +33,6 @@ const StyledPanelButton = styled.button`
 
     &:hover {
       cursor: pointer;
-      font-weight: 600;
       opacity: ${(props) => !props.active && 1};
       transition: opacity 0.1s ease-in-out;
     }
@@ -62,10 +61,6 @@ const StyledAsidePanel = styled.aside`
     overflow-y: auto;
     opacity: 1;
     transform: translateX(0);
-
-    /* .aside__column {
-      width: 90% !important;
-    } */
   }
 `;
 

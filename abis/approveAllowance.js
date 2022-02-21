@@ -1,24 +1,12 @@
 const approveABI = {
+  constant: false,
   inputs: [
-    {
-      internalType: "address",
-      name: "spender",
-      type: "address",
-    },
-    {
-      internalType: "uint256",
-      name: "amount",
-      type: "uint256",
-    },
+    { name: "guy", type: "address" },
+    { name: "wad", type: "uint256" },
   ],
   name: "approve",
-  outputs: [
-    {
-      internalType: "bool",
-      name: "",
-      type: "bool",
-    },
-  ],
+  outputs: [{ name: "", type: "bool" }],
+  payable: false,
   stateMutability: "nonpayable",
   type: "function",
 };

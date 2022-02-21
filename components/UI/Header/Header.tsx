@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      <Logo source="/assets/img/logo.png" />
+      <Logo />
       {isMobile && <BtnMenu />}
 
       {!isMobile && <Nav />}

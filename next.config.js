@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: false,
   images: {
-    domains: ["marketplace.oxsoccer.com"],
+    domains: ["marketplace.oxsoccer.com", "ox-images.s3.amazonaws.com"],
+  },
+  webp: {
+    preset: "default",
+    quality: 100,
   },
 };
-
-module.exports = nextConfig;

@@ -16,12 +16,10 @@ const GridContainer = styled.div`
 
 const StadiumList = () => {
   const { usdPrice } = useUsdPrice();
-  const { width } = useWindowSize();
-  const isMobile = width < 768;
 
   return (
     <GridContainer>
-      <Grid centered={isMobile}>
+      <Grid centered>
         {PublicSaleData.map((stadium) => (
           <Grid.Column key={stadium.name} computer={5} mobile={14} tablet={8}>
             <StadiumCard

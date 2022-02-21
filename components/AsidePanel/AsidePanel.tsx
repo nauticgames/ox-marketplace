@@ -6,7 +6,7 @@ import Nav from "../UI/Nav/Nav";
 import { useSelector } from "react-redux";
 
 interface AsidePanelProps {
-  type: string;
+  type: "marketplace" | "account";
 }
 
 const AsidePanel = ({ type }: AsidePanelProps) => {
@@ -19,28 +19,31 @@ const AsidePanel = ({ type }: AsidePanelProps) => {
   switch (type) {
     case "marketplace":
       return (
-        <StyledAsidePanel isMobile={isMobile} showNav={showNav}>
-          {isMobile && <Nav />}
+        <AsidePanelLayout showNav={showNav} isMobile={isMobile}>
           <Marketplace />
-        </StyledAsidePanel>
+        </AsidePanelLayout>
       );
     case "account":
       return (
-        <>
-          <StyledAsidePanel isMobile={isMobile} showNav={showNav}>
-            {isMobile && <Nav />}
-            <Account />
-          </StyledAsidePanel>
-        </>
+        <AsidePanelLayout showNav={showNav} isMobile={isMobile}>
+          <Account />
+        </AsidePanelLayout>
       );
+
     default:
-      return (
-        <StyledAsidePanel isMobile={isMobile} showNav={showNav}>
-          {isMobile && <Nav />}
-          <Marketplace />
-        </StyledAsidePanel>
-      );
+      <AsidePanelLayout showNav={showNav} isMobile={isMobile}>
+        <Marketplace />
+      </AsidePanelLayout>;
   }
 };
 
 export default AsidePanel;
+
+const AsidePanelLayout = ({ showNav, isMobile, children }) => {
+  return (
+    <StyledAsidePanel showNav={showNav}>
+      {isMobile && <Nav />}
+      {children}
+    </StyledAsidePanel>
+  );
+};

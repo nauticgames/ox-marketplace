@@ -1,11 +1,7 @@
-import { useChain, useMoralis } from "react-moralis";
-import { Moralis } from "moralis";
-import { Icon } from "@iconify/react";
+import { useEffect } from "react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import approveABI from "../../../abis/approveAllowance";
-import purchaseStadiumABI from "../../../abis/purchaseStadiumABI";
+import { useMoralis } from "react-moralis";
+import { Icon } from "@iconify/react";
 import { Container, Grid, Loader } from "semantic-ui-react";
 import {
   DisabledButton,
@@ -15,106 +11,64 @@ import {
 } from "./styles/detailsStyles";
 import { Title, Price, Details } from "../StadiumDetails/styles";
 import useUsdPrice from "../../../hooks/useUsdPrice";
-import { erc20Contract, stadiumContract } from "../../../constants/contracts";
-import handleRpcErrors from "../../../utils/handleRpcErrors";
 import { chainId as chain } from "../../../constants/chain";
 import StadiumsLeft from "./StadiumsLeft";
-import { getWBNBApprovals } from "../../../utils/getApprovals";
+import { useDispatch, useSelector } from "react-redux";
+import { stadiumPurchaseAction } from "../../../redux/actions/stadiumsPurchase";
+import useChain from "../../../hooks/useChain";
+import { getWBNBbalance } from "../../../utils/getTokenBalances";
+import toast from "react-hot-toast";
+import { getWbnbAllowanceAction } from "../../../redux/actions/allowance";
+import { approveWbnbAction } from "../../../redux/actions/approve";
 
 const StadiumDetails = ({ stadiumDetails }) => {
   const { nameBackground, name, fee, maxParticipants, price, img, type } =
     stadiumDetails;
 
-  const currentChain = Moralis.chainId;
-  const { switchNetwork } = useChain();
-
   const { isAuthenticated, account } = useMoralis();
-  const { usdPrice } = useUsdPrice();
 
-  const [fetching, setFetching] = useState(false);
-  const [error, setError] = useState(false);
-  const [lastApproval, setLastApproval] = useState(null);
+  const { currentChain, switchChain } = useChain();
+
+  const { usdPrice } = useUsdPrice();
+  const dispatch = useDispatch();
+
+  const purchaseState = useSelector((state: any) => state.stadiumPurchase);
+  const { allowance, networkError, allowanceFetching } = useSelector(
+    (state: any) => state.allowance
+  );
+  const { approveFetching } = useSelector((state: any) => state.approve);
 
   useEffect(() => {
+    if (!account) return;
+
     const unsubscribe = () => {
-      getWBNBApprovals(setError, setLastApproval, account);
+      dispatch(getWbnbAllowanceAction(account));
     };
 
-    account && unsubscribe();
+    return unsubscribe();
   }, [account]);
 
-  const approveAllowance = async () => {
-    const options = {
-      functionName: "approve",
-      contractAddress: erc20Contract,
-      chain,
-      abi: [approveABI],
-      params: {
-        spender: stadiumContract,
-        amount: Moralis.Units.ETH(30),
-      },
-    };
-
-    try {
-      const tx: any = await Moralis.executeFunction(options);
-
-      setFetching(true);
-
-      await tx.wait();
-
-      await getWBNBApprovals(setError, setLastApproval, account);
-
-      setFetching(false);
-    } catch {
-      return;
-    }
+  const approveWBNB = async () => {
+    dispatch(approveWbnbAction(account));
   };
 
   const purchase = async () => {
+    if (currentChain !== chain) {
+      return switchChain();
+    }
+
+    if (allowance.wbnb < price) {
+      return;
+    }
+
     try {
-      if (currentChain && currentChain !== chain) {
-        switchNetwork(chain);
-      } else {
-        const options = {
-          functionName: "purchase",
-          contractAddress: stadiumContract,
-          chain,
-          abi: [purchaseStadiumABI],
-          params: {
-            _type: type,
-          },
-        };
+      const balance = await getWBNBbalance(account);
 
-        const erc20Balance = await Moralis.Web3API.account.getTokenBalances({
-          address: account,
-          chain,
-          token_addresses: [erc20Contract],
-        });
-
-        if (!erc20Balance || !erc20Balance.length) {
-          return toast.error("You don't have enought money");
-        }
-
-        const balance = Number(Moralis.Units.FromWei(erc20Balance[0].balance));
-
-        if (balance < price) {
-          return toast.error("You don't have enought money");
-        }
-
-        try {
-          const tx: any = await Moralis.executeFunction(options);
-
-          setFetching(true);
-
-          await tx.wait();
-
-          setFetching(false);
-
-          toast.success("Stadium purchased succesfull");
-        } catch (error) {
-          return handleRpcErrors(error);
-        }
+      if (balance < price) {
+        return toast.error("You don't have enought money");
       }
+
+      dispatch(stadiumPurchaseAction(type));
     } catch {
       return;
     }
@@ -155,24 +109,25 @@ const StadiumDetails = ({ stadiumDetails }) => {
             </div>
           </Details>
           {isAuthenticated ? (
-            error ? (
-              <NetworkError />
-            ) : lastApproval !== null ? (
-              lastApproval < price ? (
+            allowance.wbnb !== null && !networkError.wbnb ? (
+              allowance.wbnb < price ? (
                 <>
                   <ApproveButton
-                    fetching={fetching}
-                    approveFunction={approveAllowance}
+                    fetching={approveFetching.wbnb}
+                    approveFunction={approveWBNB}
                   />
                 </>
               ) : (
                 <>
-                  <BuyButton purchase={purchase} fetching={fetching} />
+                  <BuyButton
+                    purchase={purchase}
+                    fetching={purchaseState.fetching}
+                  />
                 </>
               )
             ) : (
               <Grid centered>
-                <Loader inline size="medium" active />
+                <Loader inline size="medium" active={allowanceFetching.wbnb} />
               </Grid>
             )
           ) : (
