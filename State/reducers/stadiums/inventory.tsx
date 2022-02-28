@@ -1,11 +1,16 @@
 const initialState = {
   stadiums: null,
   error: null,
-  fetching: true,
+  fetching: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case "GET_STADIUMS":
+      return {
+        ...state,
+        fetching: true,
+      };
     case "GET_STADIUMS_SUCCESS":
       return {
         ...state,

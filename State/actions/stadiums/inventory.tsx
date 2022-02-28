@@ -2,14 +2,28 @@ import { Moralis } from "moralis";
 import axios from "axios";
 import { StadiumContract } from "../../../constants/contracts";
 import { baseURI } from "../../../constants/baseURI";
+import { IGetStadiumsProps } from "../../../types/State";
 
-export default function GetStadiumsAction(account, chain, order) {
+export default function GetStadiumsAction({
+  account,
+  chain,
+  order,
+  page,
+}: IGetStadiumsProps) {
   return async (dispatch) => {
     try {
+      dispatch(GetStadiums());
+
+      const limit = 12;
+
+      const offset = page ? limit * (page - 1) : 0;
+
       const { result }: any = await Moralis.Web3API.account.getNFTs({
         chain,
         address: account,
         token_addresses: [StadiumContract],
+        limit,
+        offset,
       });
 
       const ids = [];
@@ -54,6 +68,10 @@ const sortMetadata = (order = "asc", items: any) => {
 
   return sortedItems;
 };
+
+const GetStadiums = () => ({
+  type: "GET_STADIUMS",
+});
 
 const GetStadiumsSuccess = (stadiums) => ({
   type: "GET_STADIUMS_SUCCESS",
