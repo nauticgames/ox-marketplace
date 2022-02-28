@@ -8,11 +8,17 @@ const useWindowSize = () => {
     height: typeof window !== "undefined" && window.innerHeight,
   });
 
+  const [isMobile, setIsMobile] = useState(windowSize?.width < 768);
+
   const changeWindowSize = () => {
     if (isSSR) return;
 
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
   };
+
+  useEffect(() => {
+    setIsMobile(windowSize?.width < 768);
+  }, [windowSize]);
 
   useEffect(() => {
     if (isSSR) return;
@@ -22,9 +28,9 @@ const useWindowSize = () => {
     return () => {
       window.removeEventListener("resize", changeWindowSize);
     };
-  }, []);
+  }, [isSSR]);
 
-  return windowSize;
+  return { windowSize, isMobile };
 };
 
 export default useWindowSize;

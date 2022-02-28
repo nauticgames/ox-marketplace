@@ -1,13 +1,11 @@
-import AsidePanel from "../components/AsidePanel/AsidePanel";
-import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
+import AsidePanel from "../components/AsidePanel";
+import ComingSoon from "../components/UI/ComingSoon";
 import useWindowSize from "../hooks/useWindowsSize";
 import BasicLayout from "../Layout/BasicLayout";
-import NavigationButtons from "../Layout/NavigationButtons";
+import NavigationButtons from "../components/Navigation";
 
 const Exchange = () => {
-  const { width } = useWindowSize();
-
-  const isMobile = width < 768;
+  const { isMobile } = useWindowSize();
 
   return (
     <>

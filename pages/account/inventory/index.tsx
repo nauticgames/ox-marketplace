@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import AsidePanel from "../../../components/AsidePanel/AsidePanel";
+import AsidePanel from "../../../components/AsidePanel";
 import useAuth from "../../../hooks/useAuth";
 import BasicLayout from "../../../Layout/BasicLayout";
 import Main from "../../../Layout/Main";
-import NavigationButtons from "../../../Layout/NavigationButtons";
+import NavigationButtons from "../../../components/Navigation";
 
 const Index = () => {
-  const router = useRouter();
   useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     router.replace("/account/inventory/stadiums");

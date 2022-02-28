@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import AsidePanel from "../components/AsidePanel/AsidePanel";
+import AsidePanel from "../components/AsidePanel";
 import BasicLayout from "../Layout/BasicLayout";
 
 const Home = () => {

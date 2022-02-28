@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter, withRouter } from "next/router";
-import { Loader } from "semantic-ui-react";
-import StadiumDetails from "../../components/Stadiums/StadiumDetails/StadiumDetails";
-import AssetDetails from "../../components/AssetDetails/AssetDetails";
-import { StyledContainer } from "../../components/Stadiums/StadiumDetails/styles";
+import Details from "../../components/Marketplace/Stadiums/Details";
+import AssetDetails from "../../components/AssetDetails";
 import BasicLayout from "../../Layout/BasicLayout";
-import NavigationButtons from "../../Layout/NavigationButtons";
+import NavigationButtons from "../../components/Navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getStadiumsDetailsAction } from "../../redux/actions/stadiumsDetails";
-import { useMoralis } from "react-moralis";
-import { chainId } from "../../constants/chain";
-import AsidePanel from "../../components/AsidePanel/AsidePanel";
+import {
+  ClearStadiumDataStateAction,
+  GetStadiumsDetailsAction,
+} from "../../State/actions/stadiums/details";
+import { CorrectHexChain } from "../../constants/chain";
+import AsidePanel from "../../components/AsidePanel";
 import useWindowSize from "../../hooks/useWindowsSize";
+import AssetNotFound from "../../components/AssetDetails/NotFound";
+import LoadingAsset from "../../components/AssetDetails/Loading";
+import { Web3Context } from "../../context/Web3Context";
 
 const Id = () => {
   const {
@@ -19,82 +22,68 @@ const Id = () => {
   } = useRouter();
 
   const dispatch = useDispatch();
-  const { fetching, error, details } = useSelector(
-    (state: any) => state.stadiumsDetails
+
+  const { fetching, error, data } = useSelector(
+    (state: any) => state.STADIUM_DETAILS
   );
 
-  const { width } = useWindowSize();
+  const { isMobile } = useWindowSize();
 
-  const isMobile = width < 768;
-
-  const { account } = useMoralis();
+  const { user }: any = useContext(Web3Context);
 
   useEffect(() => {
-    if (!id || !chainId) return;
-
     const unsubscribe = () => {
-      getDetails();
+      dispatch(ClearStadiumDataStateAction());
     };
 
     return unsubscribe();
-  }, [id, chainId]);
+  }, []);
 
-  const getDetails = () => {
-    dispatch(getStadiumsDetailsAction(chainId, id));
-  };
+  useEffect(() => {
+    if (!id || !CorrectHexChain) return;
+
+    const unsubscribe = () => {
+      dispatch(GetStadiumsDetailsAction(CorrectHexChain, id));
+    };
+
+    return unsubscribe();
+  }, [id, CorrectHexChain]);
 
   if (fetching) {
     return (
       <>
         <BasicLayout />
         {isMobile && <AsidePanel type="marketplace" />}
-        <LoadingToken />
+        <NavigationButtons mt={120} path="/stadiums" />
+        <LoadingAsset />
       </>
     );
   }
+
   if (error) {
     return (
       <>
         <BasicLayout />
         {isMobile && <AsidePanel type="marketplace" />}
-        <NotFoundMessage />
+        <NavigationButtons mt={120} path="/stadiums" />
+        <AssetNotFound />
       </>
     );
   }
-  if (details && !error) {
-    return (
-      <>
-        <BasicLayout />
-        {isMobile && <AsidePanel type="marketplace" />}
-        <NavigationButtons
-          mt={120}
-          path={account ? "/account/inventory/stadiums" : "/stadiums"}
-        />
-        <AssetDetails>
-          <StadiumDetails details={details} />
-        </AssetDetails>
-      </>
-    );
-  }
-};
 
-export default withRouter(Id);
-
-const LoadingToken = () => {
-  return (
-    <StyledContainer>
-      <Loader size="big" inline active style={{ marginTop: 300 }} />
-    </StyledContainer>
-  );
-};
-
-const NotFoundMessage = () => {
   return (
     <>
-      <NavigationButtons mt={120} path={"/stadiums"} />
-      <StyledContainer>
-        <h2 className="notfound__message">Token not found</h2>
-      </StyledContainer>
+      <BasicLayout />
+      {isMobile && <AsidePanel type="marketplace" />}
+      <NavigationButtons
+        mt={120}
+        path={user ? "/account/inventory/stadiums" : "/stadiums"}
+      />
+      <AssetDetails>
+        <Details data={data} />
+      </AssetDetails>
     </>
   );
 };
+
+export default withRouter(Id);

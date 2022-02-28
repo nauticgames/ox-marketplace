@@ -18,8 +18,8 @@ const StyledAssetDetails = styled.main`
   }
 
   @media (min-width: 1200px) {
-    width: 800px;
+    width: 900px;
   }
 `;
 
-export { StyledAssetDetails };
+export default StyledAssetDetails;

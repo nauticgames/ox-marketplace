@@ -1,12 +1,12 @@
 import { Grid } from "semantic-ui-react";
-import AsidePanel from "../../components/AsidePanel/AsidePanel";
+import AsidePanel from "../../components/AsidePanel";
 import Main from "../../Layout/Main";
 import styled from "styled-components";
-import AccountOverview from "../../components/Overview/AccountOverview";
-import Rankings from "../../components/Overview/Rankings";
-import CommunityTrophys from "../../components/Overview/CommunityTrophys";
+import AccountOverview from "../../components/Account/Overview";
+import Rankings from "../../components/Account/Overview/Rankings/Rankings";
+import CommunityTrophys from "../../components/Account/Overview/Trophys/CommunityTrophys";
 import BasicLayout from "../../Layout/BasicLayout";
-import NavigationButtons from "../../Layout/NavigationButtons";
+import NavigationButtons from "../../components/Navigation";
 import useAuth from "../../hooks/useAuth";
 
 const StyledContainer = styled.div`

@@ -1,9 +1,9 @@
-import AsidePanel from "../../components/AsidePanel/AsidePanel";
+import AsidePanel from "../../components/AsidePanel";
 import Main from "../../Layout/Main";
-import ComingSoon from "../../components/UI/ComingSoon/ComingSoon";
+import ComingSoon from "../../components/UI/ComingSoon";
 import BasicLayout from "../../Layout/BasicLayout";
-import NavigationButtons from "../../Layout/NavigationButtons";
 import useAuth from "../../hooks/useAuth";
+import Navigation from "../../components/Navigation";
 
 const Claim = () => {
   useAuth();
@@ -14,7 +14,7 @@ const Claim = () => {
       <AsidePanel type="account" />
 
       <Main>
-        <NavigationButtons mt={40} path="/stadiums" />
+        <Navigation mt={40} path="/stadiums" />
         <ComingSoon width={400} height={400} />
       </Main>
     </>

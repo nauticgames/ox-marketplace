@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
+interface IComingSoonProps {
+  width: number;
+  height: number;
+}
+
 const StyledComingSoon = styled.div`
-  width: ${(props) => `${props.width}px`};
-  height: ${(props) => `${props.height}px`};
+  width: ${(props: IComingSoonProps) => `${props.width}px`};
+  height: ${(props: IComingSoonProps) => `${props.height}px`};
   position: relative;
   margin: auto;
   max-width: 90%;

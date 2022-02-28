@@ -1,6 +1,6 @@
-import AsidePanel from "../../components/AsidePanel/AsidePanel";
+import AsidePanel from "../../components/AsidePanel";
 import Main from "../../Layout/Main";
-import StadiumList from "../../components/Stadiums/PublicSale/StadiumList";
+import List from "../../components/Marketplace/Stadiums/Sale/List";
 import BasicLayout from "../../Layout/BasicLayout";
 
 const index = () => {
@@ -9,7 +9,7 @@ const index = () => {
       <BasicLayout />
       <AsidePanel type="marketplace" />
       <Main>
-        <StadiumList />
+        <List />
       </Main>
     </>
   );

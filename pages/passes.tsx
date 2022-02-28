@@ -1,7 +1,7 @@
-import AsidePanel from "../components/AsidePanel/AsidePanel";
+import AsidePanel from "../components/AsidePanel";
 import Main from "../Layout/Main";
-import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
 import BasicLayout from "../Layout/BasicLayout";
+import Info from "../components/Marketplace/Passes";
 
 const Passes = () => {
   return (
@@ -9,7 +9,7 @@ const Passes = () => {
       <BasicLayout />
       <AsidePanel type="marketplace" />
       <Main>
-        <ComingSoon width={400} height={400} />
+        <Info />
       </Main>
     </>
   );

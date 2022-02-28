@@ -1,6 +1,6 @@
-import AsidePanel from "../components/AsidePanel/AsidePanel";
+import AsidePanel from "../components/AsidePanel";
 import Main from "../Layout/Main";
-import ComingSoon from "../components/UI/ComingSoon/ComingSoon";
+import ComingSoon from "../components/UI/ComingSoon";
 import BasicLayout from "../Layout/BasicLayout";
 
 const Chests = () => {

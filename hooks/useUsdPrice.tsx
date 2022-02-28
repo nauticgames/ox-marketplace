@@ -1,22 +1,32 @@
-import { useEffect, useState } from "react";
-import { useTokenPrice } from "react-moralis";
+import { useContext, useEffect, useState } from "react";
+import { Web3Context } from "../context/Web3Context";
+import GetTokenPrice from "../services/TokenPrice";
 
 const useUsdPrice = () => {
   const [usdPrice, setUsdPrice] = useState(null);
-  const { data: formattedData } = useTokenPrice({
-    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    chain: "bsc",
-  });
+  const { enabled }: any = useContext(Web3Context);
 
   useEffect(() => {
-    if (!formattedData) return;
+    if (!enabled) return;
 
     const unsubscribe = () => {
-      setUsdPrice(formattedData.usdPrice);
+      GetUsdTokenPrice();
     };
 
     return unsubscribe();
-  }, [formattedData]);
+  }, [enabled]);
+
+  const GetUsdTokenPrice = async () => {
+    try {
+      const { usdPrice } = await GetTokenPrice(
+        "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+      );
+
+      setUsdPrice(usdPrice);
+    } catch {
+      return;
+    }
+  };
 
   return { usdPrice };
 };

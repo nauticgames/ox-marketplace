@@ -1,25 +1,29 @@
 import "semantic-ui-css/semantic.min.css";
 import "../styles/globals.css";
 import { Provider } from "react-redux";
-import store from "../redux/store";
-import Web3EnabledWrapped from "../hoc/Web3EnabledWrapped";
+import store from "../State/store";
+import Web3ContextWrapped from "../context/Web3Context";
 import { Toaster } from "react-hot-toast";
 import NextNprogress from "nextjs-progressbar";
 import { MoralisProvider } from "react-moralis";
+import { ThemeProvider } from "styled-components";
+import theme from "../ThemeConfig";
+import { MetaMaskInpageProvider } from "@metamask/providers";
 
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: MetaMaskInpageProvider;
+    __REDUX_DEVTOOLS_EXTENSION__?: any;
   }
 }
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   return (
     <>
       <style jsx global>{`
         body {
           background-color: 
-            #f5f5f5
+            ${theme.body}
           }
         }
       `}</style>
@@ -36,14 +40,16 @@ function MyApp({ Component, pageProps }) {
         appId={process.env.NEXT_PUBLIC_MORALIS_APPID}
         serverUrl={process.env.NEXT_PUBLIC_MORALIS_SERVERURL}
       >
-        <Web3EnabledWrapped>
+        <Web3ContextWrapped>
           <Provider store={store}>
-            <Component {...pageProps} />
+            <ThemeProvider theme={theme}>
+              <Component {...pageProps} />
+            </ThemeProvider>
           </Provider>
-        </Web3EnabledWrapped>
+        </Web3ContextWrapped>
       </MoralisProvider>
     </>
   );
-}
+};
 
-export default MyApp;
+export default App;
