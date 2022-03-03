@@ -1,6 +1,7 @@
 export interface IGetStadiumsProps {
   account: string;
-  chain: string;
-  order: "asc" | "desc";
+  order?: "asc" | "desc";
   page?: number;
+  filters?: null | [];
+  limitPerPage?: number;
 }

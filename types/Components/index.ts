@@ -9,16 +9,12 @@ export interface AsidePanelItem {
   src: string;
 }
 
-export interface IButtonProps {
+export interface IPanelButtonProps {
   name: string;
   path: string;
   label: string;
   src: string;
   active?: boolean;
-}
-
-export interface IPanelButtonProps {
-  active: boolean;
 }
 
 export interface IAsidePanelProps {
@@ -41,7 +37,7 @@ export interface ITab {
   component: any;
 }
 
-export interface IStadiumDetailsProps {
+export interface IStadiumMetadata {
   data: {
     itemId: number;
     external_url: string;

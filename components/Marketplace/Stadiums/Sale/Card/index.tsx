@@ -22,7 +22,7 @@ const Card = ({ stadium, usdPrice }) => {
 
   return (
     <SemanticCard onClick={showDetails} fluid>
-      <CardHeader content>
+      <CardHeader>
         <StyledTitle stadiumColor={stadiumColor}>
           <h2 className="label">{label}</h2>
           <Remaining type={type} />

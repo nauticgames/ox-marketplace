@@ -4,7 +4,6 @@ import StadiumCard from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import GetStadiumsAction from "../../../../State/actions/stadiums/inventory";
 import useUsdPrice from "../../../../hooks/useUsdPrice";
-import { CorrectHexChain } from "../../../../constants/chain";
 import { Web3Context } from "../../../../context/Web3Context";
 import EmptyAssets from "../Empty";
 import LoadingAssets from "../Loading";
@@ -14,7 +13,9 @@ import WithPaginationLayout from "../../../../Layout/WithPaginationLayout";
 
 const Stadiums = () => {
   const { query, push, pathname } = useRouter();
+
   const dispatch = useDispatch();
+
   const { stadiums, error, fetching } = useSelector(
     (state: any) => state.STADIUM_INVENTORY
   );
@@ -24,40 +25,58 @@ const Stadiums = () => {
   const { usdPrice } = useUsdPrice();
 
   const [totalPages, setTotalPages] = useState(1);
+  const [limitPerPage] = useState(8);
 
   useEffect((): any => {
-    if (!user) return;
+    if (!user || !stadiums) return;
+    let mounted = true;
 
     const unsubscribe = async () => {
       const balance = await GetStadiumsBalance(user);
 
-      setTotalPages(Math.ceil(balance / 12));
+      if (!balance) return;
+
+      if (mounted) setTotalPages(Math.ceil(balance / limitPerPage));
     };
 
-    return unsubscribe();
-  }, [user]);
+    unsubscribe();
+
+    return () => {
+      mounted = false;
+    };
+  }, [user, stadiums]);
 
   useEffect((): any => {
-    if (!user || !CorrectHexChain) return;
+    if (!user || typeof query.page === "undefined" || fetching) return;
+    let mounted = true;
 
-    const page = typeof query.page !== "undefined" ? Number(query.page) : 1;
+    let filters = null;
 
-    const unsubscribe = async () => {
-      dispatch(
-        GetStadiumsAction({
-          account: user,
-          chain: CorrectHexChain,
-          order: "asc",
-          page,
-        })
-      );
+    if (query.type) {
+      filters = { type: query.type };
+    }
+
+    const unsubscribe = () => {
+      if (mounted)
+        dispatch(
+          GetStadiumsAction({
+            account: user,
+            page: Number(query.page) < 1 ? 1 : Number(query.page),
+            filters,
+            limitPerPage,
+          })
+        );
     };
 
-    return unsubscribe();
-  }, [user, CorrectHexChain, query]);
+    unsubscribe();
+
+    return () => {
+      mounted = false;
+    };
+  }, [user, query]);
 
   const onChange = (activePage) => {
-    push({ pathname, query: { page: activePage } });
+    push({ pathname, query: { ...query, page: activePage } });
   };
 
   if (fetching) {

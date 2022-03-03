@@ -6,27 +6,30 @@ const useUsdPrice = () => {
   const [usdPrice, setUsdPrice] = useState(null);
   const { enabled }: any = useContext(Web3Context);
 
-  useEffect(() => {
+  useEffect((): any => {
     if (!enabled) return;
+    let mounted = true;
 
-    const unsubscribe = () => {
-      GetUsdTokenPrice();
+    const unsubscribe = async () => {
+      try {
+        const { usdPrice } = await GetTokenPrice(
+          "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+        );
+
+        if (mounted) {
+          setUsdPrice(usdPrice);
+        }
+      } catch {
+        return;
+      }
     };
 
-    return unsubscribe();
+    unsubscribe();
+
+    return () => {
+      mounted = false;
+    };
   }, [enabled]);
-
-  const GetUsdTokenPrice = async () => {
-    try {
-      const { usdPrice } = await GetTokenPrice(
-        "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
-      );
-
-      setUsdPrice(usdPrice);
-    } catch {
-      return;
-    }
-  };
 
   return { usdPrice };
 };

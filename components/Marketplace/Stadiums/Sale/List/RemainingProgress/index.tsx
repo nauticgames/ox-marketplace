@@ -10,7 +10,11 @@ const RemainingProgress = () => {
   useEffect(() => {
     if (!totalRemaining) return;
 
-    setColor(SetProgressColor(GetRemainingPercent(15000, totalRemaining)));
+    const unsubscribe = setColor(
+      SetProgressColor(GetRemainingPercent(15000, totalRemaining))
+    );
+
+    return () => unsubscribe;
   }, [totalRemaining]);
 
   if (totalRemaining === null) {

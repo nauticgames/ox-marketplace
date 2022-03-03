@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Grid } from "semantic-ui-react";
 import SectionInfo from "../SectionInfo";
@@ -6,11 +7,15 @@ const Skins = () => {
   return (
     <SectionInfo>
       <div className="gradient"></div>
-      <Grid.Column>
-        <img
-          src="/assets/img/players.png"
+      <Grid.Column className="image__container">
+        <Image
+          src="/assets/img/skins.png"
           alt="Players image"
-          className="players__img"
+          className="section__info-img"
+          width={2300}
+          height={1400}
+          quality={100}
+          objectFit="contain"
         />
       </Grid.Column>
       <Grid.Column>

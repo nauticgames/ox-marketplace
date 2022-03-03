@@ -9,18 +9,23 @@ const useTotalRemaining = () => {
 
   useEffect((): any => {
     if (!enabled) return;
+    let mounted = true;
 
     const unsubscribe = async () => {
       try {
         const result = await GetTotalSupply(StadiumContract);
 
-        setTotalRemaining(result);
+        if (mounted) setTotalRemaining(result);
       } catch {
         return;
       }
     };
 
-    return unsubscribe();
+    unsubscribe();
+
+    return () => {
+      mounted = false;
+    };
   }, [enabled]);
 
   return {

@@ -40,7 +40,7 @@ const Inventory = () => {
           </div>
         ))}
       </div>
-      {currentTab && currentTab}
+      {currentTab}
     </StyledInventory>
   );
 };

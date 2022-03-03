@@ -23,7 +23,7 @@ export function GetWbnbAllowanceAction(account) {
       const formattedAllowance = Number(Moralis.Units.FromWei(allowance));
 
       dispatch(GetWbnbAllowanceSuccess(formattedAllowance));
-    } catch (error) {
+    } catch {
       dispatch(GetWbnbAllowanceError());
       return toast.error("An error has ocurred, please refresh");
     }

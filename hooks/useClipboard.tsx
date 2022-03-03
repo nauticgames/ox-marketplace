@@ -6,13 +6,8 @@ const useClipboard = () => {
 
   const copy = (ref) => {
     if (copied) return;
-
-    const unsubscribe = () => {
-      CopyClipboard(ref);
-      setCopied(true);
-    };
-
-    return unsubscribe();
+    CopyClipboard(ref);
+    setCopied(true);
   };
 
   const CopyClipboard = (ref) => {

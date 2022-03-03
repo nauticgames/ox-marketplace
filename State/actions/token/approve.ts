@@ -31,7 +31,7 @@ export function ApproveWBNBAction(account) {
 
       await dispatch(GetWbnbAllowanceAction(account));
       await dispatch(ApproveWBNBSuccess());
-    } catch (error) {
+    } catch {
       dispatch(ApproveWBNBError());
       return toast.error("Please approve allowance before purchase");
     }

@@ -13,9 +13,9 @@ import useUsdPrice from "../../../../hooks/useUsdPrice";
 import PriceWithCommas from "../../../../utils/FormatPrice";
 import Data from "../Data";
 import cutAddress from "../../../../utils/CutAddress";
-import { IStadiumDetailsProps } from "../../../../types/Components";
+import { IStadiumMetadata } from "../../../../types/Components";
 
-const StadiumDetails = ({ data, price }: IStadiumDetailsProps) => {
+const StadiumDetails = ({ data, price }: IStadiumMetadata) => {
   const { owner, image, name, attributes } = data;
 
   const [formattedPrice, setFormattedPrice] = useState(null);
@@ -24,12 +24,17 @@ const StadiumDetails = ({ data, price }: IStadiumDetailsProps) => {
 
   useEffect(() => {
     if (!usdPrice || !price) return;
+    let mounted = true;
 
     const unsubscribe = () => {
-      setFormattedPrice(PriceWithCommas((usdPrice * price).toFixed(2)));
+      if (mounted)
+        setFormattedPrice(PriceWithCommas((usdPrice * price).toFixed(2)));
     };
+    unsubscribe();
 
-    return unsubscribe();
+    return () => {
+      mounted = false;
+    };
   }, [usdPrice]);
 
   const { stadiumColor, fee, maxParticipants } = Data.find(

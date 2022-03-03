@@ -29,6 +29,12 @@ const StyledSectionInfo = styled.div`
     );
   }
 
+  .image__container {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+  }
+
   img,
   h2,
   p,
@@ -37,10 +43,8 @@ const StyledSectionInfo = styled.div`
     z-index: 200;
   }
 
-  img {
-    width: 300px;
-    object-fit: contain;
-    margin-bottom: 30px;
+  .section__info-img {
+    aspect-ratio: 16 / 9;
   }
 
   h2 {
@@ -85,6 +89,10 @@ const StyledSectionInfo = styled.div`
     margin: 3% 0 40px 3%;
     min-height: 400px;
     flex-direction: row;
+
+    .image__container {
+      margin-bottom: 40px;
+    }
 
     img {
       margin-right: 40px;

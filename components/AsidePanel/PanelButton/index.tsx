@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { IButtonProps } from "../../../types/Components";
+import { IPanelButtonProps } from "../../../types/Components";
 import StyledPanelButton from "./styles";
 
-const PanelButton = ({ path, label, src, active }: IButtonProps) => {
+const PanelButton = ({ path, label, src, active }: IPanelButtonProps) => {
   const router = useRouter();
 
   const SwitchPage = (path: string) => {

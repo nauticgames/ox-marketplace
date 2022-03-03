@@ -7,20 +7,20 @@ const useRemaining = ({ type }: IStadiumsRemainingProps) => {
   const [remaining, setRemaining] = useState(null);
   const { enabled }: any = useContext(Web3Context);
 
-  useEffect((): any => {
+  useEffect(() => {
     if (!enabled) return;
+    let mounted = true;
 
     const unsubscribe = async () => {
-      try {
-        const result = await GetStadiumsRemaining(type);
-
-        setRemaining(result);
-      } catch {
-        return;
-      }
+      const result = await GetStadiumsRemaining(type);
+      if (mounted) setRemaining(result);
     };
 
-    return unsubscribe();
+    unsubscribe();
+
+    return () => {
+      mounted = false;
+    };
   }, [enabled]);
 
   return {
