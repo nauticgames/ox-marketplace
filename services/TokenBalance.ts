@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Moralis } from "moralis";
 import { BalanceOfABI } from "../abis";
 import { StadiumContract, WBNBContract } from "../constants/contracts";
