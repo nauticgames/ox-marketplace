@@ -1,6 +1,11 @@
+import { ReactChild, ReactChildren } from "react";
 import StyledContainer from "./styles";
 
-const ContainerLayout = ({ children }) => {
+interface IContainerLayoutProps {
+  children?: ReactChildren | ReactChild;
+}
+
+const ContainerLayout = ({ children }: IContainerLayoutProps) => {
   return <StyledContainer>{children}</StyledContainer>;
 };
 

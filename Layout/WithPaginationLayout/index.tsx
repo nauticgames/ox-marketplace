@@ -1,6 +1,12 @@
 import Pagination from "../../components/Pagination";
+import { IPaginationLayoutProps } from "../../types/Layout";
 
-const WithPaginationLayout = ({ children, totalPages, onChange, query }) => {
+const WithPaginationLayout = ({
+  children,
+  totalPages,
+  onChange,
+  query,
+}: IPaginationLayoutProps) => {
   return (
     <>
       {children}
