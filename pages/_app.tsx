@@ -1,5 +1,3 @@
-//@ts-ignore
-//@ts-nocheck
 import "semantic-ui-css/semantic.min.css";
 import "../styles/globals.css";
 import { Provider } from "react-redux";
@@ -11,6 +9,7 @@ import { MoralisProvider } from "react-moralis";
 import { ThemeProvider } from "styled-components";
 import theme from "../ThemeConfig";
 import { MetaMaskInpageProvider } from "@metamask/providers";
+import Head from "next/head";
 
 declare global {
   interface Window {
