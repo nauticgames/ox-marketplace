@@ -1,3 +1,5 @@
+//@ts-ignore
+//@ts-nocheck
 import "semantic-ui-css/semantic.min.css";
 import "../styles/globals.css";
 import { Provider } from "react-redux";
