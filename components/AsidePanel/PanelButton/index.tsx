@@ -1,3 +1,5 @@
+//@ts-ignore
+//@ts-nocheck
 import { useRouter } from "next/router";
 import { IPanelButtonProps } from "../../../types/Components";
 import StyledPanelButton from "./styles";
