@@ -8,4 +8,7 @@ module.exports = {
     preset: "default",
     quality: 100,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
