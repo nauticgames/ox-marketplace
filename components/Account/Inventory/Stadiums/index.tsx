@@ -75,7 +75,7 @@ const Stadiums = () => {
     };
   }, [user, query]);
 
-  const onChange = (activePage) => {
+  const onChange = (activePage: number) => {
     push({ pathname, query: { ...query, page: activePage } });
   };
 
