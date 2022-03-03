@@ -10,7 +10,7 @@ export interface IActionsLayoutProps {
 }
 
 export interface IMainLayoutProps {
-  children?: ReactChildren | ReactChild;
+  children?: any | ReactChildren[] | ReactChild[];
 }
 
 export interface IPaginationLayoutProps {
