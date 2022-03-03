@@ -3,9 +3,9 @@ import { TotalSupplyABI } from "../abis";
 import { CorrectHexChain } from "../constants/chain";
 
 const GetTotalSupply = async (address: string) => {
-  const totalSupply = await Moralis.Web3API.native.runContractFunction({
-    function_name: "totalSupply",
-    address,
+  const totalSupply = await Moralis.executeFunction({
+    functionName: "totalSupply",
+    contractAddress: address,
     abi: [TotalSupplyABI],
     chain: CorrectHexChain,
   });
