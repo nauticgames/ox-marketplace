@@ -1,13 +1,17 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-import AsidePanel from "../components/AsidePanel/AsidePanel";
+import { useRouter } from "next/router";
+import AsidePanel from "../components/AsidePanel";
 import BasicLayout from "../Layout/BasicLayout";
 
 const Home = () => {
-  const { replace } = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
-    replace("/stadiums");
+    const unsubscribe = () => {
+      router.replace("/stadiums");
+    };
+
+    return unsubscribe();
   }, []);
 
   return (

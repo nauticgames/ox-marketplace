@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import AsidePanel from "../../components/AsidePanel/AsidePanel";
+import AsidePanel from "../../components/AsidePanel";
 import BasicLayout from "../../Layout/BasicLayout";
-import NavigationButtons from "../../Layout/NavigationButtons";
+import NavigationButtons from "../../components/Navigation";
 import useAuth from "../../hooks/useAuth";
 
 const Index = () => {

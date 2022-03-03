@@ -1,26 +1,36 @@
 import { useEffect, useState } from "react";
 
 const useWindowSize = () => {
-  const isSSR = typeof window !== "undefined";
+  const isSSR = typeof window === "undefined";
+
   const [windowSize, setWindowSize] = useState({
     width: typeof window !== "undefined" && window.innerWidth,
     height: typeof window !== "undefined" && window.innerHeight,
   });
 
+  const [isMobile, setIsMobile] = useState(windowSize?.width < 768);
+
   const changeWindowSize = () => {
-    isSSR &&
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    if (isSSR) return;
+
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
   };
 
   useEffect(() => {
-    isSSR && window.addEventListener("resize", changeWindowSize);
+    setIsMobile(windowSize?.width < 768);
+  }, [windowSize]);
+
+  useEffect(() => {
+    if (isSSR) return;
+
+    window.addEventListener("resize", changeWindowSize);
 
     return () => {
-      isSSR && window.removeEventListener("resize", changeWindowSize);
+      window.removeEventListener("resize", changeWindowSize);
     };
-  }, []);
+  }, [isSSR]);
 
-  return windowSize;
+  return { windowSize, isMobile };
 };
 
 export default useWindowSize;

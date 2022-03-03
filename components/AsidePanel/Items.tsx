@@ -1,4 +1,6 @@
-export const MarketplaceItems = [
+import { AsidePanelItem } from "../../types/Components";
+
+export const Marketplace: AsidePanelItem[] = [
   {
     name: "stadiums",
     path: "/stadiums",
@@ -25,7 +27,7 @@ export const MarketplaceItems = [
   },
 ];
 
-export const AccountItems = [
+export const Account: AsidePanelItem[] = [
   {
     name: "overview",
     path: "/account/overview",
