@@ -38,7 +38,7 @@ const GetStadiumsBalance = async (account: string) => {
 
     return Number(balance);
   } catch {
-    return null;
+    return 0;
   }
 };
 

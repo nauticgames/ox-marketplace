@@ -28,17 +28,12 @@ const Stadiums = () => {
   const [limitPerPage] = useState(8);
 
   useEffect((): any => {
-    if (!user || typeof query.page === "undefined" || fetching) return;
     let mounted = true;
 
-    let filters = null;
-
-    if (query.type) {
-      filters = { type: query.type };
-    }
-
     const unsubscribe = async () => {
-      if (mounted) {
+      if (!user || fetching || typeof query.page === "undefined") return;
+
+      try {
         const balance = await GetStadiumsBalance(user);
 
         setTotalPages(Math.ceil(balance / limitPerPage));
@@ -48,20 +43,21 @@ const Stadiums = () => {
             account: user,
             order: "asc",
             page: Number(query.page) < 1 ? 1 : Number(query.page),
-            filters,
             balance,
             limitPerPage,
           })
         );
+      } catch {
+        return;
       }
     };
 
-    unsubscribe();
+    if (mounted) unsubscribe();
 
     return () => {
       mounted = false;
     };
-  }, [user, query]);
+  }, [user, query.page]);
 
   const onChange = (activePage: number) => {
     push({ pathname, query: { ...query, page: activePage } });
