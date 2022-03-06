@@ -9,7 +9,7 @@ const AsidePanelLayout = ({ showNav, children }: IAsidePanelLayoutProps) => {
   return (
     <StyledAsidePanel showNav={showNav}>
       {children}
-      {isMobile !== null && isMobile && <Nav />}
+      {isMobile && <Nav />}
     </StyledAsidePanel>
   );
 };

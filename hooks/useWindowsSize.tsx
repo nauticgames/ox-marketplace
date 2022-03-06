@@ -8,7 +8,7 @@ const useWindowSize = () => {
     height: typeof window !== "undefined" && window.innerHeight,
   });
 
-  const [isMobile, setIsMobile] = useState(windowSize?.width < 768);
+  const [isMobile, setIsMobile] = useState(null);
 
   const changeWindowSize = () => {
     if (isSSR) return;
