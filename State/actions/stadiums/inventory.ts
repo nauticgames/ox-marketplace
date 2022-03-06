@@ -1,5 +1,3 @@
-import axios from "axios";
-import { baseURI } from "../../../constants/baseURI";
 import { getTokensByOwner } from "../../../services/getNFTs";
 import getStadiumMetadata from "../../../services/getStadiumMetadata";
 import { IGetStadiumsProps } from "../../../types/State";
