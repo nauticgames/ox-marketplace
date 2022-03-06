@@ -1,7 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-const theme: DefaultTheme = {
-  body: "#f5f5f5",
+const theme = {
   primary: {
     red: {
       normal: "#ED2E2E",

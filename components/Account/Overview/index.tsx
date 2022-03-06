@@ -3,7 +3,7 @@ import { useMoralis } from "react-moralis";
 import Balances from "../../UI/Balances";
 import { Popup } from "semantic-ui-react";
 import { useRef } from "react";
-import cutAddress from "../../../utils/CutAddress";
+import cutAddress from "../../../utils/cutAddress";
 import StyledAccountOverview from "./styles";
 import useClipboard from "../../../hooks/useClipboard";
 

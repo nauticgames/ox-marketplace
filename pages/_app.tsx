@@ -21,12 +21,8 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <style jsx global>{`
-        * {
-          font-family: 'Poppins', sans-serif;
-        },
         body {
-          background-color: 
-            ${theme.body}
+          background-color: #f5f5f5
           }
         }
       `}</style>

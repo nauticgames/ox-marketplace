@@ -12,8 +12,8 @@ import {
 import useUsdPrice from "../../../../hooks/useUsdPrice";
 import Data from "../Data";
 import { IStadiumMetadata } from "../../../../types/Components";
-import cutAddress from "../../../../utils/CutAddress";
-import formatPrice from "../../../../utils/FormatPrice";
+import cutAddress from "../../../../utils/cutAddress";
+import formatPrice from "../../../../utils/formatPrice";
 
 const StadiumDetails = ({ data, price }: IStadiumMetadata) => {
   const { owner, image, name, attributes } = data;
