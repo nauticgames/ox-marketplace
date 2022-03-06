@@ -10,10 +10,10 @@ import {
   SectionCard,
 } from "./styles";
 import useUsdPrice from "../../../../hooks/useUsdPrice";
-import PriceWithCommas from "../../../../utils/FormatPrice";
 import Data from "../Data";
-import cutAddress from "../../../../utils/CutAddress";
 import { IStadiumMetadata } from "../../../../types/Components";
+import cutAddress from "../../../../utils/CutAddress";
+import formatPrice from "../../../../utils/FormatPrice";
 
 const StadiumDetails = ({ data, price }: IStadiumMetadata) => {
   const { owner, image, name, attributes } = data;
@@ -26,7 +26,7 @@ const StadiumDetails = ({ data, price }: IStadiumMetadata) => {
     if (!usdPrice || !price) return;
 
     const unsubscribe = () => {
-      setFormattedPrice(PriceWithCommas((usdPrice * price).toFixed(2)));
+      setFormattedPrice(formatPrice((usdPrice * price).toFixed(2)));
     };
 
     return () => unsubscribe();

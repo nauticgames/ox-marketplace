@@ -1,4 +1,4 @@
-import HandleRPCErrors from "../../../utils/HandleRPCErrors";
+import HandleRPCErrors from "../../../utils/handleRPCErrors";
 import toast from "react-hot-toast";
 import purchaseStadium from "../../../services/purchaseStadium";
 

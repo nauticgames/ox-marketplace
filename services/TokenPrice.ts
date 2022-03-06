@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const GetTokenPrice = async (address: string) => {
+const getTokenPrice = async (address: string) => {
   try {
     const {
       data: { data },
@@ -14,4 +14,4 @@ const GetTokenPrice = async (address: string) => {
   }
 };
 
-export default GetTokenPrice;
+export default getTokenPrice;

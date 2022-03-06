@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import GetTokenPrice from "../services/TokenPrice";
+import GetTokenPrice from "../services/tokenPrice";
 
 const useUsdPrice = () => {
   const [usdPrice, setUsdPrice] = useState(null);

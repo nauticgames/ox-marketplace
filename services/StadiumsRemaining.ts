@@ -3,7 +3,7 @@ import httpClient from "../config/axios";
 import { CorrectHexChain } from "../constants/chain";
 import { StadiumContract } from "../constants/contracts";
 
-const GetStadiumsRemaining = async (type) => {
+const getStadiumsRemaining = async (type) => {
   try {
     const { data } = await httpClient.post(
       `${StadiumContract}/function?chain=${CorrectHexChain}&function_name=stadiumsLeft`,
@@ -21,4 +21,4 @@ const GetStadiumsRemaining = async (type) => {
   }
 };
 
-export default GetStadiumsRemaining;
+export default getStadiumsRemaining;

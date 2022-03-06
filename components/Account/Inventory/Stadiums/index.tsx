@@ -8,7 +8,7 @@ import { Web3Context } from "../../../../context/Web3Context";
 import EmptyAssets from "../Empty";
 import LoadingAssets from "../Loading";
 import { useRouter } from "next/router";
-import { GetStadiumsBalance } from "../../../../services/TokenBalance";
+import { getStadiumsBalance } from "../../../../services/tokenBalance";
 import WithPaginationLayout from "../../../../Layout/WithPaginationLayout";
 
 const Stadiums = () => {
@@ -34,7 +34,7 @@ const Stadiums = () => {
       if (!user || fetching || typeof query.page === "undefined") return;
 
       try {
-        const balance = await GetStadiumsBalance(user);
+        const balance = await getStadiumsBalance(user);
 
         setTotalPages(Math.ceil(balance / limitPerPage));
 

@@ -4,7 +4,7 @@ import { CorrectHexChain } from "../constants/chain";
 import { StadiumContract, WBNBContract } from "../constants/contracts";
 import toast from "react-hot-toast";
 
-const ApproveWBNB = async (account) => {
+const approveWBNB = async (account) => {
   if (!account) {
     return toast.error("Network error, please refresh");
   }
@@ -29,4 +29,4 @@ const ApproveWBNB = async (account) => {
   }
 };
 
-export { ApproveWBNB };
+export { approveWBNB };

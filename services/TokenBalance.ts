@@ -4,7 +4,7 @@ import { StadiumContract, WBNBContract } from "../constants/contracts";
 import { CorrectHexChain } from "../constants/chain";
 import toast from "react-hot-toast";
 
-const GetWBNBBalance = async (account: string) => {
+const getWBNBBalance = async (account: string) => {
   try {
     const balance: any = await Moralis.executeFunction({
       functionName: "balanceOf",
@@ -24,7 +24,7 @@ const GetWBNBBalance = async (account: string) => {
   }
 };
 
-const GetStadiumsBalance = async (account: string) => {
+const getStadiumsBalance = async (account: string) => {
   try {
     const balance: any = await Moralis.executeFunction({
       functionName: "balanceOf",
@@ -42,4 +42,4 @@ const GetStadiumsBalance = async (account: string) => {
   }
 };
 
-export { GetWBNBBalance, GetStadiumsBalance };
+export { getWBNBBalance, getStadiumsBalance };

@@ -9,14 +9,14 @@ import { CorrectHexChain } from "../../../../../constants/chain";
 import Remaining from "../Remaining";
 import { useDispatch, useSelector } from "react-redux";
 import { StadiumPurchaseAction } from "../../../../../State/actions/stadiums/purchase";
-import { GetWBNBBalance } from "../../../../../services/TokenBalance";
+import { getWBNBBalance } from "../../../../../services/tokenBalance";
 import toast from "react-hot-toast";
 import { GetWbnbAllowanceAction } from "../../../../../State/actions/token/allowance";
 import { ApproveWBNBAction } from "../../../../../State/actions/token/approve";
 import { Web3Context } from "../../../../../context/Web3Context";
 import PurchaseActions from "./Actions";
 
-const Details = ({ data, remaining }) => {
+const Details = ({ data }) => {
   const { stadiumColor, label, fee, maxParticipants, price, img, type } = data;
 
   const { currentChain, switchChain }: any = useContext(Web3Context);
@@ -56,7 +56,7 @@ const Details = ({ data, remaining }) => {
     }
 
     try {
-      const balance = await GetWBNBBalance(account);
+      const balance = await getWBNBBalance(account);
 
       if (balance < price) {
         return toast.error("You don't have enough money");
