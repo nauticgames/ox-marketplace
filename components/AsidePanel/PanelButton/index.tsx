@@ -4,7 +4,7 @@ import StyledPanelButton from "./styles";
 
 const PanelButton = ({ path, label, src, active }: IPanelButtonProps) => {
   return (
-    <Link href={path}>
+    <Link href={path} passHref>
       <StyledPanelButton active={active}>
         <img src={src} alt={label} /> {label}
       </StyledPanelButton>

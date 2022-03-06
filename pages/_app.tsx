@@ -35,7 +35,8 @@ const App = ({ Component, pageProps }) => {
         startPosition={0.5}
         stopDelayMs={200}
         height={3}
-        showOnShallow={true}
+        showOnShallow={false}
+        options={{ easing: "ease", speed: 200 }}
       />
       <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
       <MoralisProvider
