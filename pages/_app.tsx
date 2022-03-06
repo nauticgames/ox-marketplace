@@ -9,7 +9,6 @@ import { MoralisProvider } from "react-moralis";
 import { ThemeProvider } from "styled-components";
 import theme from "../ThemeConfig";
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import Head from "next/head";
 
 declare global {
   interface Window {
@@ -22,6 +21,9 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <style jsx global>{`
+        * {
+          font-family: 'Poppins', sans-serif;
+        },
         body {
           background-color: 
             ${theme.body}

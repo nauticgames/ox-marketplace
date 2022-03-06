@@ -23,15 +23,15 @@ export default function GetStadiumsAction({
     try {
       dispatch(GetStadiums());
 
+      if (balance === 0) {
+        return dispatch(GetStadiumsSuccess([]));
+      }
+
       //initial id to search
       let offset = 0;
 
       if (balance > limitPerPage) {
         page > 1 && (offset = limitPerPage * (page - 1));
-      }
-
-      if (!balance) {
-        dispatch(GetStadiumsSuccess([]));
       }
 
       const ids = SortTokenIds(order, await getTokensByOwner(account));
