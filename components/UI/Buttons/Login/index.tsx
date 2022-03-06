@@ -6,12 +6,8 @@ import { Web3Context } from "../../../../context/Web3Context";
 const LoginButton = () => {
   const { login }: any = useContext(Web3Context);
 
-  const auth = async () => {
-    await login();
-  };
-
   return (
-    <StyledLoginButton onClick={auth}>
+    <StyledLoginButton onClick={login}>
       Sign in <Icon icon="logos:metamask-icon" />
     </StyledLoginButton>
   );

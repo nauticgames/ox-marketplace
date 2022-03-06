@@ -18,18 +18,17 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 
-  .column-1,
-  .column-2 {
+  .column {
     width: 100%;
   }
 
-  .column-1 {
+  .column:first-of-type {
     margin-top: 20px;
   }
 
-  .column-2 {
+  .column:nth-of-type(2) {
     display: flex;
     justify-content: space-between;
   }
@@ -39,7 +38,7 @@ const StyledContainer = styled.div`
     flex-direction: row;
     border: none;
 
-    .column-1 {
+    .column:first-of-type {
       display: flex;
       margin-top: 0;
     }

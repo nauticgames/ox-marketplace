@@ -6,7 +6,6 @@ import { StadiumContract, WBNBContract } from "../../../constants/contracts";
 export function GetWbnbAllowanceAction(account) {
   return async (dispatch) => {
     if (!account) {
-      toast.error("An error has ocurred, please refresh");
       return dispatch(GetWbnbAllowanceError());
     }
 

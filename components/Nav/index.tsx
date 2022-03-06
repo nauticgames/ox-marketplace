@@ -21,10 +21,10 @@ export default Nav;
 const Authenticated = () => {
   return (
     <StyledContainer>
-      <Grid.Column className="column-1">
+      <Grid.Column>
         <ExchangeButton />
       </Grid.Column>
-      <Grid.Column className="column-2">
+      <Grid.Column>
         <AccountButton />
         <LogoutButton />
       </Grid.Column>
@@ -35,7 +35,7 @@ const Authenticated = () => {
 const Unauthenticated = () => {
   return (
     <StyledContainer>
-      <Grid.Column className="column-1">
+      <Grid.Column>
         <LoginButton />
       </Grid.Column>
     </StyledContainer>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { IPanelButtonProps } from "../../../types/Components";
 
-const StyledPanelButton = styled.button`
+const StyledPanelButton = styled.a`
   width: 100%;
   height: 65px;
   display: flex;
@@ -20,6 +20,10 @@ const StyledPanelButton = styled.button`
     margin-right: 15px;
     width: 24px;
     height: 24px;
+  }
+
+  &:hover {
+    color: #535353;
   }
 
   @media (min-width: 768px) {

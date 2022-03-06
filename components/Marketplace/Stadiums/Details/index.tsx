@@ -24,17 +24,12 @@ const StadiumDetails = ({ data, price }: IStadiumMetadata) => {
 
   useEffect(() => {
     if (!usdPrice || !price) return;
-    let mounted = true;
 
     const unsubscribe = () => {
-      if (mounted)
-        setFormattedPrice(PriceWithCommas((usdPrice * price).toFixed(2)));
+      setFormattedPrice(PriceWithCommas((usdPrice * price).toFixed(2)));
     };
-    unsubscribe();
 
-    return () => {
-      mounted = false;
-    };
+    return () => unsubscribe();
   }, [usdPrice]);
 
   const { stadiumColor, fee, maxParticipants } = Data.find(

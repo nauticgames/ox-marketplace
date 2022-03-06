@@ -1,7 +1,7 @@
 import StyledGridContainer from "./styles";
 import Card from "../Card";
 import SaleData from "../Data";
-import { Grid, GridColumn, GridRow } from "semantic-ui-react";
+import { Grid, GridColumn } from "semantic-ui-react";
 import useUsdPrice from "../../../../../hooks/useUsdPrice";
 import RemainingProgress from "./RemainingProgress";
 import { Icon } from "@iconify/react";
@@ -11,7 +11,7 @@ const List = () => {
 
   return (
     <StyledGridContainer>
-      <Grid className="grid">
+      <Grid>
         <Grid.Row>
           <GridColumn computer={15} mobile={12} tablet={16}>
             <RemainingProgress />

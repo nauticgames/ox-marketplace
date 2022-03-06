@@ -26,8 +26,11 @@ export interface INavigationProps {
   path?: string;
 }
 
+export interface IStadiumsRemainingHookProps {
+  type: "0" | "1" | "2";
+}
 export interface IStadiumsRemainingProps {
-  type: 0 | 1 | 2;
+  type: "0" | "1" | "2";
 }
 
 export interface ITab {

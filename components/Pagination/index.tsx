@@ -1,5 +1,4 @@
 import {
-  Container,
   Grid,
   Icon,
   Pagination as SemanticPagination,

@@ -1,16 +1,20 @@
-import { Moralis } from "moralis";
 import { TotalSupplyABI } from "../abis";
 import { CorrectHexChain } from "../constants/chain";
+import httpClient from "../config/axios";
 
-const GetTotalSupply = async (address: string) => {
-  const totalSupply: any = await Moralis.executeFunction({
-    functionName: "totalSupply",
-    contractAddress: address,
-    abi: [TotalSupplyABI],
-    chain: CorrectHexChain,
-  });
+const getTotalSupply = async (address: string) => {
+  try {
+    const { data } = await httpClient.post(
+      `${address}/function?chain=${CorrectHexChain}&function_name=totalSupply`,
+      {
+        abi: [TotalSupplyABI],
+      }
+    );
 
-  return Number(totalSupply);
+    return Number(data);
+  } catch {
+    return null;
+  }
 };
 
-export default GetTotalSupply;
+export default getTotalSupply;

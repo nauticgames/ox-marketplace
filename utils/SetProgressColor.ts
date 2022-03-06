@@ -1,5 +1,5 @@
-const SetProgressColor = (width) => {
-  let color = "#39df65";
+const SetProgressColor = (width: number) => {
+  let color: string = "#39df65";
 
   if (width <= 75) {
     color = "#c6df39";

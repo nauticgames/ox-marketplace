@@ -1,14 +1,14 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { StyledExchangeButton } from "./styles";
 
 const ExchangeButton = () => {
-  const router = useRouter();
-
   return (
-    <StyledExchangeButton onClick={() => router.push("/exchange")}>
-      Exchange Luny
-      <img src="/assets/img/exchange-luny.svg" alt="Exchange luny" />
-    </StyledExchangeButton>
+    <Link href="/exchange">
+      <StyledExchangeButton>
+        Exchange Luny
+        <img src="/assets/img/exchange-luny.svg" alt="Exchange luny" />
+      </StyledExchangeButton>
+    </Link>
   );
 };
 
