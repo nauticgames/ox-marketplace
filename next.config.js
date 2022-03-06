@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: ["marketplace.oxsoccer.com", "ox-images.s3.amazonaws.com"],
   },

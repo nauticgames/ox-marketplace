@@ -6,17 +6,6 @@
     "react/no-unescaped-entities": 0,
     "@next/next/no-img-element": "off",
     "react-hooks/rules-of-hooks": "error",
-    "import/no-anonymous-default-export": [
-      "error",
-      {
-        "allowArray": false,
-        "allowArrowFunction": false,
-        "allowAnonymousClass": false,
-        "allowAnonymousFunction": true,
-        "allowCallExpression": true, // The true value here is for backward compatibility
-        "allowLiteral": false,
-        "allowObject": false
-      }
-    ]
+    "no-restricted-imports": "off"
   }
 }
