@@ -1,14 +1,14 @@
-import { Moralis } from "moralis";
+import axios from "axios";
 
 const GetTokenPrice = async (address: string) => {
   try {
-    const result = await Moralis.Web3API.token.getTokenPrice({
-      address,
-      chain: "0x38",
-      exchange: "pancakeswap-v2",
-    });
+    const {
+      data: { data },
+    } = await axios.get(
+      `https://api.pancakeswap.info/api/v2/tokens/${address}`
+    );
 
-    return result;
+    return Number(data.price);
   } catch {
     return null;
   }

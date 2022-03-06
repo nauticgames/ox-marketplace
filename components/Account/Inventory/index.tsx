@@ -14,11 +14,7 @@ const Inventory = () => {
   };
 
   useEffect(() => {
-    const { component } = Tabs.find((tab) =>
-      router.pathname.includes(tab.name)
-    );
-
-    setCurrentTab(component);
+    setCurrentTab(Tabs.find((tab) => router.pathname.includes(tab.name)));
   }, []);
 
   return (
@@ -40,7 +36,7 @@ const Inventory = () => {
           </div>
         ))}
       </div>
-      {currentTab}
+      {currentTab?.component}
     </StyledInventory>
   );
 };

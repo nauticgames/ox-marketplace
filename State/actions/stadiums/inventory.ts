@@ -1,8 +1,6 @@
-import axios from "axios";
-import { StadiumContract } from "../../../constants/contracts";
-import { baseURI } from "../../../constants/baseURI";
+import { getTokensByOwner } from "../../../services/getNFTs";
+import getStadiumMetadata from "../../../services/getStadiumMetadata";
 import { IGetStadiumsProps } from "../../../types/State";
-import GetNfts from "../../../services/GetNfts";
 
 interface IResponse {
   result: [];
@@ -11,52 +9,39 @@ interface IResponse {
   page: number;
   cursor: string;
   status: string;
+  balance: number;
 }
 
 export default function GetStadiumsAction({
   account,
   order,
   page,
+  balance,
   limitPerPage,
 }: IGetStadiumsProps) {
   return async (dispatch) => {
     try {
       dispatch(GetStadiums());
 
-      const { result }: IResponse = await GetNfts(account, StadiumContract);
+      //initial id to search
+      let offset = 0;
 
-      if (!result) {
-        dispatch(GetStadiumsSuccess(result));
+      if (balance > limitPerPage) {
+        page > 1 && (offset = limitPerPage * (page - 1));
       }
 
-      const ids = [];
+      if (!balance) {
+        dispatch(GetStadiumsSuccess([]));
+      }
+
+      const ids = SortTokenIds(order, await getTokensByOwner(account));
+
       const stadiums = [];
 
-      result.map(({ token_id }) => {
-        ids.push(Number(token_id));
-      });
-
-      const SortedIds = SortTokenIds(order, ids);
-
-      //initial id to map
-      let offset = 1;
-
-      if (ids.length > limitPerPage) {
-        if (page > 1) {
-          offset = limitPerPage * (page - 1) + 1;
-        }
-      }
-
-      for (
-        let i = offset;
-        i <= SortedIds.length && stadiums.length < limitPerPage;
-        i++
-      ) {
-        const index = SortedIds[i - 1];
-
+      //Fetch stadiums metadatas
+      for (let i = offset; i < balance && stadiums.length < limitPerPage; i++) {
         try {
-          const { data } = await axios.get(`${baseURI}${index}.json`);
-          stadiums.push(data);
+          stadiums.push(await getStadiumMetadata(ids[i]));
         } catch {
           continue;
         }
@@ -70,22 +55,9 @@ export default function GetStadiumsAction({
 }
 
 const SortTokenIds = (order: "asc" | "desc", ids: number[]) => {
-  let sorted = [];
-
-  switch (order) {
-    case "asc":
-      return (sorted = ids.sort((a, b) => {
-        return a - b;
-      }));
-    case "desc":
-      return (sorted = ids.sort((a, b) => {
-        return b - a;
-      }));
-    default:
-      return (sorted = ids.sort((a, b) => {
-        return a - b;
-      }));
-  }
+  return ids.sort((a, b) => {
+    return order === "asc" ? a - b : b - a;
+  });
 };
 
 const GetStadiums = () => ({

@@ -14,13 +14,22 @@ const useWeb3 = () => {
 
   useEffect(() => {
     if (!CheckMetamaskInstalled()) return;
+    let mounted = true;
 
     const unsubscribe = () => {
       Moralis.enableWeb3();
       setEnabled(true);
+
+      window.ethereum._metamask.isUnlocked().then((active) => {
+        !active && logout();
+      });
     };
 
-    return unsubscribe();
+    if (mounted) unsubscribe();
+
+    return () => {
+      mounted = false;
+    };
   }, [typeof window]);
 
   useEffect(() => {
@@ -43,16 +52,11 @@ const useWeb3 = () => {
       logout();
     });
 
-    window.ethereum.removeListener("chainChanged", () => null);
-  }, []);
-
-  useEffect(() => {
-    if (!CheckMetamaskInstalled()) return;
-
     window.ethereum.on("accountsChanged", () => {
       logout();
     });
 
+    window.ethereum.removeListener("chainChanged", () => null);
     window.ethereum.removeListener("accountsChanged", () => null);
   }, []);
 
@@ -68,18 +72,27 @@ const useWeb3 = () => {
     if (!CheckMetamaskInstalled()) return;
 
     if (!isAuthenticated) {
-      try {
-        if (Moralis.getChainId() !== CorrectHexChain) {
+      const isUnlocked = await window.ethereum._metamask.isUnlocked();
+
+      if (!isUnlocked) {
+        return toast.error("You need to unlock metamask");
+      }
+
+      if (Moralis.getChainId() !== CorrectHexChain) {
+        try {
           await switchChain();
+        } catch (error) {
           return;
         }
+      }
 
+      try {
         await authenticate({
           provider: "metamask",
           chainId: CorrectChainId,
           signingMessage: "Authenticate",
         });
-      } catch (error) {
+      } catch {
         return;
       }
     }

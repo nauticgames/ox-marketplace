@@ -1,27 +1,16 @@
-import { Moralis } from "moralis";
-import { StadiumContract } from "../../../constants/contracts";
-import { CorrectHexChain } from "../../../constants/chain";
-import { PurchaseStadiumABI } from "../../../abis";
 import HandleRPCErrors from "../../../utils/HandleRPCErrors";
 import toast from "react-hot-toast";
+import purchaseStadium from "../../../services/purchaseStadium";
 
 export function StadiumPurchaseAction(type) {
   return async (dispatch) => {
-    const options = {
-      functionName: "purchase",
-      contractAddress: StadiumContract,
-      chain: CorrectHexChain,
-      abi: [PurchaseStadiumABI],
-      params: {
-        _type: type,
-      },
-    };
-
     try {
       dispatch(InitPurchase());
-      const tx: any = await Moralis.executeFunction(options);
+
+      const tx = await purchaseStadium(type);
 
       await tx.wait();
+
       toast.success("Stadium purchased succesfull");
 
       dispatch(PurchaseSuccess());

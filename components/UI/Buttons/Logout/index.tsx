@@ -6,12 +6,8 @@ import { StyledLogoutButton } from "./styles";
 const LogoutButton = () => {
   const { logout }: any = useContext(Web3Context);
 
-  const signOut = async () => {
-    await logout();
-  };
-
   return (
-    <StyledLogoutButton onClick={signOut}>
+    <StyledLogoutButton onClick={logout}>
       <Icon icon="fe:logout" color="white" />
     </StyledLogoutButton>
   );

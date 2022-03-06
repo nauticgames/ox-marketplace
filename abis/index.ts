@@ -87,7 +87,33 @@ export const StadiumsLeftABI = {
 export const TotalSupplyABI = {
   inputs: [],
   name: "totalSupply",
-  outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+  outputs: [
+    {
+      internalType: "uint256",
+      name: "",
+      type: "uint256",
+    },
+  ],
+  stateMutability: "view",
+  type: "function",
+};
+
+export const GetTokensByOwnerABI = {
+  inputs: [
+    {
+      internalType: "address",
+      name: "_owner",
+      type: "address",
+    },
+  ],
+  name: "getTokensByOwner",
+  outputs: [
+    {
+      internalType: "uint256[]",
+      name: "",
+      type: "uint256[]",
+    },
+  ],
   stateMutability: "view",
   type: "function",
 };

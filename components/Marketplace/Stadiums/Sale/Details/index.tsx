@@ -16,7 +16,7 @@ import { ApproveWBNBAction } from "../../../../../State/actions/token/approve";
 import { Web3Context } from "../../../../../context/Web3Context";
 import PurchaseActions from "./Actions";
 
-const Details = ({ data }) => {
+const Details = ({ data, remaining }) => {
   const { stadiumColor, label, fee, maxParticipants, price, img, type } = data;
 
   const { currentChain, switchChain }: any = useContext(Web3Context);

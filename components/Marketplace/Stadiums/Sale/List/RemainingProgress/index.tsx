@@ -10,24 +10,24 @@ const RemainingProgress = () => {
   useEffect(() => {
     if (!totalRemaining) return;
 
-    const unsubscribe = setColor(
-      SetProgressColor(GetRemainingPercent(15000, totalRemaining))
-    );
+    const unsubscribe = () => {
+      setColor(SetProgressColor(handleRemainingPercent(15000, totalRemaining)));
+    };
 
-    return () => unsubscribe;
+    return unsubscribe();
   }, [totalRemaining]);
+
+  const handleRemainingPercent = (total = 15000, left: number) => {
+    return ((total - left) / total) * 100;
+  };
 
   if (totalRemaining === null) {
     return <Progress width={100} color={"#39df65"} />;
   }
 
-  const GetRemainingPercent = (total = 15000, left: number) => {
-    return ((total - left) / total) * 100;
-  };
-
   return (
     <Progress
-      width={GetRemainingPercent(15000, totalRemaining)}
+      width={handleRemainingPercent(15000, totalRemaining)}
       color={color}
       message="Sold out"
     />

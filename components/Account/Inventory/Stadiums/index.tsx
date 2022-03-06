@@ -28,25 +28,6 @@ const Stadiums = () => {
   const [limitPerPage] = useState(8);
 
   useEffect((): any => {
-    if (!user || !stadiums) return;
-    let mounted = true;
-
-    const unsubscribe = async () => {
-      const balance = await GetStadiumsBalance(user);
-
-      if (!balance) return;
-
-      if (mounted) setTotalPages(Math.ceil(balance / limitPerPage));
-    };
-
-    unsubscribe();
-
-    return () => {
-      mounted = false;
-    };
-  }, [user, stadiums]);
-
-  useEffect((): any => {
     if (!user || typeof query.page === "undefined" || fetching) return;
     let mounted = true;
 
@@ -56,16 +37,23 @@ const Stadiums = () => {
       filters = { type: query.type };
     }
 
-    const unsubscribe = () => {
-      if (mounted)
+    const unsubscribe = async () => {
+      if (mounted) {
+        const balance = await GetStadiumsBalance(user);
+
+        setTotalPages(Math.ceil(balance / limitPerPage));
+
         dispatch(
           GetStadiumsAction({
             account: user,
+            order: "asc",
             page: Number(query.page) < 1 ? 1 : Number(query.page),
             filters,
+            balance,
             limitPerPage,
           })
         );
+      }
     };
 
     unsubscribe();
@@ -88,17 +76,7 @@ const Stadiums = () => {
   }
 
   if (stadiums?.length === 0) {
-    return (
-      <>
-        <WithPaginationLayout
-          query={query}
-          onChange={onChange}
-          totalPages={totalPages}
-        >
-          <EmptyAssets title="You don't have any assets in this category" />
-        </WithPaginationLayout>
-      </>
-    );
+    return <EmptyAssets title="You don't have any assets in this category" />;
   }
 
   return (

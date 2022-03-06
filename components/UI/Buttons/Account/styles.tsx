@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledAccountButton = styled.button`
+const StyledAccountButton = styled.a`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,6 +19,10 @@ const StyledAccountButton = styled.button`
     width: 20px;
     height: 20px;
     margin-left: 10px;
+  }
+
+  &:hover {
+    color: #ffffff;
   }
 
   @media (min-width: 768px) {

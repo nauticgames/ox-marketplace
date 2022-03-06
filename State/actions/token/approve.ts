@@ -9,7 +9,6 @@ export function ApproveWBNBAction(account) {
   return async (dispatch) => {
     if (!account) {
       dispatch(ApproveWBNBError());
-      return toast.error("Network error, please refresh");
     }
 
     const options = {
