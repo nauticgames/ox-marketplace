@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useTotalRemaining from "../../../../../../hooks/useTotalRemaining";
-import SetProgressColor from "../../../../../../utils/SetProgressColor";
+import setProgressColor from "../../../../../../utils/setProgressColor";
 import Progress from "../../../../../UI/Progress";
 
 const RemainingProgress = () => {
@@ -11,7 +11,7 @@ const RemainingProgress = () => {
     if (!totalRemaining) return;
 
     const unsubscribe = () => {
-      setColor(SetProgressColor(handleRemainingPercent(15000, totalRemaining)));
+      setColor(setProgressColor(handleRemainingPercent(15000, totalRemaining)));
     };
 
     return unsubscribe();

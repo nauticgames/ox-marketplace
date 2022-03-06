@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { IWeb3Context, Web3Context } from "../context/Web3Context";
-import GetStadiumsRemaining from "../services/StadiumsRemaining";
+import GetStadiumsRemaining from "../services/stadiumsRemaining";
 import { IStadiumsRemainingHookProps } from "../types/Components";
 
 const useRemaining = ({ type }: IStadiumsRemainingHookProps) => {

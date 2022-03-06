@@ -1,5 +1,5 @@
-const FormatPrice = (price: string | number) => {
+const formatPrice = (price: string | number) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export default FormatPrice;
+export default formatPrice;

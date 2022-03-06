@@ -1,4 +1,4 @@
-const SetProgressColor = (width: number) => {
+const setProgressColor = (width: number) => {
   let color: string = "#39df65";
 
   if (width <= 75) {
@@ -16,4 +16,4 @@ const SetProgressColor = (width: number) => {
   return color;
 };
 
-export default SetProgressColor;
+export default setProgressColor;

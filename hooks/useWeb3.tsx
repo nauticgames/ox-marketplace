@@ -3,7 +3,7 @@ import { Moralis } from "moralis";
 import { CorrectHexChain, CorrectChainId } from "../constants/chain";
 import toast from "react-hot-toast";
 import { useMoralis } from "react-moralis";
-import CheckMetamaskInstalled from "../utils/CheckMetamaskInstalled";
+import CheckMetamaskInstalled from "../utils/handleCheckWeb3Installed";
 
 const useWeb3 = () => {
   const [enabled, setEnabled] = useState(false);

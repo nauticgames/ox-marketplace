@@ -3,7 +3,7 @@ import { GetTokensByOwnerABI } from "../abis";
 import { CorrectHexChain } from "../constants/chain";
 import { StadiumContract } from "../constants/contracts";
 
-const getAllNftsByOwner = async (account, contract, limit, offset) => {
+const getAllNFTByOwner = async (account, contract, limit, offset) => {
   try {
     const result: any = await Moralis.Web3API.account.getNFTs({
       chain: CorrectHexChain,
@@ -39,4 +39,4 @@ const getTokensByOwner = async (account: string) => {
   }
 };
 
-export { getAllNftsByOwner, getTokensByOwner };
+export { getAllNFTByOwner, getTokensByOwner };

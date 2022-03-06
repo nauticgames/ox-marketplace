@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { IRpcError } from "../types/Utils";
 
-const HandleRPCErrors = (error: IRpcError) => {
+const handleRPCErrors = (error: IRpcError) => {
   try {
     if (error.code !== -32603) return;
     const { message } = error.data || null;
@@ -12,4 +12,4 @@ const HandleRPCErrors = (error: IRpcError) => {
   }
 };
 
-export default HandleRPCErrors;
+export default handleRPCErrors;
