@@ -1,10 +1,5 @@
 @import "./normalize.css";
 
-.ui {
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
 button {
   border: none;
   outline: none;
@@ -14,6 +9,10 @@ body,
 html {
   height: initial;
   overflow-x: hidden;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
 }
 
 button,
