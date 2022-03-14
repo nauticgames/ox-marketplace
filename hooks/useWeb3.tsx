@@ -20,9 +20,9 @@ const useWeb3 = () => {
       Moralis.enableWeb3();
       setEnabled(true);
 
-      window.ethereum._metamask.isUnlocked().then((active) => {
-        !active && logout();
-      });
+      const isUnlocked = window.ethereum._metamask.isUnlocked();
+
+      if (!isUnlocked) logout();
     };
 
     if (mounted) unsubscribe();
@@ -42,8 +42,6 @@ const useWeb3 = () => {
 
   useEffect(() => {
     if (!handleCheckWeb3Installed()) return;
-
-    console.log(currentChain, enabled, isAuthenticated);
 
     setCurrentChain(window.ethereum.chainId);
   }, [enabled]);
