@@ -6,6 +6,7 @@
     "react/no-unescaped-entities": 0,
     "@next/next/no-img-element": "off",
     "react-hooks/rules-of-hooks": "error",
-    "no-restricted-imports": "off"
+    "no-restricted-imports": "off",
+    "no-console": "warn"
   }
 }
