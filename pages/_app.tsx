@@ -9,8 +9,6 @@ import { ThemeProvider } from "styled-components";
 import theme from "../ThemeConfig";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { MoralisProvider } from "react-moralis";
-import { useEffect } from "react";
-import { Moralis } from "moralis";
 
 declare global {
   interface Window {
@@ -20,13 +18,6 @@ declare global {
 }
 
 const App = ({ Component, pageProps }) => {
-  useEffect(() => {
-    Moralis.start({
-      appId: process.env.NEXT_PUBLIC_MORALIS_APPID,
-      serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVERURL,
-    });
-  }, []);
-
   return (
     <>
       <style jsx global>{`
@@ -47,7 +38,7 @@ const App = ({ Component, pageProps }) => {
       <MoralisProvider
         appId={process.env.NEXT_PUBLIC_MORALIS_APPID}
         serverUrl={process.env.NEXT_PUBLIC_MORALIS_SERVERURL}
-        environment="browser"
+        initializeOnMount
       >
         <Web3ContextWrapped>
           <Provider store={store}>
