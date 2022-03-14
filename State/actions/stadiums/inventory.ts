@@ -1,16 +1,6 @@
-import { getTokensByOwner } from "../../../services/getNFTs";
+import { getTokensByOwner } from "../../../services/getNfts";
 import getStadiumMetadata from "../../../services/getStadiumMetadata";
 import { IGetStadiumsProps } from "../../../types/State";
-
-interface IResponse {
-  result: [];
-  total: number;
-  page_size: number;
-  page: number;
-  cursor: string;
-  status: string;
-  balance: number;
-}
 
 export default function GetStadiumsAction({
   account,

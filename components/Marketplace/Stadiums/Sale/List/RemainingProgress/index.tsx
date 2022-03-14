@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useTotalRemaining from "../../../../../../hooks/useTotalRemaining";
+import useTotalStadiumsRemaining from "../../../../../../hooks/useTotalStadiumsRemaining";
 import setProgressColor from "../../../../../../utils/setProgressColor";
 import Progress from "../../../../../UI/Progress";
 
 const RemainingProgress = () => {
-  const { totalRemaining } = useTotalRemaining();
+  const { totalRemaining } = useTotalStadiumsRemaining();
   const [color, setColor] = useState(null);
 
   useEffect(() => {

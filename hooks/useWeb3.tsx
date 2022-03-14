@@ -3,7 +3,8 @@ import { Moralis } from "moralis";
 import { CorrectHexChain, CorrectChainId } from "../constants/chain";
 import toast from "react-hot-toast";
 import { useMoralis } from "react-moralis";
-import CheckMetamaskInstalled from "../utils/handleCheckWeb3Installed";
+import addNetwork from "../services/addNetwork";
+import handleCheckWeb3Installed from "../utils/handleCheckWeb3Installed";
 
 const useWeb3 = () => {
   const [enabled, setEnabled] = useState(false);
@@ -13,7 +14,7 @@ const useWeb3 = () => {
     useMoralis();
 
   useEffect(() => {
-    if (!CheckMetamaskInstalled()) return;
+    if (!handleCheckWeb3Installed()) return;
     let mounted = true;
 
     const unsubscribe = () => {
@@ -45,7 +46,7 @@ const useWeb3 = () => {
   }, [chainId]);
 
   useEffect(() => {
-    if (!CheckMetamaskInstalled()) return;
+    if (!handleCheckWeb3Installed()) return;
 
     window.ethereum.on("chainChanged", () => {
       window.location.reload();
@@ -62,14 +63,14 @@ const useWeb3 = () => {
 
   const switchChain = async () => {
     try {
-      await Moralis.switchNetwork(CorrectHexChain);
+      await Moralis.switchNetwork(CorrectChainId);
     } catch {
-      toast.error("Invalid network, please switch");
+      await addNetwork();
     }
   };
 
   const login = async () => {
-    if (!CheckMetamaskInstalled()) return;
+    if (!handleCheckWeb3Installed() || !enabled) return;
 
     if (!isAuthenticated) {
       const isUnlocked = await window.ethereum._metamask.isUnlocked();
@@ -78,22 +79,20 @@ const useWeb3 = () => {
         return toast.error("You need to unlock metamask");
       }
 
-      if (Moralis.getChainId() !== CorrectHexChain) {
-        try {
-          await switchChain();
-        } catch (error) {
-          return;
-        }
-      }
+      const currentChain = Moralis.getChainId();
 
-      try {
-        await authenticate({
-          provider: "metamask",
-          chainId: CorrectChainId,
-          signingMessage: "Authenticate",
-        });
-      } catch {
-        return;
+      if (currentChain !== CorrectHexChain) {
+        await switchChain();
+      } else {
+        try {
+          await authenticate({
+            provider: "metamask",
+            chainId: CorrectChainId,
+            signingMessage: "Authenticate",
+          });
+        } catch {
+          toast.error("Authenticate error");
+        }
       }
     }
   };

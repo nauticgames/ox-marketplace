@@ -1,12 +1,11 @@
 import axios from "axios";
+import pancakeBaseURI from "../constants/pancakeBaseURI";
 
 const getTokenPrice = async (address: string) => {
   try {
     const {
       data: { data },
-    } = await axios.get(
-      `https://api.pancakeswap.info/api/v2/tokens/${address}`
-    );
+    } = await axios.get(`${pancakeBaseURI}${address}`);
 
     return Number(data.price);
   } catch {

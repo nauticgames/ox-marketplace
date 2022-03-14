@@ -1,8 +1,8 @@
-import useRemaining from "../../../../../hooks/useRemaining";
+import useStadiumsRemaining from "../../../../../hooks/useStadiumsRemaining";
 import { IStadiumsRemainingProps } from "../../../../../types/Components";
 
 const Remaining = ({ type }: IStadiumsRemainingProps) => {
-  const { remaining } = useRemaining({ type });
+  const { remaining } = useStadiumsRemaining({ type });
 
   if (remaining === null) {
     return (
