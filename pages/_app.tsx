@@ -5,10 +5,12 @@ import store from "../State/store";
 import Web3ContextWrapped from "../context/Web3Context";
 import { Toaster } from "react-hot-toast";
 import NextNprogress from "nextjs-progressbar";
-import { MoralisProvider } from "react-moralis";
 import { ThemeProvider } from "styled-components";
 import theme from "../ThemeConfig";
 import { MetaMaskInpageProvider } from "@metamask/providers";
+import { MoralisProvider } from "react-moralis";
+import { useEffect } from "react";
+import { Moralis } from "moralis";
 
 declare global {
   interface Window {
@@ -18,6 +20,13 @@ declare global {
 }
 
 const App = ({ Component, pageProps }) => {
+  useEffect(() => {
+    Moralis.start({
+      appId: process.env.NEXT_PUBLIC_MORALIS_APPID,
+      serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVERURL,
+    });
+  }, []);
+
   return (
     <>
       <style jsx global>{`
@@ -36,9 +45,9 @@ const App = ({ Component, pageProps }) => {
       />
       <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
       <MoralisProvider
-        initializeOnMount
         appId={process.env.NEXT_PUBLIC_MORALIS_APPID}
         serverUrl={process.env.NEXT_PUBLIC_MORALIS_SERVERURL}
+        environment="browser"
       >
         <Web3ContextWrapped>
           <Provider store={store}>

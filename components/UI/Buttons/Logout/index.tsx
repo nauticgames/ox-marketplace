@@ -4,11 +4,7 @@ import { IWeb3Context, Web3Context } from "../../../../context/Web3Context";
 import { StyledLogoutButton } from "./styles";
 
 const LogoutButton = () => {
-  const { logout }: IWeb3Context = useContext(Web3Context);
-
-  const signOut = async () => {
-    await logout();
-  };
+  const { signOut }: IWeb3Context = useContext(Web3Context);
 
   return (
     <StyledLogoutButton onClick={signOut}>
