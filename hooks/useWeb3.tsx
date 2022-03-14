@@ -10,8 +10,7 @@ const useWeb3 = () => {
   const [enabled, setEnabled] = useState(false);
   const [currentChain, setCurrentChain] = useState(null);
   const [user, setUser] = useState(null);
-  const { logout, authenticate, account, chainId, isAuthenticated } =
-    useMoralis();
+  const { logout, authenticate, account, isAuthenticated } = useMoralis();
 
   useEffect(() => {
     if (!handleCheckWeb3Installed()) return;
@@ -43,8 +42,11 @@ const useWeb3 = () => {
 
   useEffect(() => {
     if (!handleCheckWeb3Installed()) return;
+
+    console.log(currentChain, enabled, isAuthenticated);
+
     setCurrentChain(window.ethereum.chainId);
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
     if (!handleCheckWeb3Installed()) return;
@@ -79,6 +81,7 @@ const useWeb3 = () => {
       if (!isUnlocked) {
         return toast.error("You need to unlock metamask");
       }
+
       if (currentChain !== CorrectHexChain) {
         await switchChain();
       } else {
