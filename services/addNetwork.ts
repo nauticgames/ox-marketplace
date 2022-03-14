@@ -4,7 +4,7 @@ import { CorrectChainId } from "../constants/chain";
 const TESTNET_RPC_URL = "https://data-seed-prebsc-1-s1.binance.org:8545/";
 const MAINNET_RPC_URL = "https://bsc-dataseed.binance.org/";
 const TESTNET_CHAINNAME = "Binance Smart Chain - Testnet";
-const MAINNET_CHAINNAME = "Binance Smart Chain - MAINNET";
+const MAINNET_CHAINNAME = "Binance Smart Chain - Mainnet";
 const TESTNET_EXPLORER = "https://testnet.bscscan.com/";
 const MAINNET_EXPLORER = "https://bscscan.com/";
 
