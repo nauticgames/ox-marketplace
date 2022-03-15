@@ -16,8 +16,8 @@ const useWeb3 = () => {
     if (!handleCheckWeb3Installed()) return;
     let mounted = true;
 
-    const unsubscribe = () => {
-      Moralis.enableWeb3();
+    const unsubscribe = async () => {
+      await Moralis.enableWeb3();
       setEnabled(true);
 
       const isUnlocked = window.ethereum._metamask.isUnlocked();
@@ -25,7 +25,7 @@ const useWeb3 = () => {
       if (!isUnlocked) logout();
     };
 
-    if (mounted) unsubscribe();
+    unsubscribe();
 
     return () => {
       mounted = false;
