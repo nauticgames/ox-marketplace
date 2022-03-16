@@ -5,10 +5,10 @@ import { IStadiumsRemainingHookProps } from "../types/Components";
 
 const useRemaining = ({ type }: IStadiumsRemainingHookProps) => {
   const [remaining, setRemaining] = useState(null);
-  const { enabled }: IWeb3Context = useContext(Web3Context);
+  const { web3Provider }: IWeb3Context = useContext(Web3Context);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!web3Provider) return;
     let mounted = true;
 
     const unsubscribe = async () => {
@@ -25,7 +25,7 @@ const useRemaining = ({ type }: IStadiumsRemainingHookProps) => {
     return () => {
       mounted = false;
     };
-  }, [enabled]);
+  }, [web3Provider]);
 
   return {
     remaining,

@@ -5,10 +5,10 @@ import getTotalSupply from "../services/getTotalSupply";
 
 const useTotalRemaining = () => {
   const [totalRemaining, setTotalRemaining] = useState(null);
-  const { enabled }: IWeb3Context = useContext(Web3Context);
+  const { web3Provider }: IWeb3Context = useContext(Web3Context);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!web3Provider) return;
     let mounted = true;
 
     const unsubscribe = async () => {
@@ -25,7 +25,7 @@ const useTotalRemaining = () => {
     return () => {
       mounted = false;
     };
-  }, [enabled]);
+  }, [web3Provider]);
 
   return {
     totalRemaining,

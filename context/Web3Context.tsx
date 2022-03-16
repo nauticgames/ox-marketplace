@@ -4,19 +4,20 @@ import useWeb3 from "../hooks/useWeb3";
 export const Web3Context = createContext({});
 
 export interface IWeb3Context {
-  user?: null | string;
-  currentChain?: null | string;
-  enabled?: null | boolean;
+  user?: string;
   switchChain?: () => void;
   login?: () => void;
   signOut?: () => void;
+  web3Provider?: any;
 }
 
 const Web3ContextWrapped = ({ children }) => {
-  const { switchChain, login, user, signOut } = useWeb3();
+  const { switchChain, login, user, signOut, web3Provider } = useWeb3();
 
   return (
-    <Web3Context.Provider value={{ switchChain, login, user, signOut }}>
+    <Web3Context.Provider
+      value={{ switchChain, login, user, signOut, web3Provider }}
+    >
       {children}
     </Web3Context.Provider>
   );

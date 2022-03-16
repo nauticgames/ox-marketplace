@@ -37,7 +37,7 @@ const useWeb3 = () => {
     }
 
     setUser(account);
-  }, [isAuthenticated]);
+  }, [account, isAuthenticated]);
 
   useEffect(() => {
     if (!web3Provider) return;
