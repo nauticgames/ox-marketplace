@@ -13,13 +13,10 @@ export interface IWeb3Context {
 }
 
 const Web3ContextWrapped = ({ children }) => {
-  const { currentChain, enabled, switchChain, login, user, signOut } =
-    useWeb3();
+  const { switchChain, login, user, signOut } = useWeb3();
 
   return (
-    <Web3Context.Provider
-      value={{ currentChain, enabled, switchChain, login, user, signOut }}
-    >
+    <Web3Context.Provider value={{ switchChain, login, user, signOut }}>
       {children}
     </Web3Context.Provider>
   );
