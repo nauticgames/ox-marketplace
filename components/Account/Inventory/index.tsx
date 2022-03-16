@@ -30,6 +30,7 @@ const Inventory = () => {
             className={`tab ${tab.name} ${
               router.pathname.includes(tab.name) ? "active" : ""
             }`}
+            color={tab.color}
           >
             <h3>{tab.label}</h3>
             <img src={tab.img} alt={`${tab.label} Icon`} />

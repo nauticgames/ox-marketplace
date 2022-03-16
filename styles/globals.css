@@ -1,26 +1,31 @@
 @import "./normalize.css";
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap");
 
 button {
   border: none;
   outline: none;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: inherit;
+  margin: initial;
+}
+
 body,
 html {
   height: initial;
   overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  font-family: "Poppins", sans-serif;
-}
-
-button,
-h1,
-h2,
-h3,
-p {
-  font-family: "Poppins", sans-serif;
+.ui * {
+  font-family: inherit;
   margin: 0;
   padding: 0;
 }

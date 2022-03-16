@@ -4,6 +4,10 @@ interface IStadiumCardProps {
   stadiumColor: string;
 }
 
+interface IInventoryTabsProps {
+  color: string;
+}
+
 const StyledInventory = styled.div`
   width: 100%;
   padding: 20px;
@@ -29,102 +33,65 @@ const StyledInventory = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
 
-    .tab {
-      width: 48%;
-      padding: 20px 30px;
-      margin-bottom: 10px;
-      border-radius: 5px 5px 0 0;
-      opacity: 0.45;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 90px;
-
-      img {
-        width: 22px;
-        height: 22px;
-        object-fit: contain;
-        margin-left: 15px;
-      }
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-
-      h3 {
-        font-weight: 700;
-        font-size: 1.2em;
-        font-family: "Baloo 2", sans-serif;
-      }
-    }
-
-    .stadiums {
-      border-bottom: 5px solid #f34b4b;
-      border-bottom-width: 0;
-
-      h3 {
-        color: #f34b4b;
-      }
-    }
-
-    .chests {
-      border-bottom: 5px solid #db7028;
-      border-bottom-width: 0;
-
-      h3 {
-        color: #db7028;
-      }
-    }
-
-    .skins {
-      border-bottom: 5px solid #4666d0;
-      border-bottom-width: 0;
-
-      h3 {
-        color: #4666d0;
-      }
-    }
-
-    .passes {
-      border-bottom: 5px solid #48cc5c;
-      border-bottom-width: 0;
-
-      h3 {
-        color: #48cc5c;
-      }
-    }
-
-    .active {
-      background: linear-gradient(
-        180deg,
-        #f3f3f3 0%,
-        rgba(255, 255, 255, 0) 100%
-      );
-
-      border-bottom-width: 5px;
-      opacity: 1;
-    }
-
     @media (min-width: 768px) {
       justify-content: flex-start;
+    }
+  }
+`;
 
-      .tab {
-        margin-right: 20px;
-        cursor: pointer;
-        width: initial;
-        margin-bottom: 0;
-        min-height: initial;
+const StyledInventoryTab = styled.div`
+  width: 48%;
+  padding: 20px 30px;
+  margin-bottom: 10px;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 5px solid transparent;
+  opacity: 0.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${(props: IInventoryTabsProps) => props.color};
+  overflow: hidden;
 
-        h3 {
-          font-size: 1.4em;
-        }
+  h3 {
+    font-size: 1.3em;
+    font-family: "Baloo 2", sans-serif;
+  }
 
-        &:hover {
-          cursor: pointer;
-          opacity: 1;
-          transition: opacity 0.2s ease-in-out;
-        }
-      }
+  img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    margin-left: 15px;
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &.active {
+    opacity: 1;
+    background: linear-gradient(
+      180deg,
+      #f3f3f3 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+
+    border-bottom: 5px solid ${(props: IInventoryTabsProps) => props.color};
+  }
+
+  @media (min-width: 768px) {
+    width: initial;
+    margin-right: 20px;
+    justify-content: center;
+
+    h3 {
+      font-size: 1.4em;
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.2s ease-in-out;
     }
   }
 `;
@@ -226,4 +193,5 @@ export {
   StyledInventory,
   EmptyAssetsTitle,
   StyledStadiumCard,
+  StyledInventoryTab,
 };

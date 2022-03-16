@@ -38,6 +38,7 @@ export interface ITab {
   label: string;
   img: string;
   component: any;
+  color: string;
 }
 
 export interface IStadiumMetadata {
