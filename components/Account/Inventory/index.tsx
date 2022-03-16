@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { StyledInventory } from "./styles";
+import { StyledInventory, StyledInventoryTab } from "./styles";
 import Tabs from "./Tabs";
 
 const Inventory = () => {
@@ -24,17 +24,17 @@ const Inventory = () => {
       </div>
       <div className="tabs">
         {Tabs?.map((tab, index) => (
-          <div
+          <StyledInventoryTab
             key={index}
             onClick={() => changeTab(tab.name)}
-            className={`tab ${tab.name} ${
+            className={`tab ${
               router.pathname.includes(tab.name) ? "active" : ""
             }`}
             color={tab.color}
           >
             <h3>{tab.label}</h3>
             <img src={tab.img} alt={`${tab.label} Icon`} />
-          </div>
+          </StyledInventoryTab>
         ))}
       </div>
       {currentTab?.component}

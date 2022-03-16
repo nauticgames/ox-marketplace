@@ -4,7 +4,7 @@ import StadiumCard from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import GetStadiumsAction from "../../../../State/actions/stadiums/inventory";
 import useUsdPrice from "../../../../hooks/useUsdPrice";
-import { Web3Context } from "../../../../context/Web3Context";
+import { IWeb3Context, Web3Context } from "../../../../context/Web3Context";
 import EmptyAssets from "../Empty";
 import LoadingAssets from "../Loading";
 import { useRouter } from "next/router";
@@ -20,7 +20,7 @@ const Stadiums = () => {
     (state: any) => state.STADIUM_INVENTORY
   );
 
-  const { user }: any = useContext(Web3Context);
+  const { user }: IWeb3Context = useContext(Web3Context);
 
   const { usdPrice } = useUsdPrice();
 

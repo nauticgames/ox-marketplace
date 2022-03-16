@@ -8,7 +8,7 @@ import addNetwork from "../services/addNetwork";
 const useWeb3 = () => {
   const [web3Provider, setWeb3Provider] = useState(null);
   const [user, setUser] = useState(null);
-  const { logout, authenticate, account, isAuthenticated } = useMoralis();
+  const { logout, authenticate, account, isAuthenticated, web3 } = useMoralis();
 
   useEffect(() => {
     if (typeof window.ethereum === "undefined") return;
@@ -37,17 +37,17 @@ const useWeb3 = () => {
     }
 
     setUser(account);
-  }, [isAuthenticated]);
+  }, [account, isAuthenticated]);
 
   useEffect(() => {
     if (!web3Provider) return;
 
     window.ethereum.on("chainChanged", () => {
-      logout();
+      signOut();
     });
 
     window.ethereum.on("accountsChanged", () => {
-      logout();
+      signOut();
     });
 
     window.ethereum.removeListener("chainChanged", () => null);
@@ -71,7 +71,7 @@ const useWeb3 = () => {
       return toast.error("You need to unlock metamask first");
     }
 
-    if (web3Provider.network.chainId !== CorrectChainId) {
+    if (web3?.network.chainId !== CorrectChainId) {
       return switchChain();
     }
 
