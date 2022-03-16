@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { Container, Grid } from "semantic-ui-react";
 import { Title, Price, StyledDetails, SectionCard } from "../../Details/styles";
 import useUsdPrice from "../../../../../hooks/useUsdPrice";
-import { CorrectHexChain } from "../../../../../constants/chain";
+import { CorrectChainId } from "../../../../../constants/chain";
 import Remaining from "../Remaining";
 import { useDispatch, useSelector } from "react-redux";
 import { StadiumPurchaseAction } from "../../../../../State/actions/stadiums/purchase";
@@ -13,15 +13,15 @@ import { getWBNBBalance } from "../../../../../services/tokenBalance";
 import toast from "react-hot-toast";
 import { GetWbnbAllowanceAction } from "../../../../../State/actions/token/allowance";
 import { ApproveWBNBAction } from "../../../../../State/actions/token/approve";
-import { Web3Context } from "../../../../../context/Web3Context";
+import { IWeb3Context, Web3Context } from "../../../../../context/Web3Context";
 import PurchaseActions from "./Actions";
 
 const Details = ({ data }) => {
   const { stadiumColor, label, fee, maxParticipants, price, img, type } = data;
 
-  const { currentChain, switchChain }: any = useContext(Web3Context);
+  const { switchChain, web3Provider }: IWeb3Context = useContext(Web3Context);
 
-  const { isAuthenticated, account } = useMoralis();
+  const { isAuthenticated, account, web3 } = useMoralis();
 
   const { usdPrice } = useUsdPrice();
   const dispatch = useDispatch();
@@ -33,21 +33,25 @@ const Details = ({ data }) => {
   const { approveFetching } = useSelector((state: any) => state.TOKEN_APPROVE);
 
   useEffect(() => {
-    if (!account) return;
+    if (!web3Provider) return;
 
     const unsubscribe = () => {
       dispatch(GetWbnbAllowanceAction(account));
     };
 
     return unsubscribe();
-  }, [account]);
+  }, [web3Provider]);
 
   const approveWBNB = async () => {
+    if (web3.network.chainId !== CorrectChainId) {
+      return switchChain();
+    }
+
     dispatch(ApproveWBNBAction(account));
   };
 
   const purchase = async () => {
-    if (currentChain !== CorrectHexChain) {
+    if (web3.network.chainId !== CorrectChainId) {
       return switchChain();
     }
 
