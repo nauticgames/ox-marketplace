@@ -1,6 +1,5 @@
-import Document, { Html, Main, NextScript, Head } from "next/document";
+import Document from "next/document";
 import { ServerStyleSheet } from "styled-components";
-import { GoogleFonts } from "nextjs-google-fonts/GoogleFonts";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -25,17 +24,5 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
-  }
-
-  render() {
-    return (
-      <Html>
-        <Head>{GoogleFonts()}</Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    );
   }
 }
