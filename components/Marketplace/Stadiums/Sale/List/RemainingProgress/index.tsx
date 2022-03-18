@@ -1,33 +1,39 @@
 import { useEffect, useState } from "react";
-import useTotalStadiumsRemaining from "../../../../../../hooks/useTotalStadiumsRemaining";
-import setProgressColor from "../../../../../../utils/setProgressColor";
+import { StadiumContract } from "../../../../../../constants/contracts";
+import useTotalSupply from "../../../../../../hooks/useTotalSupply";
+import handleRemainingPercent from "../../../../../../utils/handleRemainingPercent";
 import Progress from "../../../../../UI/Progress";
+import handleProgressBarColors from "./handleProgressBarColors";
 
 const RemainingProgress = () => {
-  const { totalRemaining } = useTotalStadiumsRemaining();
+  const { totalSupply } = useTotalSupply({ contract: StadiumContract });
   const [color, setColor] = useState(null);
 
   useEffect(() => {
-    if (!totalRemaining) return;
+    if (!totalSupply) return;
+    let mounted = true;
 
     const unsubscribe = () => {
-      setColor(setProgressColor(handleRemainingPercent(15000, totalRemaining)));
+      if (mounted)
+        setColor(
+          handleProgressBarColors(handleRemainingPercent(15000, totalSupply))
+        );
     };
 
-    return unsubscribe();
-  }, [totalRemaining]);
+    unsubscribe();
 
-  const handleRemainingPercent = (total = 15000, left: number) => {
-    return ((total - left) / total) * 100;
-  };
+    return () => {
+      mounted = false;
+    };
+  }, [totalSupply]);
 
-  if (totalRemaining === null) {
+  if (totalSupply === null) {
     return <Progress width={100} color={"#39df65"} />;
   }
 
   return (
     <Progress
-      width={handleRemainingPercent(15000, totalRemaining)}
+      width={handleRemainingPercent(15000, totalSupply)}
       color={color}
       message="Sold out"
     />

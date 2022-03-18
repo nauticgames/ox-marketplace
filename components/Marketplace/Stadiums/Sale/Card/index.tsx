@@ -14,14 +14,15 @@ const Card = ({ stadium, usdPrice }) => {
 
   const router = useRouter();
 
-  const showDetails = () => {
-    router.push({
-      pathname: `/stadiums/sale${path}`,
-    });
-  };
-
   return (
-    <SemanticCard onClick={showDetails} fluid>
+    <SemanticCard
+      onClick={() =>
+        router.push({
+          pathname: `/stadiums/sale${path}`,
+        })
+      }
+      fluid
+    >
       <CardHeader>
         <StyledTitle stadiumColor={stadiumColor}>
           <h2 className="label">{label}</h2>

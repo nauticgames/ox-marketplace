@@ -1,21 +1,16 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import useInventoryTab from "../../../hooks/useInventoryTab";
 import { StyledInventory, StyledInventoryTab } from "./styles";
 import Tabs from "./Tabs";
 
 const Inventory = () => {
   const router = useRouter();
-  const [currentTab, setCurrentTab] = useState(null);
+  const TabComponent = useInventoryTab();
 
-  const changeTab = (path: string) => {
+  const handleChangeTab = (path: string) => {
     if (router.pathname.includes(path)) return;
-
     router.push(`/account/inventory/${path}`);
   };
-
-  useEffect(() => {
-    setCurrentTab(Tabs.find((tab) => router.pathname.includes(tab.name)));
-  }, []);
 
   return (
     <StyledInventory>
@@ -26,7 +21,7 @@ const Inventory = () => {
         {Tabs?.map((tab, index) => (
           <StyledInventoryTab
             key={index}
-            onClick={() => changeTab(tab.name)}
+            onClick={() => handleChangeTab(tab.name)}
             className={`tab ${
               router.pathname.includes(tab.name) ? "active" : ""
             }`}
@@ -37,7 +32,7 @@ const Inventory = () => {
           </StyledInventoryTab>
         ))}
       </div>
-      {currentTab?.component}
+      {TabComponent}
     </StyledInventory>
   );
 };

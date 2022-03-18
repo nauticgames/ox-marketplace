@@ -4,7 +4,7 @@ const initialState = {
   success: false,
 };
 
-export default function (state = initialState, action) {
+export default function StadiumsPurchaseReducer(state = initialState, action) {
   switch (action.type) {
     case "STADIUM_PURCHASE":
       return {

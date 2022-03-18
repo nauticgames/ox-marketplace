@@ -5,24 +5,9 @@ import BasicLayout from "../../../Layout/BasicLayout";
 import NavigationButtons from "../../../components/Navigation";
 import useAuth from "../../../hooks/useAuth";
 import ContainerLayout from "../../../Layout/Container";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
 
-const Stadiums = ({ page }) => {
+const Stadiums = () => {
   useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (page <= 1) {
-      router.replace({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          page,
-        },
-      });
-    }
-  }, []);
 
   return (
     <>
@@ -43,17 +28,17 @@ export default Stadiums;
 export async function getServerSideProps(ctx) {
   const { page } = ctx.query;
 
-  if (typeof page === "undefined" || Number(page) < 1) {
+  if (typeof page === "undefined") {
     return {
-      props: {
-        page: 1,
+      redirect: {
+        destination: "/account/inventory/stadiums/?page=1",
+        permanent: false,
       },
+      props: {},
     };
   }
 
   return {
-    props: {
-      page: Number(page),
-    },
+    props: {},
   };
 }

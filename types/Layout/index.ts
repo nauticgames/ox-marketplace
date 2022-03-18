@@ -17,7 +17,5 @@ export interface IPaginationLayoutProps {
   children?: ReactChild | ReactChildren;
   totalPages: number;
   onChange: (activePage: number) => void;
-  query: {
-    page?: undefined | number;
-  };
+  page?: any;
 }

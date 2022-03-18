@@ -23,7 +23,7 @@ const PurchaseActions = ({
     );
   }
 
-  if (fetching.allowance) {
+  if (fetching.allowance || allowance.wbnb === null) {
     return (
       <ActionsLayout>
         <Loading active={fetching.allowance} />
