@@ -10,11 +10,6 @@ export function GetStadiumsDetailsAction(id: string | number) {
       const result = data.result[0];
       const owner = result.owner_of;
 
-      if (result.metadata) {
-        const parseMetadata = JSON.parse(result.metadata);
-        const stadium = { ...parseMetadata, owner };
-        return dispatch(GetDetailsSuccess(stadium));
-      }
 
       const metadata = await getStadiumMetadata(id);
       const stadium = { ...metadata, owner };
