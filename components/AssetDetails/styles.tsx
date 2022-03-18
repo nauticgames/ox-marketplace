@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledAssetDetails = styled.main`
+const StyledAssetDetails = styled.div`
   position: relative;
   margin: 20px auto 60px auto;
   width: 90%;

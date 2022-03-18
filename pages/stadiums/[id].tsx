@@ -1,89 +1,70 @@
-import { useContext, useEffect } from "react";
-import { useRouter, withRouter } from "next/router";
+import { useEffect } from "react";
 import Details from "../../components/Marketplace/Stadiums/Details";
 import AssetDetails from "../../components/AssetDetails";
-import BasicLayout from "../../Layout/BasicLayout";
-import NavigationButtons from "../../components/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ClearStadiumDataStateAction,
   GetStadiumsDetailsAction,
 } from "../../State/actions/stadiums/details";
-import { CorrectHexChain } from "../../constants/chain";
-import AsidePanel from "../../components/AsidePanel";
-import useWindowSize from "../../hooks/useWindowsSize";
 import AssetNotFound from "../../components/AssetDetails/NotFound";
 import LoadingAsset from "../../components/AssetDetails/Loading";
-import { Web3Context } from "../../context/Web3Context";
+import AssetLayout from "../../Layout/Asset";
 
-const Id = () => {
-  const {
-    query: { id },
-  } = useRouter();
-
+const Id = ({ id }) => {
   const dispatch = useDispatch();
 
   const { fetching, error, data } = useSelector(
     (state: any) => state.STADIUM_DETAILS
   );
 
-  const { isMobile } = useWindowSize();
-
-  const { user }: any = useContext(Web3Context);
-
   useEffect(() => {
+    let mounted = true;
+
     const unsubscribe = () => {
       dispatch(ClearStadiumDataStateAction());
+      dispatch(GetStadiumsDetailsAction(id));
     };
 
-    return unsubscribe();
+    if (mounted) unsubscribe();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
-
-  useEffect(() => {
-    if (!id || !CorrectHexChain) return;
-
-    const unsubscribe = () => {
-      dispatch(GetStadiumsDetailsAction(CorrectHexChain, id));
-    };
-
-    return unsubscribe();
-  }, [id, CorrectHexChain]);
 
   if (fetching) {
     return (
-      <>
-        <BasicLayout />
-        {isMobile && <AsidePanel type="marketplace" />}
-        <NavigationButtons mt={120} path="/stadiums" />
+      <AssetLayout>
         <LoadingAsset />
-      </>
+      </AssetLayout>
     );
   }
 
   if (error) {
     return (
-      <>
-        <BasicLayout />
-        {isMobile && <AsidePanel type="marketplace" />}
-        <NavigationButtons mt={120} path="/stadiums" />
+      <AssetLayout>
         <AssetNotFound />
-      </>
+      </AssetLayout>
     );
   }
 
   return (
-    <>
-      <BasicLayout />
-      {isMobile && <AsidePanel type="marketplace" />}
-      <NavigationButtons
-        mt={120}
-        path={user ? "/account/inventory/stadiums" : "/stadiums"}
-      />
+    <AssetLayout>
       <AssetDetails>
         <Details data={data} />
       </AssetDetails>
-    </>
+    </AssetLayout>
   );
 };
 
-export default withRouter(Id);
+export default Id;
+
+export async function getServerSideProps(ctx) {
+  const { id } = ctx.query;
+
+  return {
+    props: {
+      id,
+    },
+  };
+}

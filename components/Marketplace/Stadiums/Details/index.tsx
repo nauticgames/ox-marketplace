@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Container, Grid } from "semantic-ui-react";
 import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
 import {
   StyledOwnerAddress,
   Title,
@@ -13,27 +12,14 @@ import useUsdPrice from "../../../../hooks/useUsdPrice";
 import Data from "../Data";
 import { IStadiumMetadata } from "../../../../types/Components";
 import cutAddress from "../../../../utils/cutAddress";
-import formatPrice from "../../../../utils/formatPrice";
 
 const StadiumDetails = ({ data, price }: IStadiumMetadata) => {
   const { owner, image, name, attributes } = data;
 
-  const [formattedPrice, setFormattedPrice] = useState(null);
-
-  const { usdPrice } = useUsdPrice();
-
-  useEffect(() => {
-    if (!usdPrice || !price) return;
-
-    const unsubscribe = () => {
-      setFormattedPrice(formatPrice((usdPrice * price).toFixed(2)));
-    };
-
-    return () => unsubscribe();
-  }, [usdPrice]);
+  const { formattedPrice } = useUsdPrice();
 
   const { stadiumColor, fee, maxParticipants } = Data.find(
-    (type) => type.name === attributes[0].value
+    (data) => data.name === attributes[0].value
   );
 
   return (
@@ -55,13 +41,12 @@ const StadiumDetails = ({ data, price }: IStadiumMetadata) => {
           />
         </Grid.Column>
         <Grid.Column computer={7} tablet={8} mobile={16}>
-          {price &&
-            formattedPrice(
-              <Price>
-                <p>{price} WBNB</p>
-                <span>${formattedPrice}</span>
-              </Price>
-            )}
+          {price && (
+            <Price>
+              <p>{price} WBNB</p>
+              <span>${formattedPrice}</span>
+            </Price>
+          )}
           <SectionCard>
             <StyledDetails>
               <h2 className="section__title">Details</h2>

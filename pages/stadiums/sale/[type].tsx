@@ -1,56 +1,41 @@
-import { useRouter, withRouter } from "next/router";
-import { useEffect, useState } from "react";
 import AssetDetails from "../../../components/AssetDetails";
 import Details from "../../../components/Marketplace/Stadiums/Sale/Details";
 import SaleData from "../../../components/Marketplace/Stadiums/Sale/Data";
 import AssetNotFound from "../../../components/AssetDetails/NotFound";
-import LoadingAsset from "../../../components/AssetDetails/Loading";
-import StadiumsSaleLayout from "../../../Layout/Stadiums/Sale";
+import AssetLayout from "../../../Layout/Asset";
 
-const Type = () => {
-  const { query } = useRouter();
-
-  const [stadiumData, setStadiumData] = useState(null);
-
-  useEffect(() => {
-    if (!query.type) return;
-
-    const data = SaleData.find((stadium) => stadium.name === query.type);
-
-    setStadiumData(data);
-  }, [query]);
-
-  if (!query.type) {
+const Type = ({ data }) => {
+  if (!data) {
     return (
       <>
-        <StadiumsSaleLayout>
-          <LoadingAsset />
-        </StadiumsSaleLayout>
-      </>
-    );
-  }
-
-  if (!stadiumData) {
-    return (
-      <>
-        <StadiumsSaleLayout>
+        <AssetLayout>
           <AssetNotFound />
-        </StadiumsSaleLayout>
+        </AssetLayout>
       </>
     );
   }
 
   return (
     <>
-      <StadiumsSaleLayout>
+      <AssetLayout>
         <AssetDetails>
-          {stadiumData && (
-            <Details data={stadiumData} remaining={query?.remaining || null} />
-          )}
+          <Details data={data} />
         </AssetDetails>
-      </StadiumsSaleLayout>
+      </AssetLayout>
     </>
   );
 };
 
-export default withRouter(Type);
+export default Type;
+
+export async function getServerSideProps(ctx) {
+  const { type } = ctx.query;
+
+  const data = SaleData.find((stadium) => stadium.name === type);
+
+  return {
+    props: {
+      data: data || null,
+    },
+  };
+}

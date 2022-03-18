@@ -4,7 +4,7 @@ const initialState = {
   fetching: false,
 };
 
-export default function (state = initialState, action) {
+export default function StadiumsInventoryReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_STADIUMS":
       return {

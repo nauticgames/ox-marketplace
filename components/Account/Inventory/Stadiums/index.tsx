@@ -3,7 +3,6 @@ import { Grid } from "semantic-ui-react";
 import StadiumCard from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import GetStadiumsAction from "../../../../State/actions/stadiums/inventory";
-import useUsdPrice from "../../../../hooks/useUsdPrice";
 import { IWeb3Context, Web3Context } from "../../../../context/Web3Context";
 import EmptyAssets from "../Empty";
 import LoadingAssets from "../Loading";
@@ -21,8 +20,6 @@ const Stadiums = () => {
   );
 
   const { user }: IWeb3Context = useContext(Web3Context);
-
-  const { usdPrice } = useUsdPrice();
 
   const [totalPages, setTotalPages] = useState(1);
   const [limitPerPage] = useState(8);
@@ -59,7 +56,7 @@ const Stadiums = () => {
     };
   }, [user, query.page]);
 
-  const onChange = (activePage: number) => {
+  const handleChangePage = (activePage: number) => {
     push({ pathname, query: { ...query, page: activePage } });
   };
 
@@ -76,26 +73,24 @@ const Stadiums = () => {
   }
 
   return (
-    <>
-      <WithPaginationLayout
-        query={query}
-        onChange={onChange}
-        totalPages={totalPages}
-      >
-        <Grid style={{ marginTop: 40, minHeight: 400 }}>
-          {stadiums?.map((stadium, index) => (
-            <Grid.Column
-              computer={4}
-              mobile={8}
-              tablet={8}
-              key={parseInt(stadium.tokenId) || index}
-            >
-              <StadiumCard stadium={stadium} usdPrice={usdPrice} price={null} />
-            </Grid.Column>
-          ))}
-        </Grid>
-      </WithPaginationLayout>
-    </>
+    <WithPaginationLayout
+      page={typeof query.page === "undefined" ? 1 : query.page}
+      onChange={handleChangePage}
+      totalPages={totalPages}
+    >
+      <Grid style={{ marginTop: 40, minHeight: 400 }}>
+        {stadiums?.map((stadium, index) => (
+          <Grid.Column
+            computer={4}
+            mobile={8}
+            tablet={8}
+            key={parseInt(stadium.tokenId) || index}
+          >
+            <StadiumCard stadium={stadium} />
+          </Grid.Column>
+        ))}
+      </Grid>
+    </WithPaginationLayout>
   );
 };
 

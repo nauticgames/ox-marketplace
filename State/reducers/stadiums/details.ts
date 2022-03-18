@@ -4,7 +4,7 @@ const initialState = {
   error: false,
 };
 
-export default function (state = initialState, action) {
+export default function StadiumDetailsReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_STADIUMS_DETAILS_SUCCESS":
       return {

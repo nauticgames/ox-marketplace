@@ -1,25 +1,5 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import AsidePanel from "../components/AsidePanel";
-import BasicLayout from "../Layout/BasicLayout";
-
-const Home = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const unsubscribe = () => {
-      router.replace("/stadiums");
-    };
-
-    return unsubscribe();
-  }, []);
-
-  return (
-    <>
-      <BasicLayout />
-      <AsidePanel type="marketplace" />
-    </>
-  );
+const index = () => {
+  return null;
 };
 
-export default Home;
+export default index;

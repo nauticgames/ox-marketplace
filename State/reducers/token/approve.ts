@@ -16,7 +16,10 @@ const initialState = {
   },
 };
 
-export default function (state: InitialState = initialState, action) {
+export default function TokenApproveReducer(
+  state: InitialState = initialState,
+  action
+) {
   switch (action.type) {
     case "TOKEN_APPROVE":
       return {

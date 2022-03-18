@@ -4,19 +4,18 @@ import { CorrectHexChain } from "../constants/chain";
 import { StadiumContract } from "../constants/contracts";
 
 const getStadiumsRemaining = async (type) => {
+  const url = `${StadiumContract}/function?chain=${CorrectHexChain}&function_name=stadiumsLeft`;
+
   try {
-    const { data } = await httpClient.post(
-      `${StadiumContract}/function?chain=${CorrectHexChain}&function_name=stadiumsLeft`,
-      {
-        abi: [StadiumsLeftABI],
-        params: {
-          "": String(type),
-        },
-      }
-    );
+    const { data } = await httpClient.post(url, {
+      abi: [StadiumsLeftABI],
+      params: {
+        "": String(type),
+      },
+    });
 
     return Number(data);
-  } catch (error) {
+  } catch {
     return null;
   }
 };

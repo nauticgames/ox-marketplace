@@ -1,4 +1,4 @@
-const setProgressColor = (width: number) => {
+const handleProgressBarColors = (width: number) => {
   let color: string = "#39df65";
 
   if (width <= 75) {
@@ -16,4 +16,4 @@ const setProgressColor = (width: number) => {
   return color;
 };
 
-export default setProgressColor;
+export default handleProgressBarColors;

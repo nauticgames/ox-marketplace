@@ -5,13 +5,13 @@ const WithPaginationLayout = ({
   children,
   totalPages,
   onChange,
-  query,
+  page,
 }: IPaginationLayoutProps) => {
   return (
     <>
       {children}
       <Pagination
-        activePage={typeof query.page !== "undefined" ? query.page : 1}
+        activePage={page}
         onChange={onChange}
         totalPages={totalPages}
         disabled={totalPages === 1}

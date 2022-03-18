@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { StyledStadiumCard } from "../../styles";
 import Data from "../../../../Marketplace/Stadiums/Data";
 
-const Card = ({ stadium, price, usdPrice }) => {
+const Card = ({ stadium }) => {
   const { itemId, image, attributes } = stadium;
   const router = useRouter();
 
@@ -31,13 +30,6 @@ const Card = ({ stadium, price, usdPrice }) => {
           priority
         />
       </div>
-      {price &&
-        usdPrice(
-          <p>
-            <Icon icon="icomoon-free:price-tag" color="#c2c2c2" />
-            {price} <span>${(usdPrice * price).toFixed(2)}</span>
-          </p>
-        )}
     </StyledStadiumCard>
   );
 };

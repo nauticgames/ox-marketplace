@@ -2,7 +2,7 @@ const initialState = {
   showNav: false,
 };
 
-export default function (state = initialState, action) {
+export default function NavReducer(state = initialState, action) {
   switch (action.type) {
     case "HANDLE_NAV":
       return {

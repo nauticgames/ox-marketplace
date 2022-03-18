@@ -11,8 +11,6 @@ const useAuth = () => {
       router.push("/stadiums");
     }
   }, [isInitialized, isAuthenticated]);
-
-  return null;
 };
 
 export default useAuth;

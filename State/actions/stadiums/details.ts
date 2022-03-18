@@ -1,26 +1,27 @@
-import { Moralis } from "moralis";
-import axios from "axios";
 import { StadiumContract } from "../../../constants/contracts";
-import { baseURI } from "../../../constants/baseURI";
+import getTokenIdOwner from "../../../services/getTokenIdOwner";
+import getStadiumMetadata from "../../../services/getStadiumMetadata";
 
-export function GetStadiumsDetailsAction(chain, id) {
+export function GetStadiumsDetailsAction(id: string | number) {
   return async (dispatch) => {
     try {
-      const { result }: any = await Moralis.Web3API.token.getTokenIdOwners({
-        address: StadiumContract,
-        token_id: id,
-        chain,
-      });
+      const { data } = await getTokenIdOwner(StadiumContract, id);
 
-      const owner = result[0].owner_of;
-      const tokenId = result[0].token_id;
-      const response = await axios.get(`${baseURI}${Number(tokenId)}.json`);
+      const result = data.result[0];
+      const owner = result.owner_of;
 
-      const data = { ...response.data, owner };
+      if (result.metadata) {
+        const parseMetadata = JSON.parse(result.metadata);
+        const stadium = { ...parseMetadata, owner };
+        return dispatch(GetDetailsSuccess(stadium));
+      }
 
-      dispatch(GetDetailsSuccess(data));
-    } catch (error) {
-      dispatch(GetDetailsError());
+      const metadata = await getStadiumMetadata(id);
+      const stadium = { ...metadata, owner };
+
+      return dispatch(GetDetailsSuccess(stadium));
+    } catch {
+      return dispatch(GetDetailsError());
     }
   };
 }
