@@ -32,7 +32,7 @@ const Inventory = () => {
           </StyledInventoryTab>
         ))}
       </div>
-      {TabComponent}
+      {TabComponent || null}
     </StyledInventory>
   );
 };

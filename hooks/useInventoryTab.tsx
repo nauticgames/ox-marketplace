@@ -10,11 +10,15 @@ const useInventoryTab = () => {
     let mounted = true;
 
     const unsubscribe = () => {
-      const { component } = Tabs.find((tab) =>
-        router.pathname.includes(tab.name)
-      );
+      try {
+        const { component } = Tabs.find((tab) =>
+          router.pathname.includes(tab.name)
+        );
 
-      setTabComponent(component);
+        setTabComponent(component);
+      } catch {
+        return;
+      }
     };
 
     if (mounted) unsubscribe();

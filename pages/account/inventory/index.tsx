@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import AsidePanel from "../../../components/AsidePanel";
 import BasicLayout from "../../../Layout/BasicLayout";
 import Main from "../../../Layout/Main";
@@ -8,12 +6,6 @@ import ContainerLayout from "../../../Layout/Container";
 import Inventory from "../../../components/Account/Inventory";
 
 const Index = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace("/account/inventory/stadiums");
-  }, []);
-
   return (
     <>
       <BasicLayout />
@@ -29,3 +21,12 @@ const Index = () => {
 };
 
 export default Index;
+
+export async function getServerSideProps() {
+  return {
+    redirect: {
+      destination: "/account/inventory/stadiums",
+      permanent: true,
+    },
+  };
+}

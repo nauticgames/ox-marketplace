@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Moralis } from "moralis";
 import { CorrectChainId } from "../constants/chain";
-import toast from "react-hot-toast";
 import { useMoralis } from "react-moralis";
 import addNetwork from "../services/addNetwork";
 
@@ -16,9 +15,7 @@ const useWeb3 = () => {
 
     const unsubscribe = async () => {
       await Moralis.enableWeb3({
-        chainId: CorrectChainId,
         provider: "metamask",
-        anyNetwork: false,
       }).then((provider) => setWeb3Provider(provider));
 
       if (!window.ethereum._metamask.isUnlocked()) logout();
@@ -40,14 +37,16 @@ const useWeb3 = () => {
   }, [account, isAuthenticated]);
 
   useEffect(() => {
-    if (!web3Provider) return;
+    if (typeof window.ethereum === "undefined") return;
 
-    window.ethereum.on("chainChanged", () => {
+    window.ethereum.on("chainChanged", async () => {
       signOut();
+      window.location.reload();
     });
 
-    window.ethereum.on("accountsChanged", () => {
+    window.ethereum.on("accountsChanged", async () => {
       signOut();
+      window.location.reload();
     });
 
     window.ethereum.removeListener("chainChanged", () => null);
@@ -63,15 +62,9 @@ const useWeb3 = () => {
   };
 
   const login = async () => {
-    if (!web3Provider || isAuthenticated) return;
+    if (!window.ethereum._metamask.isUnlocked()) return;
 
-    const metamaskUnlocked = window.ethereum._metamask.isUnlocked();
-
-    if (!metamaskUnlocked) {
-      return toast.error("You need to unlock metamask first");
-    }
-
-    if (web3?.network.chainId !== CorrectChainId) {
+    if (Number(window.ethereum.networkVersion) !== CorrectChainId) {
       return switchChain();
     }
 
@@ -86,12 +79,8 @@ const useWeb3 = () => {
     }
   };
 
-  const signOut = async () => {
-    try {
-      await logout();
-    } catch {
-      return;
-    }
+  const signOut = () => {
+    logout();
   };
 
   return {
