@@ -1,7 +1,15 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import AsidePanel from "../components/AsidePanel";
 import BasicLayout from "../Layout/BasicLayout";
 
-const index = () => {
+const Home = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/stadiums");
+  }, []);
+
   return (
     <>
       <BasicLayout />
@@ -10,13 +18,4 @@ const index = () => {
   );
 };
 
-export default index;
-
-export async function getServerSideProps() {
-  return {
-    redirect: {
-      destination: "/stadiums",
-      permanent: true,
-    },
-  };
-}
+export default Home;
