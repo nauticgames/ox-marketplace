@@ -36,7 +36,7 @@ export const Account: AsidePanelItem[] = [
   },
   {
     name: "inventory",
-    path: "/account/inventory/stadiums",
+    path: "/account/inventory",
     label: "Inventory",
     src: "/assets/img/inventory.svg",
   },
