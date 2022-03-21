@@ -9,6 +9,7 @@ import { ThemeProvider } from "styled-components";
 import theme from "../ThemeConfig";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { MoralisProvider } from "react-moralis";
+import ModalsProvider from "../providers/ModalProvider";
 
 declare global {
   interface Window {
@@ -42,9 +43,11 @@ const App = ({ Component, pageProps }) => {
       >
         <Web3ContextWrapped>
           <Provider store={store}>
-            <ThemeProvider theme={theme}>
-              <Component {...pageProps} />
-            </ThemeProvider>
+            <ModalsProvider>
+              <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </ModalsProvider>
           </Provider>
         </Web3ContextWrapped>
       </MoralisProvider>

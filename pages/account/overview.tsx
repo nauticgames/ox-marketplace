@@ -24,7 +24,7 @@ const Overview = () => {
       <AsidePanel type="account" />
 
       <Main>
-        <NavigationButtons mt={40} path="/stadiums" />
+        <NavigationButtons mt={40} />
         <StyledContainer>
           <Grid stackable>
             <Grid.Column mobile={16} computer={16} tablet={16}>

@@ -15,6 +15,7 @@ import { GetWbnbAllowanceAction } from "../../../../../State/actions/token/allow
 import { ApproveWBNBAction } from "../../../../../State/actions/token/approve";
 import { IWeb3Context, Web3Context } from "../../../../../context/Web3Context";
 import PurchaseActions from "./Actions";
+import NiceModal from "@ebay/nice-modal-react";
 
 const Details = ({ data }) => {
   const { stadiumColor, label, fee, maxParticipants, price, img, type } = data;
@@ -63,7 +64,7 @@ const Details = ({ data }) => {
       const balance = await getWBNBBalance(account);
 
       if (balance < price) {
-        return toast.error("You don't have enough money");
+        return NiceModal.show("insufficient-wbnb-modal");
       }
 
       dispatch(StadiumPurchaseAction(type));

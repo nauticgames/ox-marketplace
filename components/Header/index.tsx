@@ -11,7 +11,6 @@ const Header = () => {
     <StyledHeader>
       <Logo />
       {isMobile && <MenuButton />}
-
       {!isMobile && <Nav />}
     </StyledHeader>
   );

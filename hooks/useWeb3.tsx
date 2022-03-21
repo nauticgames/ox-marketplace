@@ -3,6 +3,7 @@ import { Moralis } from "moralis";
 import { CorrectChainId } from "../constants/chain";
 import { useMoralis } from "react-moralis";
 import addNetwork from "../services/addNetwork";
+import NiceModal from "@ebay/nice-modal-react";
 
 const useWeb3 = () => {
   const [web3Provider, setWeb3Provider] = useState(null);
@@ -62,6 +63,13 @@ const useWeb3 = () => {
   };
 
   const login = async () => {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.ethereum === "undefined"
+    ) {
+      return NiceModal.show("metamask-modal");
+    }
+
     if (!window.ethereum._metamask.isUnlocked()) return;
 
     if (Number(window.ethereum.networkVersion) !== CorrectChainId) {

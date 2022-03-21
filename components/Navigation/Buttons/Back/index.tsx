@@ -2,15 +2,11 @@ import { StyledBackButton } from "./styles";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 
-interface IBackButtonProps {
-  path: string;
-}
-
-const Back = ({ path }: IBackButtonProps) => {
+const Back = () => {
   const router = useRouter();
 
   const back = () => {
-    path ? router.push(path) : router.back();
+    router.back();
   };
 
   return (

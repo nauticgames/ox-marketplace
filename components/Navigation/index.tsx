@@ -3,11 +3,11 @@ import StyledNavigation from "./styles";
 import Back from "./Buttons/Back";
 import Home from "./Buttons/Home";
 
-const Navigation = ({ mt, path }: INavigationProps) => {
+const Navigation = ({ mt }: INavigationProps) => {
   return (
-    <StyledNavigation mt={mt} path={path}>
+    <StyledNavigation mt={mt}>
       <Home />
-      <Back path={path} />
+      <Back />
     </StyledNavigation>
   );
 };

@@ -11,7 +11,7 @@ const Exchange = () => {
     <>
       <BasicLayout />
       {isMobile && <AsidePanel type="marketplace" />}
-      <NavigationButtons mt={120} path="/stadiums" />
+      <NavigationButtons mt={120} />
       <ComingSoon width={400} height={400} />
     </>
   );

@@ -14,7 +14,7 @@ const Claim = () => {
       <AsidePanel type="account" />
 
       <Main>
-        <Navigation mt={40} path="/stadiums" />
+        <Navigation mt={40} />
         <ComingSoon width={400} height={400} />
       </Main>
     </>
