@@ -14,7 +14,7 @@ const Stadiums = () => {
       <BasicLayout />
       <AsidePanel type="account" />
       <Main>
-        <NavigationButtons mt={40} path="/stadiums" />
+        <NavigationButtons mt={40} />
         <ContainerLayout>
           <Inventory />
         </ContainerLayout>

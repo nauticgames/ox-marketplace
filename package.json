@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ebay/nice-modal-react": "^1.2.1",
     "@iconify/react": "^3.1.2",
     "@metamask/providers": "^8.1.1",
     "@walletconnect/web3-provider": "^1.7.1",
@@ -22,7 +23,6 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hot-toast": "^2.2.0",
-    "react-modal": "^3.14.4",
     "react-moralis": "^1.3.2",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",

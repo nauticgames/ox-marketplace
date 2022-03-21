@@ -16,7 +16,7 @@ const Index = () => {
   return (
     <>
       <BasicLayout />
-      <NavigationButtons mt={40} path="/stadiums" />
+      <NavigationButtons mt={40} />
       <AsidePanel type="account" />
     </>
   );

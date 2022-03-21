@@ -11,7 +11,7 @@ const AssetLayout = ({ children }) => {
       <BasicLayout />
       <main>
         {isMobile && <AsidePanel type="marketplace" />}
-        <Navigation mt={120} path="/stadiums" />
+        <Navigation mt={120} />
         {children}
       </main>
     </>

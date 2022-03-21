@@ -1,16 +1,18 @@
 import { combineReducers } from "redux";
-import allowance from "./token/allowance";
-import approve from "./token/approve";
-import nav from "./nav";
-import stadiumDetails from "./stadiums/details";
-import stadiumPurchase from "./stadiums/purchase";
-import stadiumsInventory from "./stadiums/inventory";
+import NavReducer from "./nav";
+import StadiumDetailsReducer from "./stadiums/details";
+import StadiumsInventoryReducer from "./stadiums/inventory";
+import StadiumsPurchaseReducer from "./stadiums/purchase";
+import TokenAllowanceReducer from "./token/allowance";
+import TokenApproveReducer from "./token/approve";
+import NiceModal from "@ebay/nice-modal-react";
 
 export default combineReducers({
-  STADIUM_INVENTORY: stadiumsInventory,
-  STADIUM_DETAILS: stadiumDetails,
-  STADIUM_PURCHASE: stadiumPurchase,
-  NAV: nav,
-  TOKEN_ALLOWANCE: allowance,
-  TOKEN_APPROVE: approve,
+  STADIUM_INVENTORY: StadiumsInventoryReducer,
+  STADIUM_DETAILS: StadiumDetailsReducer,
+  STADIUM_PURCHASE: StadiumsPurchaseReducer,
+  NAV: NavReducer,
+  TOKEN_ALLOWANCE: TokenAllowanceReducer,
+  TOKEN_APPROVE: TokenApproveReducer,
+  __nice_modals: NiceModal.reducer,
 });

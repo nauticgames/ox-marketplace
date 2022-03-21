@@ -5,6 +5,10 @@ button {
   outline: none;
 }
 
+.ui.page.dimmer {
+  z-index: 99999;
+}
+
 h1,
 h2,
 h3,

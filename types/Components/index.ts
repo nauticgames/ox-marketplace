@@ -23,7 +23,6 @@ export interface IAsidePanelProps {
 
 export interface INavigationProps {
   mt?: number;
-  path?: string;
 }
 
 export interface IStadiumsRemainingHookProps {
