@@ -34,7 +34,7 @@ const Skins = () => {
             getting them in a mysterious chest, if you are lucky, you can get a
             skin very strange.
           </p>
-          <Link href="https://facundo-lavagnino.gitbook.io/whitepaper/assets/chests-and-keys/skins-and-effects">
+          <Link href="https://docs.nauticgames.com/assets/skins-and-effects">
             <a target="__blank" className="info__btn">
               More info
             </a>

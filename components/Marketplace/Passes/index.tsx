@@ -33,7 +33,7 @@ const Passes = () => {
             a maximum number of games available, when you play all of them, the
             pass will expire and you will have to buy another one
           </p>
-          <Link href="https://facundo-lavagnino.gitbook.io/whitepaper/assets/passes">
+          <Link href="https://docs.nauticgames.com/assets/passes">
             <a target="__blank" className="info__btn">
               More info
             </a>

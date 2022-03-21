@@ -35,7 +35,7 @@ const Chests = () => {
             very special skin. rare that you can use in the game or trade it on
             the market for a high price.
           </p>
-          <Link href="https://facundo-lavagnino.gitbook.io/whitepaper/assets/chests-and-keys">
+          <Link href="https://docs.nauticgames.com/assets/chests-and-keys">
             <a target="__blank" className="info__btn">
               More info
             </a>
